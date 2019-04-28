@@ -1,10 +1,11 @@
 package controller;
 
 public class Controller {
+
+    TimeCounter timer;
+
     public Controller() {
-        String bitch = "fuck";
-        String newBitch = bitch + " me";
-        //kaskjldskjskjlaskjlasdkj;sdf
-        //ddsdsddssdfd
+        time
+
     }
 }
