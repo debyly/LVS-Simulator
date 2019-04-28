@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class OU {
 
     HashMap<String,String> states;
-    String state;
+    public String state;
     String my_buf;
 
     OU()
