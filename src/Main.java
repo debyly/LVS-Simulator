@@ -1,15 +1,13 @@
-/*
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-*/
-import java.util.Random;
 
-//import javafx.application.Application;
 
-public class Main {//extends Application {
+import javafx.application.Application;
+
+public class Main extends Application {
 
     /*private static String mainfxml = "res/sample.fxml";
 
@@ -29,7 +27,8 @@ public class Main {//extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
+        LVS lvs = new LVS();
+        lvs.working_20000();
 
     }
 }
