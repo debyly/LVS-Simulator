@@ -3,8 +3,7 @@ import java.util.HashMap;
 public class LVS {
     public HashMap<Integer,OU> clients;
     Controller ctrl;
-    String line;
-    String status;
+    LineStat ls;
 
 
     LVS()
@@ -14,30 +13,21 @@ public class LVS {
 
         for (int i = 0; i < 18; i++) clients.put(i, new OU());
 
-        line = "A";
-        status = "working";
+        ls = new LineStat();
     }
 
 
 
-    public void working_20000(Flt[][] Faults){
-        for (int i = 0; i< 20; i++){
-            working_1000(Faults[i]);
-            System.out.println("done");
+    public void working_20000(){
+        for (int i = 0; i < 20; i++){
+            working_1000();
         }
         System.out.print("total time: ");
         System.out.println(ctrl.getTime());
     }
 
-    public  void working_1000(Flt[] Fault){
+    public  void working_1000(){
         int time = ctrl.getTime();
-        for (int i = 0; i< 18; i++){
-            Flt f = Fault[i];
-            if (f.state == 1){
-                clients.get(i).chState(f.fault);
-                if (f.fault.equals("generator")) line = "generation";
-            }
-        }
         for (int i = 0; i < 55; i++){
             working_18();
         }
@@ -47,8 +37,12 @@ public class LVS {
     }
 
     public void working_18(){
-        if (status.equals("generation")){
-            ctrl.findGenerator(clients);
+        for(int i = 0; i < 18; i++) {
+            clients.get(i).Fault();
+            if (clients.get(i).state.equals("generator")) ls.status = "generation";
+        }
+        if (ls.status.equals("generation")){
+            ctrl.findGenerator(clients, ls);
         }
         for (int i = 0; i < 18; i++){
             if (clients.get(i).state.equals("failure")){
@@ -60,9 +54,10 @@ public class LVS {
                 clients.get(i).chState("working");
             }
             if ((clients.get(i).state.equals("denial")) || (clients.get(i).state.equals("blocked"))){
-                ctrl.Denial();
+                ctrl.Denial(ls);
             }
-            ctrl.NormalWork();
+            ctrl.NormalWork(ls);
         }
     }
 }
+

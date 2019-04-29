@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Random;
 
 public class OU {
 
@@ -32,6 +33,32 @@ public class OU {
         else{
             my_buf = state;
             state = states.get(st);
+        }
+    }
+
+    public void Fault(){
+        Random rand = new Random();
+        if (!((state.equals("blocked")) || ( state.equals("denial")))){
+            int gen = rand.nextInt() % 20000;
+            if (gen == 0) {
+                state = "generator";
+                return;
+            }
+            int den = rand.nextInt() % 5000;
+            if (den == 0) {
+                state = "denial";
+                return;
+            }
+            int fail = rand.nextInt() % 2000;
+            if (fail == 0) {
+                state = "failure";
+                return;
+            }
+            int busy = rand.nextInt() % 2000;
+            if (busy == 0) {
+                state = "busy";
+                return;
+            }
         }
     }
 

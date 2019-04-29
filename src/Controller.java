@@ -17,12 +17,14 @@ public class Controller {
         timer.addTime("pause_before_answer");
     }
 
-    public void Denial(){
+    public void Denial(LineStat ls){
         for (int i = 0; i < 2; i++){
             timer.addTime("command");
             timer.addTime("word");
             timer.addTime("pause_before_answer");
         }
+        ls.line = "B";
+        ls.status = "working";
     }
 
     public void Busy(){
@@ -33,19 +35,23 @@ public class Controller {
         timer.addTime("pause_if_busy");
     }
 
-    public void NormalWork(){
+    public void NormalWork(LineStat ls){
         timer.addTime("command");
         timer.addTime("word");
         timer.addTime("pause_before_answer");
         timer.addTime("answer");
+        ls.line = "A";
+        ls.status = "working";
     }
 
 
-    public void findGenerator(HashMap<Integer, OU> clients){
+    public void findGenerator(HashMap<Integer, OU> clients, LineStat ls){
         for(int i=1;i<=18;i++){
             timer.addTime("command");
             timer.addTime("pause_before_answer");
         }
+        ls.line = "B";
+        ls.status = "working";
             for(int i=1;i<=18;i++){
                 timer.addTime("block");
                 timer.addTime("pause_before_answer");
@@ -54,11 +60,16 @@ public class Controller {
             }
             int i = 0;
             do{
+                ls.line = "B";
+                ls.status = "working";
                 i++;
                 timer.addTime("unblock");
                 timer.addTime("pause_before_answer");
                 timer.addTime("answer");
                 clients.get(i).chState("working");
+
+                ls.line = "A";
+                ls.status = "working";
 
                 timer.addTime("command");
                 timer.addTime("word");
@@ -71,20 +82,26 @@ public class Controller {
                     timer.addTime("pause_before_answer");
                     //
                     //Блокируем генерящий элемент
+                    ls.line = "B";
+                    ls.status = "working";
+
                     timer.addTime("block");
                     timer.addTime("pause_before_answer");
                     timer.addTime("answer");
+
                     clients.get(i).chState("blocked");
                     //
                     break;
                 }
             }while(true);
             i++;
-            for(; i< 19; i++ ){
+            for(; i< 18; i++ ){
                 timer.addTime("unblock");
                 timer.addTime("pause_before_answer");
                 timer.addTime("answer");
                 clients.get(i).chState("working");
             }
+        ls.line = "A";
+        ls.status = "working";
     }
 }
