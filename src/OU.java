@@ -18,6 +18,7 @@ public class OU {
         states.put("generator", "generator");
 
         state = states.get("working");
+        my_buf = "";
     }
 
     public String lookStatus(){

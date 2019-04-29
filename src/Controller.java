@@ -42,6 +42,10 @@ public class Controller {
 
 
     public void findGenerator(HashMap<Integer, OU> clients){
+        for(int i=1;i<=18;i++){
+            timer.addTime("command");
+            timer.addTime("pause_before_answer");
+        }
             for(int i=1;i<=18;i++){
                 timer.addTime("block");
                 timer.addTime("pause_before_answer");
@@ -75,5 +79,12 @@ public class Controller {
                     break;
                 }
             }while(true);
+            i++;
+            for(; i< 19; i++ ){
+                timer.addTime("unblock");
+                timer.addTime("pause_before_answer");
+                timer.addTime("answer");
+                clients.get(i).chState("working");
+            }
     }
 }

@@ -1,13 +1,17 @@
+/*
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+*/
 
 
-public class Main extends Application {
+//import javafx.application.Application;
 
-    private static String mainfxml = "res/sample.fxml";
+public class Main {//extends Application {
+
+    /*private static String mainfxml = "res/sample.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -15,15 +19,17 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
-        /* test of repo cloning */
+        *//* test of repo cloning *//*
         //Another one shit
         //second one
         //I DON UBawfaw
 
-    }
+    }*/
 
 
     public static void main(String[] args) {
-        launch(args);
+        //launch(args);
+        StatTest stt = new StatTest();
+        stt.Test();
     }
 }
