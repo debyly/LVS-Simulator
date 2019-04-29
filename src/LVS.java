@@ -7,15 +7,14 @@ public class LVS {
     String status;
 
 
-    LVS(String line_type)
+    LVS()
     {
         ctrl = new Controller();
         clients = new HashMap<>();
 
-        if(line_type == "A") {
-            for (int i = 1; i <= 18; i++) clients.put(i, new OU());
-        }
-        line = line_type;
+        for (int i = 1; i <= 18; i++) clients.put(i, new OU());
+
+        line = "A";
         status = "working";
     }
 
