@@ -5,9 +5,9 @@ public class StatTest {
 
 
 
-    public Flt[][] randFault(){
+        public Flt[][] randFault(){
         Random rand = new Random();
-        int gen = rand.nextInt(2);
+        int gen = rand.nextInt() % 2000;
         int failure = rand.nextInt(4) + 8;
         int denial = rand.nextInt(2) + 3;
         int busy = rand.nextInt(4) + 8;
@@ -80,6 +80,11 @@ public class StatTest {
             }while (next == false);
         }
         return res;
+    }
+
+    public int random(int cnt, int total){
+            Random rand = new Random();
+            int res = rand.nextInt();
     }
 
     public void Test(){

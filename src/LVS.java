@@ -23,7 +23,10 @@ public class LVS {
     public void working_20000(Flt[][] Faults){
         for (int i = 0; i< 20; i++){
             working_1000(Faults[i]);
+            System.out.println("done");
         }
+        System.out.print("total time: ");
+        System.out.println(ctrl.getTime());
     }
 
     public  void working_1000(Flt[] Fault){
@@ -39,6 +42,8 @@ public class LVS {
             working_18();
         }
         time = ctrl.getTime() - time;
+        System.out.print("Time for 1000: ");
+        System.out.println(time);
     }
 
     public void working_18(){
