@@ -27,8 +27,14 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        LVS lvs = new LVS();
-        lvs.working_20000();
 
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+            primaryStage.show();
+            LVS lvs = new LVS();
+            lvs.working_20000();
     }
 }
