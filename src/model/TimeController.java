@@ -74,7 +74,7 @@ public class TimeController {
                 msgcnt += 2;
             }
         //==================================================
-            int i = 0;
+            int i = -1;
             do{
                 ls.line = "B";
                 ls.status = "working";
