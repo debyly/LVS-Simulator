@@ -34,12 +34,13 @@ public class MainScreen {
     @FXML
     private void handleStart(){
 
-        consoletext.setText("");
-        textflow.getChildren().remove(0);
+
 
         LVS lvs = new LVS();
         int[][] output = lvs.working_20000();
 
+        consoletext.setText("");
+        textflow.getChildren().remove(0);
         for (int i = 0; i < 20; i++) {
 
             int time = output[i][5] - output[i][4];
