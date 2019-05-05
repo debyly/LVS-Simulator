@@ -1,3 +1,5 @@
+package model;
+
 class LineStat{
     public String line;
     public String status;

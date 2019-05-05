@@ -4,8 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
-import javafx.application.Application;
+import view.MainScreen;
 
 public class Main extends Application {
 
@@ -17,12 +16,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource(mainfxml));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
+        Parent root = loader.load();
+        MainScreen MSController = loader.getController();
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
-        LVS lvs = new LVS();
-        lvs.working_20000();
     }
 }

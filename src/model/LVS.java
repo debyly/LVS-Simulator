@@ -1,62 +1,68 @@
+package model;
+
 import java.util.HashMap;
 
 public class LVS {
-    public HashMap<Integer,OU> clients;
-    Controller ctrl;
-    LineStat ls;
+    private HashMap<Integer,OU> clients;
+    private TimeController ctrl;
+    private LineStat ls;
 
 
-    LVS()
+    public TimeController getTimeCtrl() {
+        return ctrl;
+    }
+
+    public LVS()
     {
-        ctrl = new Controller();
-
+        ctrl = new TimeController();
         clients = new HashMap<>();
-        for (int i = 0; i < 18; i++) clients.put(i, new OU());
-
         ls = new LineStat();
+
+        for (int i = 0; i < 18; i++) clients.put(i, new OU());
     }
 
 
 
-    public void working_20000(){
+    public int[][] working_20000(){
+
+        int[][] output = new int[20][6];
+
         for (int i = 0; i < 20; i++){
-            working_1000();
+            output[i] = working_1000();
         }
-        System.out.print("total time: ");
-        System.out.println(ctrl.getTime());
+
+        return output;
+
     }
 
-    public  void working_1000(){
-        int time = ctrl.getTime();
-        int[] Flt = new int[4];
+    public  int[] working_1000(){
+        int[] flt = new int[6];
+        flt[4] = ctrl.getTime();
         for (int i = 0; i < 55; i++){
-            working_18(Flt);
+            working_18(flt);
         }
-        System.out.println("Количество ошибок:");
-        System.out.println("Генерация: " + Flt[0] + "\r\nОтказ: " +
-                Flt[1] + "\r\nСбой: " + Flt[2] + "\r\nАбонент занят: " + Flt[3]);
-        time = ctrl.getTime() - time;
-        System.out.println("Time for 1000: " + time);
-        System.out.println("Expected time: " + (time / 990) + "\r\n");
+        flt[5] = ctrl.getTime();
+        return flt;
+
     }
 
-    public void working_18(int[] Flt){
+    public void working_18(int[] flt){
         //================= Случайное возникновение неполадок =====================
         for(int i = 0; i < 18; i++) {
-            if (clients.get(i).state.equals("denial")) Flt[1]--;
+            if (clients.get(i).state.equals("denial")) flt[1]--;
             clients.get(i).Fault();
             if (clients.get(i).state.equals("generator")) {
                 ls.status = "generation";
-                Flt[0]++;
+                flt[0]++;
             }
             if (clients.get(i).state.equals("denial")) {
-                Flt[1]++;
+                flt[1]++;
             }
             if (clients.get(i).state.equals("failure")) {
-                Flt[2]++;
+                flt[2]++;
             }
             if (clients.get(i).state.equals("busy")) {
-                Flt[3]++;
+                flt[3]++;
             }
 
         }

@@ -1,10 +1,12 @@
+package model;
+
 import java.util.HashMap;
 
-public class Controller {
+public class TimeController {
     TimeCounter timer;
     int msgcnt;
 
-    Controller(){
+    TimeController(){
         timer = new TimeCounter();
         msgcnt = 0;
     }
