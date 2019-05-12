@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button mnemonicParsing="false" text="Switch">
+         <VBox.margin>
+            <Insets bottom="2.0" />
+         </VBox.margin></Button>
+      <AnchorPane prefHeight="74.0" prefWidth="60.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" layoutY="1.0" stroke="#b1b1b1" strokeType="INSIDE" strokeWidth="8.0" width="60.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="23.0" layoutY="25.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+            <Line endX="12.2222900390625" endY="-71.66665649414062" layoutX="17.0" layoutY="130.0" startX="12.2222900390625" startY="-48.666656494140625" stroke="#b1b1b1" strokeWidth="8.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

@@ -3,8 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//import view.TestScreen;
-
+import view.MainScreen;
 public class Main extends Application {
 
 
@@ -13,12 +12,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        String mainfxml = "view/TestScreen.fxml";
+        String mainfxml = "view/MainScreen.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
         Parent root = loader.load();
-        //TestScreen TSController = loader.getController();
-        primaryStage.setTitle("Hello World");
+        MainScreen MSCtrl = loader.getController();
+        primaryStage.setTitle("Симулятор ЛВС 2000");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
