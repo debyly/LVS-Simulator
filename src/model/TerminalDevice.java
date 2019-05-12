@@ -20,7 +20,7 @@ public class TerminalDevice {
         chances = probMap;
     }
 
-    void chState(DeviceState st){
+    void changeState(DeviceState st){
         if (st == WORKING){
             state = my_buf;
         }
@@ -31,7 +31,8 @@ public class TerminalDevice {
     }
 
     void restore(){
-        chState(WORKING);
+
+        changeState(WORKING);
     }
 
     void process(){

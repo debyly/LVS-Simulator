@@ -43,7 +43,6 @@ public class LineController {
             case DENIAL:
             case BLOCKED:
                 denial();
-                td.restore();
                 break;
             //Нормальная работа
             default:
@@ -106,7 +105,7 @@ public class LineController {
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
 
-                clients.get(i).chState(BLOCKED);
+                clients.get(i).changeState(BLOCKED);
 
                 messageCount += 2;
             }
@@ -122,7 +121,7 @@ public class LineController {
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
 
-                clients.get(i).chState(WORKING);
+                clients.get(i).changeState(WORKING);
 
                 messageCount += 2;
                 //===========================================
@@ -151,7 +150,7 @@ public class LineController {
                     timer.addTime(BLOCK);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     timer.addTime(ANSWER);
-                    clients.get(i).chState(BLOCKED);
+                    clients.get(i).changeState(BLOCKED);
                     messageCount += 2;
                     //===================================================================
                     //======= Остановка после обнаружения генерящего элемента ===========
