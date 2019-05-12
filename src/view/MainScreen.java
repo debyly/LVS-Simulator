@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Pair;
 import model.LVS;
+import model.Tester;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,25 +49,29 @@ public class MainScreen {
             put(DeviceState.BUSY, 2000);
         }};
 
-        LVS lvs = new LVS(18, chances);
-        int[][] output = lvs.simulateX(20,55);
+        int clientsAmount = 18;
+        int multiplier = 20;
+        int sessions = 55;
+
+        Pair<int[][],Integer> output
+                = Tester.simulateX(clientsAmount, chances, multiplier, sessions);
 
         consoletext.setText("");
         textflow.getChildren().remove(0);
         for (int i = 0; i < 20; i++) {
 
             String str = "\n\n--Количество ошибок--\n"
-                    + "Генерация: " + output[i][0]
-                    + "\r\nОтказ: " + output[i][1]
-                    + "\r\nСбой: " + output[i][2]
-                    + "\r\nАбонент занят: " + output[i][3]
-                    + "\nВремени потрачено: " + (output[i][6] - output[i][5])
-                    + " сек\nОжидалось потратить: " + ((output[i][6] - output[i][5]) / 990)
-                    + " сек\nПередано сообщений: " + output[i][4] + " штук\r\n";
+                    + "Генерация: " + output.getKey()[i][0]
+                    + "\r\nОтказ: " + output.getKey()[i][1]
+                    + "\r\nСбой: " + output.getKey()[i][2]
+                    + "\r\nАбонент занят: " + output.getKey()[i][3]
+                    + "\nВремени потрачено: " + (output.getKey()[i][6] - output.getKey()[i][5])
+                    + " сек\nОжидалось потратить: " + (output.getKey()[i][7])
+                    + " сек\n\nПередано сообщений: " + output.getKey()[i][4] + " штук\r\n";
             consoletext.setText(consoletext.getText() + str);
         }
 
-        consoletext.setText("Общее время работы программы: \n" + lvs.getLineCtrl().getTime() + "секунд" + consoletext.getText());
+        consoletext.setText("Общее время работы программы: \n" + output.getValue() + "секунд" + consoletext.getText());
 
         textflow.getChildren().add(consoletext);
     }

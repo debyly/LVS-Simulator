@@ -34,44 +34,34 @@ public class LVS {
             clients.put(i, new TerminalDevice(chances));
     }
 
-    public int[][] simulateX(int multiplier, int sessions){
+    public int getClientsAmount(){
 
-        int[][] output = new int[20][7];
-
-        for (int i = 0; i < multiplier; i++){
-
-            output[i][5] = lineController.getTime();
-            for (int j = 0; j < sessions; j++)
-                basework(output[i]);
-
-            output[i][6] = lineController.getTime();
-        }
-        return output;
+        return clientsAmount;
     }
 
-    private void basework(int[] flt){
+    public void basework(int[] statistics){
 
         //================= Симуляция работы =====================
         for(int i = 0; i < clientsAmount; i++) {
-            if (clients.get(i).getState() == DENIAL) flt[1]--;
+            if (clients.get(i).getState() == DENIAL) statistics[1]--;
             clients.get(i).process();
         }
         //================= Подсчёт ошибок =====================
         for(int i = 0; i < clientsAmount; i++) {
             switch (clients.get(i).getState()){
                 case BUSY:
-                    flt[3]++;
+                    statistics[3]++;
                     break;
                 case FAILURE:
-                    flt[2]++;
+                    statistics[2]++;
                     break;
                 case DENIAL:
                     if (clients.get(i).getPreviousState() == WORKING)
-                    flt[1]++;
+                    statistics[1]++;
                     break;
                 case GENERATOR:
                     line.setState(LineState.A_GENERATION);
-                    flt[0]++;
+                    statistics[0]++;
                     break;
                 default:
                     break;
@@ -84,7 +74,7 @@ public class LVS {
         for (int i = 0; i < clientsAmount; i++)
             lineController.reactOn(clients.get(i));
         //====== Запись общего кол-ва сообщений =====
-        flt[4] = lineController.getMessageCount();
+        statistics[4] = lineController.getMessageCount();
     }
 }
 

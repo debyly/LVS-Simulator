@@ -91,7 +91,6 @@ public class LineController {
         for(int i = 0; i < clients.size(); i++){
             timer.addTime(COMMAND);
             timer.addTime(PAUSE_BEFORE_ANSWER);
-
             messageCount += 1;
         }
         //================================================
@@ -109,7 +108,6 @@ public class LineController {
                 messageCount += 2;
             }
         //==================================================
-
             int lastDevice = 0;
             for (int i = 0; i < clients.size(); i++){
 
@@ -157,6 +155,7 @@ public class LineController {
                     break;
                 }
             }
+
             //===== Разблокировка ОУ после генерящего =====
             for (int i = lastDevice + 1; i< clients.size(); i++ ){
                 timer.addTime(UNBLOCK);
