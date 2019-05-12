@@ -39,7 +39,7 @@ public class LVS {
         return clientsAmount;
     }
 
-    public void basework(int[] statistics){
+    public void start(int[] statistics){
 
         //================= Симуляция работы =====================
         for(int i = 0; i < clientsAmount; i++)

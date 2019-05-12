@@ -16,7 +16,7 @@ public class Tester {
 
             statistics[i][5] = lvs.getLineCtrl().getTime();
             for (int j = 0; j < sessions; j++)
-                lvs.basework(statistics[i]);
+                lvs.start(statistics[i]);
 
             statistics[i][6] = lvs.getLineCtrl().getTime();
             statistics[i][7] = (statistics[i][6] - statistics[i][5]) / (sessions * lvs.getClientsAmount());
