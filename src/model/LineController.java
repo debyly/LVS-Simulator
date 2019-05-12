@@ -112,7 +112,8 @@ public class LineController {
             }
         //==================================================
 
-            for (int i = 0; i < 18; i++){
+            int i = 0;
+            do{
 
                 line.setState(B_WORKING);
 
@@ -156,13 +157,14 @@ public class LineController {
                     //======= Остановка после обнаружения генерящего элемента ===========
                     break;
                 }
-            }
+            } while(true);
             //===== Разблокировка ОУ после генерящего =====
-            for(int i = 0; i< 18; i++ ){
+            i++;
+            for(; i< 18; i++ ){
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                clients.get(i).restore();
+                clients.get(i).chState(WORKING);
                 messageCount += 2;
             //==============================================
             }
