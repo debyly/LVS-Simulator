@@ -6,9 +6,9 @@ import java.util.Iterator;
 public class Message {
 
     String state;
-    HashMap<String,Integer> commands;
-    HashMap<String, Integer> modes;
-    HashMap<Integer,String> IntStr;
+    private HashMap<String,Integer> commands;
+    private HashMap<String, Integer> modes;
+    private HashMap<Integer,String> IntStr;
     String type;
     int address_from;
     int address_to;

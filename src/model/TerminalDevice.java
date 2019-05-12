@@ -1,17 +1,25 @@
 package model;
 
+import java.util.Map;
 import java.util.Random;
 
-import static model.TerminalDevice.State.*;
+import static model.TerminalDevice.DeviceState.*;
 
-class TerminalDevice {
+public class TerminalDevice {
 
-    public enum State{WORKING, BLOCKED,
+    public enum DeviceState {WORKING, BLOCKED,
         BUSY, FAILURE, DENIAL, GENERATOR}
 
-    State state = WORKING;
+    DeviceState state = WORKING;
 
-    void chState(State st){
+    private Map<DeviceState, Integer> chances;
+
+    TerminalDevice(Map<DeviceState, Integer> probMap){
+
+        chances = probMap;
+    }
+
+    void chState(DeviceState st){
         if (st != WORKING){
             state = st;
         }
@@ -25,27 +33,21 @@ class TerminalDevice {
         Random rand = new Random();
         
         if ((state != BLOCKED) && ( state != DENIAL)){
-            
-            int gen = rand.nextInt() % 20000;
 
-            if (gen == 0) {
+            if (rand.nextInt(chances.get(GENERATOR)) == 0) {
                 state = GENERATOR;
                 return;
             }
-            int den = rand.nextInt() % 5000;
-            if (den == 0) {
+            if (rand.nextInt(chances.get(DENIAL)) == 0) {
                 state = DENIAL;
                 return;
             }
-            int fail = rand.nextInt() % 2000;
-            if (fail == 0) {
+            if (rand.nextInt(chances.get(FAILURE)) == 0) {
                 state = FAILURE;
                 return;
             }
-            int busy = rand.nextInt() % 2000;
-            if (busy == 0) {
+            if (rand.nextInt(chances.get(BUSY)) == 0)
                 state = BUSY;
-            }
         }
     }
 }

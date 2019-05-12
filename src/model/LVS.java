@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LVS {
 
@@ -23,26 +24,24 @@ public class LVS {
         return lineController;
     }
 
-    public LVS(int clientsAmount)
+    public LVS(int clientsAmount, Map<TerminalDevice.DeviceState, Integer> chances)
     {
         this.clientsAmount = clientsAmount;
         for (int i = 0; i < this.clientsAmount; i++)
-            clients.put(i, new TerminalDevice());
+            clients.put(i, new TerminalDevice(chances));
     }
 
     public int[][] simulateX(int multiplier, int sessions){
 
-        int[][] output = new int[20][6];
+        int[][] output = new int[20][7];
 
         for (int i = 0; i < multiplier; i++){
 
-            output[i][4] = lineController.getTime();
-
+            output[i][5] = lineController.getTime();
             for (int j = 0; j < sessions; j++)
                 basework(output[i]);
 
-            output[i][5] = lineController.getTime();
-
+            output[i][6] = lineController.getTime();
         }
         return output;
     }
@@ -77,12 +76,11 @@ public class LVS {
         //===== Действия при генерации ======
         if (line.getState() == LineState.A_GENERATION)
             lineController.findGenerator();
-
         //====== Запуск действия контроллера =======
-        for (int i = 0; i < clientsAmount; i++){
+        for (int i = 0; i < clientsAmount; i++)
             lineController.reactOn(clients.get(i));
-        }
-
+        //====== Запись общего кол-ва сообщений =====
+        flt[4] = lineController.getMessageCount();
     }
 }
 

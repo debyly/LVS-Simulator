@@ -3,7 +3,7 @@ package model;
 import java.util.HashMap;
 
 import static model.LVS.LineState.*;
-import static model.TerminalDevice.State.*;
+import static model.TerminalDevice.DeviceState.*;
 import static model.TimeCounter.TimeType.*;
 
 public class LineController {
@@ -22,7 +22,7 @@ public class LineController {
         return timer.getTime();
     }
 
-    public int getMessageCount() {
+    int getMessageCount() {
         return messageCount;
     }
 
