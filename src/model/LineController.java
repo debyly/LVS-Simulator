@@ -1,7 +1,4 @@
 package model;
-
-import javafx.concurrent.Worker;
-
 import java.util.HashMap;
 
 import static model.LVS.LineState.*;
@@ -46,11 +43,8 @@ public class LineController {
             case BLOCKED:
                 denial();
                 break;
-            //Нормальная работа
-            default:
-                normalWork();
-                break;
         }
+        normalWork();
     }
 
     private void failure(){
@@ -58,15 +52,6 @@ public class LineController {
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
         messageCount += 13;
-    }
-
-    private void normalWork(){
-        timer.addTime(COMMAND);
-        timer.addTime(WORD);
-        timer.addTime(PAUSE_BEFORE_ANSWER);
-        timer.addTime(ANSWER);
-        messageCount += 14;
-        line.setState(A_WORKING);
     }
 
     private void denial(){
@@ -86,6 +71,15 @@ public class LineController {
         timer.addTime(ANSWER);
         timer.addTime(PAUSE_IF_BUSY);
         messageCount += 14;
+    }
+
+    private void normalWork(){
+        timer.addTime(COMMAND);
+        timer.addTime(WORD);
+        timer.addTime(PAUSE_BEFORE_ANSWER);
+        timer.addTime(ANSWER);
+        messageCount += 14;
+        line.setState(A_WORKING);
     }
 
     void findGenerator(){

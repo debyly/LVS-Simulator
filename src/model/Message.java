@@ -1,7 +1,6 @@
 package model;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class Message {
 
