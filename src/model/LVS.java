@@ -2,117 +2,87 @@ package model;
 
 import java.util.HashMap;
 
-import static model.LVS.LineState.A_GENERATION;
-import static model.OU.State.*;
-
 public class LVS {
-    private HashMap<Integer,OU> clients;
-    private TimeController ctrl;
 
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
     class Line {
 
         LineState state = LineState.A_WORKING;
-
         LineState getState() {
             return state;
         }
-
         void setState(LineState state) {
             this.state = state;
         }
     }
-
+    private Integer clientsAmount;
+    private HashMap<Integer, TerminalDevice> clients = new HashMap<>();
     private Line line = new Line();
-
-    public TimeController getTimeCtrl() {
-        return ctrl;
+    private LineController lineController = new LineController(clients, line);
+    public LineController getLineCtrl() {
+        return lineController;
     }
 
-    public LVS()
+    public LVS(int clientsAmount)
     {
-        ctrl = new TimeController();
-        clients = new HashMap<>();
-
-        for (int i = 0; i < 18; i++) clients.put(i, new OU());
+        this.clientsAmount = clientsAmount;
+        for (int i = 0; i < this.clientsAmount; i++)
+            clients.put(i, new TerminalDevice());
     }
 
-
-
-    public int[][] working_20000(){
+    public int[][] simulateX(int multiplier, int sessions){
 
         int[][] output = new int[20][6];
 
-        for (int i = 0; i < 20; i++)
-            output[i] = working_1000();
+        for (int i = 0; i < multiplier; i++){
 
+            output[i][4] = lineController.getTime();
+
+            for (int j = 0; j < sessions; j++)
+                basework(output[i]);
+
+            output[i][5] = lineController.getTime();
+
+        }
         return output;
-
     }
 
-    private int[] working_1000(){
-        int[] flt = new int[6];
-        flt[4] = ctrl.getTime();
-        for (int i = 0; i < 55; i++){
-            working_18(flt);
+    private void basework(int[] flt){
+
+        //================= Симуляция работы =====================
+        for(int i = 0; i < clientsAmount; i++)
+            clients.get(i).process();
+
+        //================= Подсчёт ошибок =====================
+        for(int i = 0; i < clientsAmount; i++) {
+
+            switch (clients.get(i).state){
+                case BUSY:
+                    flt[3]++;
+                    break;
+                case FAILURE:
+                    flt[2]++;
+                    break;
+                case DENIAL:
+                    flt[1]++;
+                    break;
+                case GENERATOR:
+                    line.setState(LineState.A_GENERATION);
+                    flt[0]++;
+                    break;
+                default:
+                    break;
+            }
         }
-        flt[5] = ctrl.getTime();
-        return flt;
-
-    }
-
-    private void working_18(int[] flt){
-        //================= Случайное возникновение неполадок =====================
-        for(int i = 0; i < 18; i++) {
-            if (clients.get(i).state == DENIAL) flt[1]--;
-            clients.get(i).Fault();
-            if (clients.get(i).state == GENERATOR) {
-
-                line.setState(A_GENERATION);
-
-                flt[0]++;
-            }
-            if (clients.get(i).state == DENIAL) {
-                flt[1]++;
-            }
-            if (clients.get(i).state == FAILURE) {
-                flt[2]++;
-            }
-            if (clients.get(i).state == BUSY) {
-                flt[3]++;
-            }
-
-        }
-        //=========================================================================
-
         //===== Действия при генерации ======
-        if (line.getState() == A_GENERATION){
-            ctrl.findGenerator(clients, line);
+        if (line.getState() == LineState.A_GENERATION)
+            lineController.findGenerator();
+
+        //====== Запуск действия контроллера =======
+        for (int i = 0; i < clientsAmount; i++){
+            lineController.reactOn(clients.get(i));
         }
-        //===================================
 
-
-        for (int i = 0; i < 18; i++){
-            //====================== Действия при определенных неполадках ============================
-            // Сбой
-            if (clients.get(i).state == FAILURE){
-                ctrl.Failure();
-                clients.get(i).chState(WORKING);
-            }
-            // Абонент занят
-            if (clients.get(i).state == BUSY){
-                ctrl.Busy();
-                clients.get(i).chState(WORKING);
-            }
-            // Отказ или блокировка ОУ
-            if ((clients.get(i).state == DENIAL) || (clients.get(i).state == BLOCKED)){
-                ctrl.Denial(line);
-            }
-            //========================================================================================
-
-            //Нормальная работа
-            ctrl.NormalWork(line);
-        }
     }
 }
 

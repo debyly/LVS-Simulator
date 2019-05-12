@@ -36,8 +36,8 @@ public class MainScreen {
 
 
 
-        LVS lvs = new LVS();
-        int[][] output = lvs.working_20000();
+        LVS lvs = new LVS(18);
+        int[][] output = lvs.simulateX(20,55);
 
         consoletext.setText("");
         textflow.getChildren().remove(0);
@@ -54,7 +54,7 @@ public class MainScreen {
             consoletext.setText(consoletext.getText() + str);
         }
 
-        consoletext.setText("TOTAL TIME: " + lvs.getTimeCtrl().getTime() + consoletext.getText());
+        consoletext.setText("TOTAL TIME: " + lvs.getLineCtrl().getTime() + consoletext.getText());
 
         textflow.getChildren().add(consoletext);
     }

@@ -3,12 +3,20 @@ package model;
 import java.util.HashMap;
 
 import static model.LVS.LineState.*;
-import static model.OU.State.*;
+import static model.TerminalDevice.State.*;
 import static model.TimeCounter.TimeType.*;
 
-public class TimeController {
+public class LineController {
     private TimeCounter timer = new TimeCounter();
+    private HashMap<Integer, TerminalDevice> clients;
+    private LVS.Line line;
     private int messageCount = 0;
+
+    LineController(HashMap<Integer, TerminalDevice> clients, LVS.Line line){
+
+        this.clients = clients;
+        this.line = line;
+    }
 
     public int getTime(){
         return timer.getTime();
@@ -18,14 +26,40 @@ public class TimeController {
         return messageCount;
     }
 
-    void Failure(){
+    //======= Действия при определенных неполадках ============
+    void reactOn(TerminalDevice td){
+        switch (td.state){
+            // Абонент занят
+            case BUSY:
+                busy();
+                td.restore();
+                break;
+            // Сбой
+            case FAILURE:
+                failure();
+                td.restore();
+                break;
+            // Отказ или блокировка ОУ
+            case DENIAL:
+            case BLOCKED:
+                denial();
+                td.restore();
+                break;
+            //Нормальная работа
+            default:
+                normalWork();
+                break;
+        }
+    }
+
+    private void failure(){
         timer.addTime(COMMAND);
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
         messageCount += 13;
     }
 
-    void NormalWork(LVS.Line line){
+    private void normalWork(){
         timer.addTime(COMMAND);
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
@@ -34,7 +68,7 @@ public class TimeController {
         line.setState(A_WORKING);
     }
 
-    void Denial (LVS.Line line){
+    private void denial(){
         for (int i = 0; i < 2; i++){
             timer.addTime(COMMAND);
             timer.addTime(WORD);
@@ -44,7 +78,7 @@ public class TimeController {
         line.setState(B_WORKING);
     }
 
-    void Busy(){
+    private void busy(){
         timer.addTime(COMMAND);
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
@@ -53,7 +87,7 @@ public class TimeController {
         messageCount += 14;
     }
 
-    void findGenerator(HashMap<Integer, OU> clients, LVS.Line line){
+    void findGenerator(){
 
         // ================ Тест МКО ====================
         for(int i = 0; i < 18; i++){
@@ -94,7 +128,7 @@ public class TimeController {
 
                 line.setState(A_WORKING);
 
-                //========================= Опрос текущего ОУ ===============================
+                //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 messageCount += 1;
@@ -103,7 +137,7 @@ public class TimeController {
                     timer.addTime(ANSWER);
                     messageCount += 1;
                 }
-                //===========================================================================
+                //==================================================
 
                 else {
                     //======== Опрос предыдущего ОУ ==========
@@ -128,7 +162,7 @@ public class TimeController {
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                clients.get(i).chState(WORKING);
+                clients.get(i).restore();
                 messageCount += 2;
             //==============================================
             }

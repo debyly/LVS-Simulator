@@ -6,6 +6,7 @@ public class TimeCounter {
 
     private int total_time = 0;
     private HashMap<TimeType,Integer> time_types = new HashMap<>();
+
     public enum TimeType {WORD, COMMAND, ANSWER, BLOCK, UNBLOCK,
         PAUSE_IF_BUSY, PAUSE_BEFORE_ANSWER, PAUSE_BETWEEN_MESSAGES}
 
