@@ -2,127 +2,139 @@ package model;
 
 import java.util.HashMap;
 
-public class TimeController {
-    TimeCounter timer;
-    int msgcnt;
+import static model.LVS.LineState.*;
+import static model.OU.State.*;
+import static model.TimeCounter.TimeType.*;
 
-    TimeController(){
-        timer = new TimeCounter();
-        msgcnt = 0;
-    }
+public class TimeController {
+    private TimeCounter timer = new TimeCounter();
+    private int messageCount = 0;
 
     public int getTime(){
         return timer.getTime();
     }
-    public int getMsgcnt(){ return msgcnt; }
 
-    public void Failure(){
-        timer.addTime("command");
-        timer.addTime("word");
-        timer.addTime("pause_before_answer");
-        msgcnt += 13;
+    public int getMessageCount() {
+        return messageCount;
     }
 
-    public void Denial(LineStat ls){
+    void Failure(){
+        timer.addTime(COMMAND);
+        timer.addTime(WORD);
+        timer.addTime(PAUSE_BEFORE_ANSWER);
+        messageCount += 13;
+    }
+
+    void NormalWork(LVS.Line line){
+        timer.addTime(COMMAND);
+        timer.addTime(WORD);
+        timer.addTime(PAUSE_BEFORE_ANSWER);
+        timer.addTime(ANSWER);
+        messageCount += 14;
+        line.setState(A_WORKING);
+    }
+
+    void Denial (LVS.Line line){
         for (int i = 0; i < 2; i++){
-            timer.addTime("command");
-            timer.addTime("word");
-            timer.addTime("pause_before_answer");
-            msgcnt += 13;
+            timer.addTime(COMMAND);
+            timer.addTime(WORD);
+            timer.addTime(PAUSE_BEFORE_ANSWER);
+            messageCount += 13;
         }
-        ls.line = "B";
-        ls.status = "working";
+        line.setState(B_WORKING);
     }
 
-    public void Busy(){
-        timer.addTime("command");
-        timer.addTime("word");
-        timer.addTime("pause_before_answer");
-        timer.addTime("answer");
-        timer.addTime("pause_if_busy");
-        msgcnt += 14;
+    void Busy(){
+        timer.addTime(COMMAND);
+        timer.addTime(WORD);
+        timer.addTime(PAUSE_BEFORE_ANSWER);
+        timer.addTime(ANSWER);
+        timer.addTime(PAUSE_IF_BUSY);
+        messageCount += 14;
     }
 
-    public void NormalWork(LineStat ls){
-        timer.addTime("command");
-        timer.addTime("word");
-        timer.addTime("pause_before_answer");
-        timer.addTime("answer");
-        ls.line = "A";
-        ls.status = "working";
-        msgcnt +=14;
-    }
+    void findGenerator(HashMap<Integer, OU> clients, LVS.Line line){
 
-
-    public void findGenerator(HashMap<Integer, OU> clients, LineStat ls){
         // ================ Тест МКО ====================
         for(int i = 0; i < 18; i++){
-            timer.addTime("command");
-            timer.addTime("pause_before_answer");
-            msgcnt += 1;
+            timer.addTime(COMMAND);
+            timer.addTime(PAUSE_BEFORE_ANSWER);
+
+            messageCount += 1;
         }
         //================================================
 
         //=============== Блокировка всех ОУ =============
-        ls.line = "B";
-        ls.status = "working";
+        line.setState(B_WORKING);
             for(int i = 0; i < 18; i++) {
-                timer.addTime("block");
-                timer.addTime("pause_before_answer");
-                timer.addTime("answer");
-                clients.get(i).chState("blocked");
-                msgcnt += 2;
+
+                timer.addTime(BLOCK);
+                timer.addTime(PAUSE_BEFORE_ANSWER);
+                timer.addTime(ANSWER);
+
+                clients.get(i).chState(BLOCKED);
+
+                messageCount += 2;
             }
         //==================================================
             int i = 0;
-            do{
-                ls.line = "B";
-                ls.status = "working";
+            boolean repairing = true;
+
+            while (repairing){
+
+                line.setState(B_WORKING);
+
                 //======= Разблокировка одного ОУ ==========
                 i++;
-                timer.addTime("unblock");
-                timer.addTime("pause_before_answer");
-                timer.addTime("answer");
-                clients.get(i).chState("working");
-                msgcnt += 2;
+                timer.addTime(UNBLOCK);
+                timer.addTime(PAUSE_BEFORE_ANSWER);
+                timer.addTime(ANSWER);
+
+                clients.get(i).chState(WORKING);
+
+                messageCount += 2;
                 //===========================================
-                ls.line = "A";
-                ls.status = "working";
+
+                line.setState(A_WORKING);
+
                 //========================= Опрос текущего ОУ ===============================
-                timer.addTime("command");
-                timer.addTime("pause_before_answer");
-                msgcnt += 1;
-                if(!(clients.get(i).state.equals("generator"))) {timer.addTime("answer"); msgcnt += 1; }
+                timer.addTime(COMMAND);
+                timer.addTime(PAUSE_BEFORE_ANSWER);
+                messageCount += 1;
+
+                if(!(clients.get(i).state == GENERATOR)) {
+                    timer.addTime(ANSWER);
+                    messageCount += 1;
+                }
                 //===========================================================================
+
                 else {
                     //======== Опрос предыдущего ОУ ==========
-                    timer.addTime("command");
-                    timer.addTime("pause_before_answer");
-                    msgcnt += 1;
+                    timer.addTime(COMMAND);
+                    timer.addTime(PAUSE_BEFORE_ANSWER);
+                    messageCount += 1;
                     //========================================
-                    ls.line = "B";
-                    ls.status = "working";
+                    line.setState(B_WORKING);
                     //====== Блокируем генерящий элемент ======
-                    timer.addTime("block");
-                    timer.addTime("pause_before_answer");
-                    timer.addTime("answer");
-                    clients.get(i).chState("blocked");
-                    msgcnt += 2;
+                    timer.addTime(BLOCK);
+                    timer.addTime(PAUSE_BEFORE_ANSWER);
+                    timer.addTime(ANSWER);
+                    clients.get(i).chState(BLOCKED);
+                    messageCount += 2;
                     //=========================================
-                    break;
+                    repairing = false;
                 }
-            }while(true);
+            }
             i++;
             //===== Разблокировка ОУ после генерящего =====
             for(; i< 18; i++ ){
-                timer.addTime("unblock");
-                timer.addTime("pause_before_answer");
-                timer.addTime("answer");
-                clients.get(i).chState("working");
-                msgcnt += 2;
+                timer.addTime(UNBLOCK);
+                timer.addTime(PAUSE_BEFORE_ANSWER);
+                timer.addTime(ANSWER);
+                clients.get(i).chState(WORKING);
+                messageCount += 2;
             //==============================================
             }
-        ls.line = "A";
-        ls.status = "working";
+        line.setState(A_WORKING);
     }
 }

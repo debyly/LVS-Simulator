@@ -4,31 +4,28 @@ import java.util.HashMap;
 
 public class TimeCounter {
 
-
-    int total_time;
-    HashMap<String,Integer> time_types;
+    private int total_time = 0;
+    private HashMap<TimeType,Integer> time_types = new HashMap<>();
+    public enum TimeType {WORD, COMMAND, ANSWER, BLOCK, UNBLOCK,
+        PAUSE_IF_BUSY, PAUSE_BEFORE_ANSWER, PAUSE_BETWEEN_MESSAGES}
 
     TimeCounter()
     {
-        time_types = new HashMap<>();
-        total_time = 0;
-        time_types.put("pause_if_busy", 5000);
-        time_types.put("command", 20);
-        time_types.put("pause_before_answer", 12);
-        time_types.put("word", 12*20);
-        time_types.put("block", 20);
-        time_types.put("unblock", 20);
-        time_types.put("pause_between_messages", 1000);
-        time_types.put("answer", 20);
+        time_types.put(TimeType.PAUSE_IF_BUSY, 5000);
+        time_types.put(TimeType.COMMAND, 20);
+        time_types.put(TimeType.PAUSE_BEFORE_ANSWER, 12);
+        time_types.put(TimeType.WORD, 12*20);
+        time_types.put(TimeType.BLOCK, 20);
+        time_types.put(TimeType.UNBLOCK, 20);
+        time_types.put(TimeType.PAUSE_BETWEEN_MESSAGES, 1000);
+        time_types.put(TimeType.ANSWER, 20);
     }
 
-    public void addTime(String type)
-    {
+    void addTime(TimeType type) {
         total_time += time_types.get(type);
     }
 
-    public int getTime()
-    {
+    int getTime() {
         return total_time;
     }
 }

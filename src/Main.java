@@ -3,8 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import view.MainScreen;
+//import view.MainScreen;
 
 public class Main extends Application {
 
@@ -17,7 +16,7 @@ public class Main extends Application {
         String mainfxml = "view/MainScreen.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
         Parent root = loader.load();
-        MainScreen MSController = loader.getController();
+        //MainScreen MSController = loader.getController();
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

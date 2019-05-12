@@ -1,67 +1,48 @@
 package model;
 
-import java.util.HashMap;
 import java.util.Random;
 
-public class OU {
+import static model.OU.State.*;
 
-    HashMap<String,String> states;
-    public String state;
-    String my_buf;
+class OU {
 
-    OU()
-    {
-        states = new HashMap<>();
-        states.put("working","working");
-        states.put("not_working","not_working");
-        states.put("blocked", "blocked");
-        states.put("busy", "busy");
-        states.put("failure", "failure");
-        states.put("denial", "denial");
-        states.put("generator", "generator");
+    public enum State{WORKING, NOT_WORKING, BLOCKED,
+        BUSY, FAILURE, DENIAL, GENERATOR}
+    State state = WORKING;
+    private State my_buf = NOT_WORKING;
 
-        state = states.get("working");
-        my_buf = "";
-    }
+    void chState(State st){
+        if (st == WORKING) state = my_buf;
 
-    public String lookStatus(){
-        return  state;
-    }
-
-    public void chState(String st){
-        if (st.equals("working")){
-            state = my_buf;
-        }
         else{
             my_buf = state;
-            state = states.get(st);
+            state = st;
         }
     }
 
-    public void Fault(){
+    void Fault(){
         Random rand = new Random();
-        if (!((state.equals("blocked")) || ( state.equals("denial")))){
+        if ((state != BLOCKED) && ( state != DENIAL)){
             int gen = rand.nextInt() % 20000;
+
             if (gen == 0) {
-                state = "generator";
+                state = GENERATOR;
                 return;
             }
             int den = rand.nextInt() % 5000;
             if (den == 0) {
-                state = "denial";
+                state = DENIAL;
                 return;
             }
             int fail = rand.nextInt() % 2000;
             if (fail == 0) {
-                state = "failure";
+                state = FAILURE;
                 return;
             }
             int busy = rand.nextInt() % 2000;
             if (busy == 0) {
-                state = "busy";
-                return;
+                state = BUSY;
             }
         }
     }
-
 }

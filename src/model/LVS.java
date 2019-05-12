@@ -2,11 +2,28 @@ package model;
 
 import java.util.HashMap;
 
+import static model.LVS.LineState.A_GENERATION;
+import static model.OU.State.*;
+
 public class LVS {
     private HashMap<Integer,OU> clients;
     private TimeController ctrl;
-    private LineStat ls;
 
+    public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
+    class Line {
+
+        LineState state = LineState.A_WORKING;
+
+        LineState getState() {
+            return state;
+        }
+
+        void setState(LineState state) {
+            this.state = state;
+        }
+    }
+
+    private Line line = new Line();
 
     public TimeController getTimeCtrl() {
         return ctrl;
@@ -16,7 +33,6 @@ public class LVS {
     {
         ctrl = new TimeController();
         clients = new HashMap<>();
-        ls = new LineStat();
 
         for (int i = 0; i < 18; i++) clients.put(i, new OU());
     }
@@ -27,15 +43,14 @@ public class LVS {
 
         int[][] output = new int[20][6];
 
-        for (int i = 0; i < 20; i++){
+        for (int i = 0; i < 20; i++)
             output[i] = working_1000();
-        }
 
         return output;
 
     }
 
-    public  int[] working_1000(){
+    private int[] working_1000(){
         int[] flt = new int[6];
         flt[4] = ctrl.getTime();
         for (int i = 0; i < 55; i++){
@@ -46,22 +61,22 @@ public class LVS {
 
     }
 
-    public void working_18(int[] flt){
+    private void working_18(int[] flt){
         //================= Случайное возникновение неполадок =====================
         for(int i = 0; i < 18; i++) {
-            if (clients.get(i).state.equals("denial")) flt[1]--;
+            if (clients.get(i).state == DENIAL) flt[1]--;
             clients.get(i).Fault();
-            if (clients.get(i).state.equals("generator")) {
-                ls.status = "generation";
+            if (clients.get(i).state == GENERATOR) {
+                line.setState(A_GENERATION);
                 flt[0]++;
             }
-            if (clients.get(i).state.equals("denial")) {
+            if (clients.get(i).state == DENIAL) {
                 flt[1]++;
             }
-            if (clients.get(i).state.equals("failure")) {
+            if (clients.get(i).state == FAILURE) {
                 flt[2]++;
             }
-            if (clients.get(i).state.equals("busy")) {
+            if (clients.get(i).state == BUSY) {
                 flt[3]++;
             }
 
@@ -69,8 +84,8 @@ public class LVS {
         //=========================================================================
 
         //===== Действия при генерации ======
-        if (ls.status.equals("generation")){
-            ctrl.findGenerator(clients, ls);
+        if (line.getState() == A_GENERATION){
+            ctrl.findGenerator(clients, line);
         }
         //===================================
 
@@ -78,23 +93,23 @@ public class LVS {
         for (int i = 0; i < 18; i++){
             //====================== Действия при определенных неполадках ============================
             // Сбой
-            if (clients.get(i).state.equals("failure")){
+            if (clients.get(i).state == FAILURE){
                 ctrl.Failure();
-                clients.get(i).chState("working");
+                clients.get(i).chState(WORKING);
             }
             // Абонент занят
-            if (clients.get(i).state.equals("busy")){
+            if (clients.get(i).state == BUSY){
                 ctrl.Busy();
-                clients.get(i).chState("working");
+                clients.get(i).chState(WORKING);
             }
             // Отказ или блокировка ОУ
-            if ((clients.get(i).state.equals("denial")) || (clients.get(i).state.equals("blocked"))){
-                ctrl.Denial(ls);
+            if ((clients.get(i).state == DENIAL) || (clients.get(i).state == BLOCKED)){
+                ctrl.Denial(line);
             }
             //========================================================================================
 
             //Нормальная работа
-            ctrl.NormalWork(ls);
+            ctrl.NormalWork(line);
         }
     }
 }
