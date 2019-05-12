@@ -1,5 +1,7 @@
 package model;
 
+import javafx.concurrent.Worker;
+
 import java.util.HashMap;
 
 import static model.LVS.LineState.*;
@@ -28,16 +30,16 @@ public class LineController {
 
     //======= Действия при определенных неполадках ============
     void reactOn(TerminalDevice td){
-        switch (td.state){
+        switch (td.getState()){
             // Абонент занят
             case BUSY:
                 busy();
-                td.restore();
+                td.changeState(WORKING);
                 break;
             // Сбой
             case FAILURE:
                 failure();
-                td.restore();
+                td.changeState(WORKING);
                 break;
             // Отказ или блокировка ОУ
             case DENIAL:
@@ -133,7 +135,7 @@ public class LineController {
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 messageCount += 1;
 
-                if(!(clients.get(i).state == GENERATOR)) {
+                if(!(clients.get(i).getState() == GENERATOR)) {
                     timer.addTime(ANSWER);
                     messageCount += 1;
                 }
@@ -163,7 +165,7 @@ public class LineController {
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                clients.get(i).restore();
+                clients.get(i).changeState(WORKING);
                 messageCount += 2;
             //==============================================
             }

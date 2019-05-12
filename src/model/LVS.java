@@ -52,12 +52,12 @@ public class LVS {
 
         //================= Симуляция работы =====================
         for(int i = 0; i < clientsAmount; i++) {
-            if (clients.get(i).state == DENIAL) flt[1]--;
+            if (clients.get(i).getState() == DENIAL) flt[1]--;
             clients.get(i).process();
         }
         //================= Подсчёт ошибок =====================
         for(int i = 0; i < clientsAmount; i++) {
-            switch (clients.get(i).state){
+            switch (clients.get(i).getState()){
                 case BUSY:
                     flt[3]++;
                     break;

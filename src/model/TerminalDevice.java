@@ -10,10 +10,14 @@ public class TerminalDevice {
     public enum DeviceState {WORKING, BLOCKED,
         BUSY, FAILURE, DENIAL, GENERATOR}
 
-    DeviceState state = WORKING;
-    DeviceState my_buf;
+    private DeviceState state = WORKING;
+    private DeviceState my_buf;
 
     private Map<DeviceState, Integer> chances;
+
+    DeviceState getState() {
+        return state;
+    }
 
     TerminalDevice(Map<DeviceState, Integer> probMap){
 
@@ -28,11 +32,6 @@ public class TerminalDevice {
             my_buf = state;
             state = st;
         }
-    }
-
-    void restore(){
-
-        changeState(WORKING);
     }
 
     void process(){
