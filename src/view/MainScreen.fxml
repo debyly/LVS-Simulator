@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-          prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="view.MainScreen">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-    </rowConstraints>
-    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="24.0" GridPane.halignment="CENTER"
-          GridPane.valignment="CENTER">
-        <padding>
-            <Insets top="10.0"/>
-        </padding>
-        <Button fx:id="btnstart" mnemonicParsing="false" onAction="#handleStart" prefHeight="60.0" prefWidth="129.0"
-                text="Start Program"/>
-        <Button fx:id="btnclear" mnemonicParsing="false" onAction="#handleClear" prefHeight="37.0" prefWidth="127.0"
-                text="Clear Console"/>
-    </VBox>
-    <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-        <TextFlow fx:id="textflow" maxHeight="1.7976931348623157E308" maxWidth="290.0" prefHeight="200.0"
-                  prefWidth="290.0"/>
-    </ScrollPane>
-</GridPane>
+
+<AnchorPane prefHeight="462.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
+   <children>
+      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="62.0" layoutY="288.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
+      <Text layoutX="97.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="62.0" layoutY="330.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="62.0" layoutY="350.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="62.0" layoutY="370.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="62.0" layoutY="390.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="62.0" layoutY="410.0" stroke="BLACK" strokeType="INSIDE" width="12.0" />
+      <Text layoutX="84.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Выключен" />
+      <Text layoutX="84.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Работает" />
+      <Text layoutX="83.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Сбой" />
+      <Text layoutX="83.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Отказ в работе" />
+      <Text layoutX="83.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Генерация" />
+      <TextArea layoutX="228.0" layoutY="289.0" prefHeight="147.0" prefWidth="401.0" promptText="Консоль&gt; Статистика работы симуляции" />
+      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="31.0" layoutX="384.0" layoutY="17.0" stroke="#d9d9d9" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="175.0" />
+      <Text layoutX="394.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Все ОУ работают" textAlignment="CENTER">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Text>
+      <ToggleButton layoutX="574.0" layoutY="17.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Включить ЛВС" />
+      <Separator layoutX="4.0" layoutY="269.0" prefHeight="12.0" prefWidth="691.0" />
+      <Button layoutX="24.0" layoutY="17.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="96.0" text="Обход" />
+      <Button layoutX="129.0" layoutY="17.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="106.0" text="Сменить линию" />
+      <Button layoutX="244.0" layoutY="17.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="106.0" text="Тестирование" />
+   </children>
+</AnchorPane>
