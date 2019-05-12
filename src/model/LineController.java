@@ -1,4 +1,7 @@
 package model;
+import model.TerminalDevice.DeviceState;
+import model.TimeCounter.TimeType;
+
 import java.util.HashMap;
 
 import static model.LVS.LineState.*;
@@ -101,7 +104,7 @@ public class LineController {
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
 
-                clients.get(i).changeState(BLOCKED);
+                clients.get(i).changeState(DeviceState.BLOCKED);
 
                 messageCount += 2;
             }
@@ -117,7 +120,7 @@ public class LineController {
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
 
-                clients.get(i).changeState(WORKING);
+                clients.get(i).changeState(UNBLOCKING);
 
                 messageCount += 2;
                 //===========================================

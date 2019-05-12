@@ -7,16 +7,20 @@ import static model.TerminalDevice.DeviceState.*;
 
 public class TerminalDevice {
 
-    public enum DeviceState {WORKING, BLOCKED,
+    public enum DeviceState {WORKING, BLOCKED, UNBLOCKING,
         BUSY, FAILURE, DENIAL, GENERATOR}
 
     private DeviceState state = WORKING;
-    private DeviceState my_buf;
+    private DeviceState previousState;
 
     private Map<DeviceState, Integer> chances;
 
     DeviceState getState() {
         return state;
+    }
+
+    DeviceState getPreviousState() {
+        return previousState;
     }
 
     TerminalDevice(Map<DeviceState, Integer> probMap){
@@ -25,11 +29,11 @@ public class TerminalDevice {
     }
 
     void changeState(DeviceState st){
-        if (st == WORKING){
-            state = my_buf;
+        if (st == UNBLOCKING){
+            state = previousState;
         }
         else{
-            my_buf = state;
+            previousState = state;
             state = st;
         }
     }

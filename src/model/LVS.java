@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static model.TerminalDevice.DeviceState.DENIAL;
+import static model.TerminalDevice.DeviceState.WORKING;
 
 public class LVS {
 
@@ -65,6 +66,7 @@ public class LVS {
                     flt[2]++;
                     break;
                 case DENIAL:
+                    if (clients.get(i).getPreviousState() == WORKING)
                     flt[1]++;
                     break;
                 case GENERATOR:
