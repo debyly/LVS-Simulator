@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
-import model.LVS;
 import model.Tester;
 
 import java.util.HashMap;

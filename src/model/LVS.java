@@ -42,10 +42,9 @@ public class LVS {
     public void basework(int[] statistics){
 
         //================= Симуляция работы =====================
-        for(int i = 0; i < clientsAmount; i++) {
-            if (clients.get(i).getState() == DENIAL) statistics[1]--;
+        for(int i = 0; i < clientsAmount; i++)
             clients.get(i).process();
-        }
+
         //================= Подсчёт ошибок =====================
         for(int i = 0; i < clientsAmount; i++) {
             switch (clients.get(i).getState()){
