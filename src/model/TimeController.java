@@ -77,15 +77,12 @@ public class TimeController {
                 messageCount += 2;
             }
         //==================================================
-            int i = 0;
-            boolean repairing = true;
 
-            while (repairing){
+            for (int i = 0; i < 18; i++){
 
                 line.setState(B_WORKING);
 
                 //======= Разблокировка одного ОУ ==========
-                i++;
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
@@ -121,13 +118,13 @@ public class TimeController {
                     timer.addTime(ANSWER);
                     clients.get(i).chState(BLOCKED);
                     messageCount += 2;
-                    //=========================================
-                    repairing = false;
+                    //===================================================================
+                    //======= Остановка после обнаружения генерящего элемента ===========
+                    break;
                 }
             }
-            i++;
             //===== Разблокировка ОУ после генерящего =====
-            for(; i< 18; i++ ){
+            for(int i = 0; i< 18; i++ ){
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);

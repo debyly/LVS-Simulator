@@ -67,7 +67,9 @@ public class LVS {
             if (clients.get(i).state == DENIAL) flt[1]--;
             clients.get(i).Fault();
             if (clients.get(i).state == GENERATOR) {
+
                 line.setState(A_GENERATION);
+
                 flt[0]++;
             }
             if (clients.get(i).state == DENIAL) {
