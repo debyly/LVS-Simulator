@@ -43,6 +43,7 @@ public class LineController {
             case DENIAL:
             case BLOCKED:
                 denial();
+                td.restore();
                 break;
             //Нормальная работа
             default:
@@ -89,7 +90,7 @@ public class LineController {
     void findGenerator(){
 
         // ================ Тест МКО ====================
-        for(int i = 0; i < 18; i++){
+        for(int i = 0; i < clients.size(); i++){
             timer.addTime(COMMAND);
             timer.addTime(PAUSE_BEFORE_ANSWER);
 
@@ -99,7 +100,7 @@ public class LineController {
 
         //=============== Блокировка всех ОУ =============
         line.setState(B_WORKING);
-            for(int i = 0; i < 18; i++) {
+            for(int i = 0; i < clients.size(); i++) {
 
                 timer.addTime(BLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
@@ -111,8 +112,8 @@ public class LineController {
             }
         //==================================================
 
-            int i = 0;
-            do{
+            int lastDevice = 0;
+            for (int i = 0; i < clients.size(); i++){
 
                 line.setState(B_WORKING);
 
@@ -154,16 +155,16 @@ public class LineController {
                     messageCount += 2;
                     //===================================================================
                     //======= Остановка после обнаружения генерящего элемента ===========
+                    lastDevice = i;
                     break;
                 }
-            } while(true);
+            }
             //===== Разблокировка ОУ после генерящего =====
-            i++;
-            for(; i< 18; i++ ){
+            for (int i = lastDevice; i< clients.size(); i++ ){
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                clients.get(i).chState(WORKING);
+                clients.get(i).restore();
                 messageCount += 2;
             //==============================================
             }
