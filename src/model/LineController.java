@@ -160,7 +160,7 @@ public class LineController {
                 }
             }
             //===== Разблокировка ОУ после генерящего =====
-            for (int i = lastDevice; i< clients.size(); i++ ){
+            for (int i = lastDevice + 1; i< clients.size(); i++ ){
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
