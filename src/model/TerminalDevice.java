@@ -31,7 +31,7 @@ public class TerminalDevice {
     }
 
     void restore(){
-        state = WORKING;
+        chState(WORKING);
     }
 
     void process(){

@@ -43,7 +43,6 @@ public class LineController {
             case DENIAL:
             case BLOCKED:
                 denial();
-                td.restore();
                 break;
             //Нормальная работа
             default:

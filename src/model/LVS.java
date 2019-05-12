@@ -3,6 +3,8 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
+import static model.TerminalDevice.DeviceState.DENIAL;
+
 public class LVS {
 
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
@@ -49,12 +51,12 @@ public class LVS {
     private void basework(int[] flt){
 
         //================= Симуляция работы =====================
-        for(int i = 0; i < clientsAmount; i++)
+        for(int i = 0; i < clientsAmount; i++) {
+            if (clients.get(i).state == DENIAL) flt[1]--;
             clients.get(i).process();
-
+        }
         //================= Подсчёт ошибок =====================
         for(int i = 0; i < clientsAmount; i++) {
-
             switch (clients.get(i).state){
                 case BUSY:
                     flt[3]++;
