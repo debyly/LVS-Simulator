@@ -11,6 +11,7 @@ public class TerminalDevice {
         BUSY, FAILURE, DENIAL, GENERATOR}
 
     DeviceState state = WORKING;
+    DeviceState my_buf;
 
     private Map<DeviceState, Integer> chances;
 
@@ -20,7 +21,11 @@ public class TerminalDevice {
     }
 
     void chState(DeviceState st){
-        if (st != WORKING){
+        if (st == WORKING){
+            state = my_buf;
+        }
+        else{
+            my_buf = state;
             state = st;
         }
     }
