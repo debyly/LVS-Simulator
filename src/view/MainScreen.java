@@ -3,6 +3,7 @@ package view;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
@@ -10,13 +11,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.LVS;
-import model.TerminalDevice;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class MainScreen {
@@ -40,21 +39,16 @@ public class MainScreen {
 
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
+    private Stage initStage;
 
-    private Map<TerminalDevice.DeviceState, Integer> chances;
+    public void setInitStage(Stage initStage) {
+        this.initStage = initStage;
+    }
 
     @FXML
     void initialize(){
 
         visualDevices = new ArrayList<>();
-
-        chances = new HashMap<TerminalDevice.DeviceState, Integer>(){{
-
-            put(TerminalDevice.DeviceState.GENERATOR, 20000);
-            put(TerminalDevice.DeviceState.DENIAL, 5000);
-            put(TerminalDevice.DeviceState.FAILURE, 2000);
-            put(TerminalDevice.DeviceState.BUSY, 2000);
-        }};
 
         changeLineButton.setDisable(true);
         execButton.setDisable(true);
@@ -66,10 +60,11 @@ public class MainScreen {
                 lineB.setStroke(Paint.valueOf("#b1b1b1"));
         });
 
-        lvs = new LVS(18, chances);
+    }
+
+    public void drawLVS(){
 
         try {
-
             for (int i = 0; i < lvs.getClientsAmount(); i++){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(i % 2 == 0 ? "DeviceUpper.fxml" : "DeviceLower.fxml"));
                 Node elm = loader.load();
@@ -83,7 +78,14 @@ public class MainScreen {
 
         } catch (IOException e){
 
-            e.printStackTrace();
+            lvs = null;
+            lvsPane.getChildren().clear();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Ошибка инициализации ЛВС");
+            alert.setTitle("Error: внутренняя ошибка");
+            alert.setContentText("Сообщение ошибки:\n" + e.getMessage());
+            alert.initOwner(initStage);
+            alert.showAndWait();
         }
     }
 
@@ -121,5 +123,8 @@ public class MainScreen {
 
     }
 
+    public void createLVS(int clientsAmount, int gen, int den, int fail, int busy){
 
+        lvs = new LVS(clientsAmount, gen, den, fail, busy);
+    }
 }

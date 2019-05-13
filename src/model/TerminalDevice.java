@@ -32,9 +32,9 @@ public class TerminalDevice {
         return previousState;
     }
 
-    TerminalDevice(Map<DeviceState, Integer> probMap){
+    TerminalDevice(Map<DeviceState, Integer> chances){
 
-        chances = probMap;
+        this.chances = chances;
     }
 
     public void changeState(DeviceState st){

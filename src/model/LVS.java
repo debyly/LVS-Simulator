@@ -1,6 +1,9 @@
 package model;
 
+import model.TerminalDevice.DeviceState;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static model.TerminalDevice.DeviceState.WORKING;
@@ -26,8 +29,18 @@ public class LVS {
         return lineController;
     }
 
-    public LVS(int clientsAmount, Map<TerminalDevice.DeviceState, Integer> chances)
+    public LVS(int clientsAmount, int gen, int den, int fail, int busy)
     {
+        Map<DeviceState, Integer> chances
+                = new HashMap<DeviceState, Integer>(){{
+
+            put(DeviceState.GENERATOR, gen);
+            put(DeviceState.DENIAL, den);
+            put(DeviceState.FAILURE, fail);
+            put(DeviceState.BUSY, busy);
+        }};
+
+
         for (int i = 0; i < clientsAmount; i++)
             clients.add(new TerminalDevice(chances));
     }

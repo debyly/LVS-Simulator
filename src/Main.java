@@ -3,7 +3,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.TerminalDevice;
 import view.MainScreen;
+
+import java.util.HashMap;
+
 public class Main extends Application {
 
 
@@ -15,11 +19,15 @@ public class Main extends Application {
         String mainfxml = "view/MainScreen.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
         Parent root = loader.load();
-        MainScreen MSCtrl = loader.getController();
 
         primaryStage.setTitle("Симулятор ЛВС 2000");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
+
+        MainScreen MS = loader.getController();
+        MS.setInitStage(primaryStage);
+        MS.createLVS(18,20000,5000,2000,2000);
+        MS.drawLVS();
         primaryStage.show();
     }
 }

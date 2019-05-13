@@ -7,11 +7,6 @@ import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 import model.Tester;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static model.TerminalDevice.*;
-
 public class TestScreen {
 
     @FXML
@@ -40,20 +35,17 @@ public class TestScreen {
     @FXML
     private void handleStart(){
 
-        Map<DeviceState, Integer> chances = new HashMap<DeviceState, Integer>(){{
-
-            put(DeviceState.GENERATOR, 20000);
-            put(DeviceState.DENIAL, 5000);
-            put(DeviceState.FAILURE, 2000);
-            put(DeviceState.BUSY, 2000);
-        }};
-
         int clientsAmount = 18;
+        int genProb = 20000;
+        int denProb = 5000;
+        int failProb = 2000;
+        int busyProb = 2000;
         int multiplier = 20;
         int sessions = 55;
 
         Pair<int[][],Integer> output
-                = Tester.simulateX(clientsAmount, chances, multiplier, sessions);
+                = Tester.simulateX(clientsAmount, genProb, denProb,
+                failProb, busyProb, multiplier, sessions);
 
         consoletext.setText("");
         textflow.getChildren().remove(0);

@@ -79,6 +79,7 @@ public class VisualDevice {
         state = state.next();
         stateIndicator.setFill(stateColor.get(state));
         tdStateButton.setText(stateAbbr.get(state));
+        tail.setStroke(stateColor.get(state));
     }
 
     void setOff(){
