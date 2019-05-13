@@ -20,7 +20,7 @@ public class TerminalDevice {
         }}
 
     private DeviceState state = WORKING;
-    private DeviceState previousState;
+    private DeviceState previousState = WORKING;
     private boolean real;
 
     private Map<DeviceState, Integer> chances;

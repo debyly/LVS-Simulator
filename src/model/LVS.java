@@ -63,7 +63,6 @@ public class LVS {
 
     public void start(List<Double> statistics) throws InterruptedException {
 
-
         //================= Симуляция работы =====================
         for (TerminalDevice client : clients) {
             client.changeState(client.getState());
@@ -99,8 +98,6 @@ public class LVS {
         //====== Запуск действия контроллера =======
         for (TerminalDevice client : clients)
             lineController.reactOn(client);
-        //====== Запись общего кол-ва сообщений =====
-        statistics.set(4, (double) lineController.getMessageCount());
     }
 }
 

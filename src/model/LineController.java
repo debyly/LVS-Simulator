@@ -16,8 +16,6 @@ public class LineController {
         return netLine.getState();
     }
 
-    private int messageCount = 0;
-
     LineController(boolean real, ArrayList<TerminalDevice> clients, LVS.NetLine netLine){
 
         this.real = real;
@@ -27,10 +25,6 @@ public class LineController {
 
     public int getTime(){
         return timer.getTime();
-    }
-
-    int getMessageCount() {
-        return messageCount;
     }
 
     //======= Действия при определенных неполадках ============
@@ -63,7 +57,6 @@ public class LineController {
                 timer.getTimeMap().get(COMMAND)
                         + timer.getTimeMap().get(WORD)
                         + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
-        messageCount += 13;
     }
 
     private void denial() throws InterruptedException {
@@ -77,7 +70,6 @@ public class LineController {
                             + timer.getTimeMap().get(WORD)
                             + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
 
-            messageCount += 13;
         }
         netLine.setState(B_WORKING);
     }
@@ -96,7 +88,6 @@ public class LineController {
                         + timer.getTimeMap().get(ANSWER)
                         + timer.getTimeMap().get(PAUSE_IF_BUSY));
 
-        messageCount += 14;
     }
 
     private void normalWork() throws InterruptedException {
@@ -111,7 +102,6 @@ public class LineController {
                         + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
                         + timer.getTimeMap().get(ANSWER));
 
-        messageCount += 14;
         netLine.setState(A_WORKING);
     }
 
@@ -126,7 +116,6 @@ public class LineController {
                     timer.getTimeMap().get(COMMAND)
                             + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
 
-            messageCount += 1;
         }
         //================================================
 
@@ -145,7 +134,6 @@ public class LineController {
 
             client.changeState(BLOCKED);
 
-            messageCount += 2;
         }
         //==================================================
             int lastDevice = 0;
@@ -165,7 +153,6 @@ public class LineController {
 
                 clients.get(i).changeState(UNBLOCKING);
 
-                messageCount += 2;
                 //===========================================
 
                 netLine.setState(A_WORKING);
@@ -178,15 +165,12 @@ public class LineController {
                         timer.getTimeMap().get(COMMAND)
                                 + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
 
-                messageCount += 1;
-
                 if(!(clients.get(i).getState() == GENERATOR)) {
 
                     timer.addTime(ANSWER);
                     if (real) Thread.sleep(
                             timer.getTimeMap().get(ANSWER));
 
-                    messageCount += 1;
                 }
                 //==================================================
 
@@ -199,7 +183,6 @@ public class LineController {
                             timer.getTimeMap().get(COMMAND)
                                     + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
 
-                    messageCount += 1;
                     //========================================
                     netLine.setState(B_WORKING);
                     //====== Блокируем генерящий элемент ======
@@ -213,7 +196,6 @@ public class LineController {
                                     + timer.getTimeMap().get(ANSWER));
 
                     clients.get(i).changeState(BLOCKED);
-                    messageCount += 2;
                     //===================================================================
                     //======= Остановка после обнаружения генерящего элемента ===========
                     lastDevice = i;
@@ -233,8 +215,7 @@ public class LineController {
                                 + timer.getTimeMap().get(ANSWER));
 
                 clients.get(i).changeState(WORKING);
-                messageCount += 2;
-            //==============================================
+                //==============================================
             }
         netLine.setState(A_WORKING);
     }

@@ -13,6 +13,7 @@ public class MyRandom {
         return a*b / gcd(a,b);
     }
 
+
     public static ArrayList<Byte> getRoulette(
             int clients, int sessions, int multiplier, int gen, int den, int fail, int busy){
 
