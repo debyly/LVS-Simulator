@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TestScreen">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.66668701171875" minWidth="10.0" prefWidth="387.66668701171875" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.66668701171875" minWidth="10.0" prefWidth="292.33331298828125" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+        <TextFlow fx:id="textflow" maxHeight="1.7976931348623157E308" maxWidth="301.0" prefHeight="200.0" prefWidth="301.0">
+         <children>
+             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="24.0">
+                 <padding>
+                     <Insets top="10.0" />
+                 </padding>
+             </VBox>
+         </children></TextFlow>
+    </ScrollPane>
+   <Pane prefHeight="500.0" prefWidth="401.0">
+      <children>
+           <Button fx:id="btnstart" layoutX="236.0" layoutY="402.0" mnemonicParsing="false" onAction="#handleStart" prefHeight="25.0" prefWidth="127.0" text="Запуск теста" />
+           <Button fx:id="btnclear" layoutX="236.0" layoutY="439.0" mnemonicParsing="false" onAction="#handleClear" prefHeight="25.0" prefWidth="127.0" text="Очистить консоль" />
+         <TextField layoutX="157.0" layoutY="118.0" prefHeight="25.0" prefWidth="79.0" text="18" />
+         <TextField layoutX="157.0" layoutY="149.0" prefHeight="25.0" prefWidth="79.0" text="20000" />
+         <TextField layoutX="32.0" layoutY="260.0" prefHeight="25.0" prefWidth="79.0" promptText="Ошибка" />
+         <TextField layoutX="115.0" layoutY="260.0" prefHeight="25.0" prefWidth="79.0" promptText="Сбой" />
+         <Label layoutX="32.0" layoutY="122.0" text="Количество ОУ" />
+         <Label layoutX="32.0" layoutY="153.0" text="Кол-во сообщений" />
+         <Label layoutX="31.0" layoutY="186.0" text="Количество таблиц" />
+         <TextField layoutX="157.0" layoutY="182.0" prefHeight="25.0" prefWidth="79.0" text="50" />
+         <Label layoutX="19.0" layoutY="233.0" text="Вероятности:" />
+         <TextField layoutX="198.0" layoutY="260.0" prefHeight="25.0" prefWidth="79.0" promptText="Занят" />
+         <TextField layoutX="282.0" layoutY="260.0" prefHeight="25.0" prefWidth="79.0" promptText="Генерация" />
+         <Button layoutX="14.0" layoutY="23.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="32.0" prefWidth="62.0" text="Сменить">
+            <font>
+               <Font name="Calibri" size="12.0" />
+            </font>
+         </Button>
+         <Text fill="#989898" layoutX="87.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   т е с т и р о в а н и я">
+            <font>
+               <Font name="Calibri" size="18.0" />
+            </font>
+         </Text>
+         <Label layoutX="9.0" layoutY="87.0" text="Основные параметры" />
+      </children>
+   </Pane>
+</GridPane>

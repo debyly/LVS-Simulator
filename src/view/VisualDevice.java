@@ -67,7 +67,7 @@ public class VisualDevice {
         tail.setStroke(Paint.valueOf("#b1b1b1"));
     }
 
-    void setTerminalDevice(int number, TerminalDevice td){
+    public void setTerminalDevice(int number, TerminalDevice td){
 
         tdLabel.setText("ОУ №" + (number+1));
         terminalDevice = td;
@@ -82,7 +82,7 @@ public class VisualDevice {
         tail.setStroke(stateColor.get(state));
     }
 
-    void setOff(){
+    public void setOff(){
         tail.setStroke(basePaint);
         stateIndicator.setFill(Paint.valueOf("#ffffff"));
         tdStateButton.setText("откл");
@@ -90,7 +90,7 @@ public class VisualDevice {
         terminalDevice.changeState(DeviceState.BLOCKED);
     }
 
-    void setOn(){
+    public void setOn(){
         tail.setStroke(stateColor.get(ONLINE));
         stateIndicator.setFill(stateColor.get(ONLINE));
         tdStateButton.setText("вкл");

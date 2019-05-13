@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
+<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainScreen">
    <children>
       <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="43.0" layoutY="313.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
       <Text fill="#868686" layoutX="83.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
@@ -30,29 +30,29 @@
       <Text fill="#868686" layoutX="64.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой" />
       <Text fill="#868686" layoutX="64.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе" />
       <Text fill="#868686" layoutX="64.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация" />
-      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="31.0" layoutX="129.0" layoutY="17.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="175.0" />
-      <Text fx:id="statePrompt" layoutX="140.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
+      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="32.0" layoutX="496.0" layoutY="18.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="165.0" />
+      <Text fx:id="statePrompt" layoutX="507.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
          <font>
             <Font name="Calibri Italic" size="12.0" />
          </font>
       </Text>
       <Separator layoutX="2.0" layoutY="279.0" prefHeight="12.0" prefWidth="675.0" />
-      <Button fx:id="execButton" layoutX="406.0" layoutY="16.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="96.0" text="Обход">
+      <Button fx:id="execButton" layoutX="587.0" layoutY="316.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="62.0" text="Обход">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="512.0" layoutY="17.0" mnemonicParsing="false" onAction="#testHandle" prefHeight="32.0" prefWidth="106.0" text="Тестирование">
+      <Button layoutX="21.0" layoutY="18.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="32.0" prefWidth="62.0" text="Сменить">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <ToggleButton fx:id="turnButton" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="106.0" text="ВКЛЮЧИТЬ">
+      <ToggleButton fx:id="turnButton" layoutX="394.0" layoutY="18.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="89.0" text="ВКЛЮЧИТЬ">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </ToggleButton>
-      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="199.0" layoutY="312.0" prefHeight="159.0" prefWidth="448.0" promptText="Консоль&gt; Статистика работы симуляции">
+      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="199.0" layoutY="312.0" prefHeight="159.0" prefWidth="367.0" promptText="Консоль&gt; Статистика работы симуляции">
          <font>
             <Font name="Calibri" size="14.0" />
          </font>
@@ -83,5 +83,10 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Text fill="#989898" layoutX="100.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

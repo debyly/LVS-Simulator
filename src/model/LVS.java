@@ -12,7 +12,7 @@ import static model.TerminalDevice.DeviceState.WORKING;
 public class LVS {
 
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
-    public class NetLine {
+    class NetLine {
 
         private LineState state = LineState.A_WORKING;
         public LineState getState() {
@@ -67,24 +67,25 @@ public class LVS {
         //================= Симуляция работы =====================
         for (TerminalDevice client : clients) {
             client.changeState(client.getState());
-            client.process();
+            if (!real) client.process();
         }
 
         //================= Подсчёт ошибок =====================
         for (TerminalDevice client : clients) {
             switch (client.getState()) {
-                case GENERATOR:
-                    netLine.setState(LineState.A_GENERATION);
+
+                case FAILURE:
                     statistics.set(0, statistics.get(0)+1);
                     break;
                 case DENIAL:
                     if (client.getPreviousState() == WORKING)
                         statistics.set(1, statistics.get(1)+1);
                     break;
-                case FAILURE:
+                case BUSY:
                     statistics.set(2, statistics.get(2)+1);
                     break;
-                case BUSY:
+                case GENERATOR:
+                    netLine.setState(LineState.A_GENERATION);
                     statistics.set(3, statistics.get(3)+1);
                     break;
 

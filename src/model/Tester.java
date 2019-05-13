@@ -7,22 +7,20 @@ import java.util.List;
 
 public class Tester {
 
-    public static Pair<List<List<Double>>, Integer> simulateX(
-            int clientsAmount, int gen, int den, int fail,
-            int busy, int multiplier, int sessions) throws InterruptedException {
+    public static Pair<List<List<Double>>, Integer> simulate20X(
+            int[] args) throws InterruptedException {
 
-        LVS lvs = new LVS(false, clientsAmount, gen, den, fail, busy);
-        List<List<Double>> statistics = new ArrayList<>(multiplier);//Integer[multiplier][8];
+        LVS lvs = new LVS(false, args[0],args[3], args[4], args[5], args[6]);
+        List<List<Double>> statistics = new ArrayList<>(args[2]);
 
+        int restMessages = args[1];
 
-
-        for (int i = 0; i < multiplier; i++){
+        for (int i = 0; i < args[2]; i++){
 
             statistics.add(new ArrayList<>(8));
 
-            for (int i1 = 0; i1 < 8; i1++){
+            for (int i1 = 0; i1 < 8; i1++)
                 statistics.get(i).add(.0);
-            }
 
             List<Double> temp = new ArrayList<Double>(){{
 
@@ -31,23 +29,26 @@ public class Tester {
 
             }};
 
+            double initTime = (double) lvs.getLineCtrl().getTime();
 
-            Double initTime = (double) lvs.getLineCtrl().getTime();
+            int step = (args[0] * (args[1] / ((args[2]) * args[0])) + 1);
+            int sessions = restMessages < step ? restMessages / args[0] : step;
+
+            restMessages -= sessions * args[0];
 
             for (int j = 0; j < sessions; j++) {
                 lvs.start(temp);
-
             }
 
-            statistics.get(i).set(4,temp.get(0));
+            statistics.get(i).set(0, (double) sessions * args[0]);
+            statistics.get(i).set(1,temp.get(0));
             statistics.get(i).set(2,temp.get(1));
-            statistics.get(i).set(1,temp.get(2));
-            statistics.get(i).set(3,temp.get(3));
-            statistics.get(i).set(0,temp.get(4));
+            statistics.get(i).set(3,temp.get(2));
+            statistics.get(i).set(4,temp.get(3));
 
             statistics.get(i).set(5, lvs.getLineCtrl().getTime() - initTime);
 
-            Double M = (lvs.getLineCtrl().getTime() - initTime) / (sessions * clientsAmount);
+            Double M = (lvs.getLineCtrl().getTime() - initTime) / (sessions * args[0]);
 
             Double D = .0;//(lvs.getLineCtrl().getTime() - initTime) / (sessions * clientsAmount)
 

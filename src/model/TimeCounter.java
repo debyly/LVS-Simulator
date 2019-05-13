@@ -27,11 +27,6 @@ class TimeCounter {
         return timeMap;
     }
 
-    TimeCounter()
-    {
-
-    }
-
     void addTime(TimeType type) {
         total_time += timeMap.get(type);
     }

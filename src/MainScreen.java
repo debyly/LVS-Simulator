@@ -1,5 +1,3 @@
-package view;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +11,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LVS;
+import view.VisualDevice;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ public class MainScreen {
     @FXML
     Button execButton;
     @FXML
-    Button changeLineButton;
-    @FXML
     Text statePrompt;
     @FXML
     Pane lvsPane;
@@ -40,6 +37,7 @@ public class MainScreen {
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
     private Stage initStage;
+    private Main main;
 
     public void setInitStage(Stage initStage) {
         this.initStage = initStage;
@@ -50,11 +48,10 @@ public class MainScreen {
 
         visualDevices = new ArrayList<>();
 
-        changeLineButton.setDisable(true);
         execButton.setDisable(true);
         console.setMouseTransparent(true);
         turnButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            changeLineButton.setDisable(!newValue);
+
             execButton.setDisable(!newValue);
                 lineA.setStroke(Paint.valueOf( newValue ? "#5bd983" : "#b1b1b1"));
                 lineB.setStroke(Paint.valueOf("#b1b1b1"));
@@ -65,7 +62,7 @@ public class MainScreen {
 
         try {
             for (int i = 0; i < lvs.getClientsAmount(); i++){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(i % 2 == 0 ? "DeviceUpper.fxml" : "DeviceLower.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(i % 2 == 0 ? "view/DeviceUpper.fxml" : "view/DeviceLower.fxml"));
                 Node elm = loader.load();
                 visualDevices.add(loader.getController());
                 visualDevices.get(i).setTerminalDevice(i, lvs.getClients().get(i));
@@ -114,32 +111,19 @@ public class MainScreen {
 
 
     }
-    @FXML
-    void changeLineHandle(){
-
-        if (lvs.getLineCtrl().getLineState() == LVS.LineState.A_WORKING){
-
-
-            lineB.setStroke(Paint.valueOf("#5bd983"));
-            lineA.setStroke(Paint.valueOf("#b1b1b1"));
-
-        }
-        else
-            if (lvs.getLineCtrl().getLineState() == LVS.LineState.B_WORKING){
-
-
-                lineB.setStroke(Paint.valueOf("#b1b1b1"));
-                lineA.setStroke(Paint.valueOf("#5bd983"));
-            }
-        }
 
     @FXML
-    void testHandle(){
+    void profileHandle() throws IOException {
 
+        main.testWindow(initStage);
     }
 
     public void createLVS(int clientsAmount, int gen, int den, int fail, int busy){
 
         lvs = new LVS(true, clientsAmount, gen, den, fail, busy);
+    }
+
+    public void setMain(Main main){
+        this.main = main;
     }
 }

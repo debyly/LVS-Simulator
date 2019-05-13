@@ -12,20 +12,15 @@ public class Reporter {
 
     private Pair<List<List<Double>>,Integer> output;
 
-    public Pair<List<List<Double>>, Integer> getOutput() {
+    Pair<List<List<Double>>, Integer> getOutput() {
         return output;
     }
 
-    public Reporter(){
-
-    }
-
-    public void report(int clientsAmount, int gen, int den, int fail,
-                       int busy, int multiplier, int sessions, Stage initStage) throws InterruptedException, IOException {
+    void report(int[] args, Stage initStage) throws InterruptedException, IOException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Сохранить отчёт");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLS File", "*.xls"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XLSX File", "*.xlsx"));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
 
         File file = fileChooser.showSaveDialog(initStage);
@@ -35,9 +30,9 @@ public class Reporter {
 
             ExcelBook excelBook = new ExcelBook();
 
-            for (int tablesIter = 0; tablesIter < 1; tablesIter++) {
+            for (int tablesIter = 0; tablesIter < 50; tablesIter++) {
 
-                output = Tester.simulateX(clientsAmount, gen, den, fail, busy, multiplier, sessions);
+                output = Tester.simulate20X(args);
 
                 tables.add(output.getKey());
 
@@ -61,7 +56,7 @@ public class Reporter {
                     add("Всего отказов");
                     add("Всего 'аб. занят'");
                     add("Всего генераций");
-                    add("Суммарное время передачи " +  (clientsAmount * sessions * multiplier) + " сообщений");
+                    add("Суммарное время передачи " +  (args[1]) + " сообщений");
                     add("Суммарное матем. ожид. времени передачи сообщений");
                     add("Сумарное СКО времени передачи сообщений");
 
