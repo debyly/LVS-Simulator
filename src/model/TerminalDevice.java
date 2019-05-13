@@ -1,5 +1,7 @@
 package model;
 
+import view.VisualDevice;
+
 import java.util.Map;
 import java.util.Random;
 
@@ -8,18 +10,25 @@ import static model.TerminalDevice.DeviceState.*;
 public class TerminalDevice {
 
     public enum DeviceState {WORKING, BLOCKED, UNBLOCKING,
-        BUSY, FAILURE, DENIAL, GENERATOR}
+        BUSY, FAILURE, DENIAL, GENERATOR;
+        private static DeviceState[] vals = values();
+        public DeviceState next() {
+            return vals[(this.ordinal()+1) % vals.length];
+        }
+        public DeviceState previous(){
+            return vals[(this.ordinal() + vals.length -1) % vals.length];
+        }}
 
     private DeviceState state = WORKING;
     private DeviceState previousState;
 
     private Map<DeviceState, Integer> chances;
 
-    DeviceState getState() {
+    public DeviceState getState() {
         return state;
     }
 
-    DeviceState getPreviousState() {
+    public DeviceState getPreviousState() {
         return previousState;
     }
 
@@ -28,7 +37,7 @@ public class TerminalDevice {
         chances = probMap;
     }
 
-    void changeState(DeviceState st){
+    public void changeState(DeviceState st){
         if (st == UNBLOCKING){
             state = previousState;
         }
@@ -36,6 +45,12 @@ public class TerminalDevice {
             previousState = state;
             state = st;
         }
+    }
+
+    public void restore(){
+
+        state = WORKING;
+        previousState = WORKING;
     }
 
     void process(){

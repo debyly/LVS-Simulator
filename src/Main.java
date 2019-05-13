@@ -16,6 +16,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
         Parent root = loader.load();
         MainScreen MSCtrl = loader.getController();
+
         primaryStage.setTitle("Симулятор ЛВС 2000");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);

@@ -1,15 +1,14 @@
 package model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
-import static model.TerminalDevice.DeviceState.DENIAL;
 import static model.TerminalDevice.DeviceState.WORKING;
 
 public class LVS {
 
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
-    class Line {
+    class NetLine {
 
         LineState state = LineState.A_WORKING;
         LineState getState() {
@@ -19,35 +18,37 @@ public class LVS {
             this.state = state;
         }
     }
-    private Integer clientsAmount;
-    private HashMap<Integer, TerminalDevice> clients = new HashMap<>();
-    private Line line = new Line();
-    private LineController lineController = new LineController(clients, line);
+    private ArrayList<TerminalDevice> clients = new ArrayList<>();
+    private NetLine netLine = new NetLine();
+    private LineController lineController = new LineController(clients, netLine);
+
     public LineController getLineCtrl() {
         return lineController;
     }
 
     public LVS(int clientsAmount, Map<TerminalDevice.DeviceState, Integer> chances)
     {
-        this.clientsAmount = clientsAmount;
-        for (int i = 0; i < this.clientsAmount; i++)
-            clients.put(i, new TerminalDevice(chances));
+        for (int i = 0; i < clientsAmount; i++)
+            clients.add(new TerminalDevice(chances));
     }
 
     public int getClientsAmount(){
 
-        return clientsAmount;
+        return clients.size();
+    }
+
+    public ArrayList<TerminalDevice> getClients() {
+        return clients;
     }
 
     public void start(int[] statistics){
 
         //================= Симуляция работы =====================
-        for(int i = 0; i < clientsAmount; i++)
-            clients.get(i).process();
+        for (TerminalDevice client : clients) client.process();
 
         //================= Подсчёт ошибок =====================
-        for(int i = 0; i < clientsAmount; i++) {
-            switch (clients.get(i).getState()){
+        for (TerminalDevice client : clients) {
+            switch (client.getState()) {
                 case BUSY:
                     statistics[3]++;
                     break;
@@ -55,11 +56,11 @@ public class LVS {
                     statistics[2]++;
                     break;
                 case DENIAL:
-                    if (clients.get(i).getPreviousState() == WORKING)
-                    statistics[1]++;
+                    if (client.getPreviousState() == WORKING)
+                        statistics[1]++;
                     break;
                 case GENERATOR:
-                    line.setState(LineState.A_GENERATION);
+                    netLine.setState(LineState.A_GENERATION);
                     statistics[0]++;
                     break;
                 default:
@@ -67,11 +68,11 @@ public class LVS {
             }
         }
         //===== Действия при генерации ======
-        if (line.getState() == LineState.A_GENERATION)
+        if (netLine.getState() == LineState.A_GENERATION)
             lineController.findGenerator();
         //====== Запуск действия контроллера =======
-        for (int i = 0; i < clientsAmount; i++)
-            lineController.reactOn(clients.get(i));
+        for (TerminalDevice client : clients)
+            lineController.reactOn(client);
         //====== Запись общего кол-ва сообщений =====
         statistics[4] = lineController.getMessageCount();
     }

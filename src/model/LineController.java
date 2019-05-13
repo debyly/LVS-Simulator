@@ -1,8 +1,6 @@
 package model;
 import model.TerminalDevice.DeviceState;
-import model.TimeCounter.TimeType;
-
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import static model.LVS.LineState.*;
 import static model.TerminalDevice.DeviceState.*;
@@ -10,14 +8,14 @@ import static model.TimeCounter.TimeType.*;
 
 public class LineController {
     private TimeCounter timer = new TimeCounter();
-    private HashMap<Integer, TerminalDevice> clients;
-    private LVS.Line line;
+    private ArrayList<TerminalDevice> clients;
+    private LVS.NetLine netLine;
     private int messageCount = 0;
 
-    LineController(HashMap<Integer, TerminalDevice> clients, LVS.Line line){
+    LineController(ArrayList<TerminalDevice> clients, LVS.NetLine netLine){
 
         this.clients = clients;
-        this.line = line;
+        this.netLine = netLine;
     }
 
     public int getTime(){
@@ -64,7 +62,7 @@ public class LineController {
             timer.addTime(PAUSE_BEFORE_ANSWER);
             messageCount += 13;
         }
-        line.setState(B_WORKING);
+        netLine.setState(B_WORKING);
     }
 
     private void busy(){
@@ -82,7 +80,7 @@ public class LineController {
         timer.addTime(PAUSE_BEFORE_ANSWER);
         timer.addTime(ANSWER);
         messageCount += 14;
-        line.setState(A_WORKING);
+        netLine.setState(A_WORKING);
     }
 
     void findGenerator(){
@@ -96,7 +94,7 @@ public class LineController {
         //================================================
 
         //=============== Блокировка всех ОУ =============
-        line.setState(B_WORKING);
+        netLine.setState(B_WORKING);
             for(int i = 0; i < clients.size(); i++) {
 
                 timer.addTime(BLOCK);
@@ -111,7 +109,7 @@ public class LineController {
             int lastDevice = 0;
             for (int i = 0; i < clients.size(); i++){
 
-                line.setState(B_WORKING);
+                netLine.setState(B_WORKING);
 
                 //======= Разблокировка одного ОУ ==========
                 timer.addTime(UNBLOCK);
@@ -123,7 +121,7 @@ public class LineController {
                 messageCount += 2;
                 //===========================================
 
-                line.setState(A_WORKING);
+                netLine.setState(A_WORKING);
 
                 //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
@@ -142,7 +140,7 @@ public class LineController {
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     messageCount += 1;
                     //========================================
-                    line.setState(B_WORKING);
+                    netLine.setState(B_WORKING);
                     //====== Блокируем генерящий элемент ======
                     timer.addTime(BLOCK);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
@@ -165,6 +163,6 @@ public class LineController {
                 messageCount += 2;
             //==============================================
             }
-        line.setState(A_WORKING);
+        netLine.setState(A_WORKING);
     }
 }

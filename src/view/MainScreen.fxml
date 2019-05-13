@@ -5,41 +5,43 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="462.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
+<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
    <children>
-      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="62.0" layoutY="288.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
-      <Text fill="#868686" layoutX="102.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
+      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="43.0" layoutY="313.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
+      <Text fill="#868686" layoutX="83.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
          <font>
             <Font name="Calibri" size="14.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="62.0" layoutY="330.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="62.0" layoutY="350.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="62.0" layoutY="370.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="62.0" layoutY="390.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="62.0" layoutY="410.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Text fill="#868686" layoutX="84.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Выключен" />
-      <Text fill="#868686" layoutX="84.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Работает" />
-      <Text fill="#868686" layoutX="83.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Сбой" />
-      <Text fill="#868686" layoutX="83.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Отказ в работе" />
-      <Text fill="#868686" layoutX="83.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Генерация" />
-      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="31.0" layoutX="140.0" layoutY="18.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="175.0" />
-      <Text fx:id="statePrompt" layoutX="151.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="43.0" layoutY="353.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="43.0" layoutY="373.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="43.0" layoutY="393.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="43.0" layoutY="413.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="43.0" layoutY="433.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Text fill="#868686" layoutX="65.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вык) Выключен" />
+      <Text fill="#868686" layoutX="65.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает" />
+      <Text fill="#868686" layoutX="64.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой" />
+      <Text fill="#868686" layoutX="64.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе" />
+      <Text fill="#868686" layoutX="64.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация" />
+      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="31.0" layoutX="129.0" layoutY="17.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="175.0" />
+      <Text fx:id="statePrompt" layoutX="140.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
          <font>
             <Font name="Calibri Italic" size="12.0" />
          </font>
       </Text>
-      <Separator layoutX="4.0" layoutY="269.0" prefHeight="12.0" prefWidth="691.0" />
-      <Button layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="96.0" text="Обход">
+      <Separator layoutX="2.0" layoutY="279.0" prefHeight="12.0" prefWidth="675.0" />
+      <Button fx:id="execButton" layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="96.0" text="Обход">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="447.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeLineHandle" prefHeight="32.0" prefWidth="106.0" text="Сменить линию">
+      <Button fx:id="changeLineButton" layoutX="447.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeLineHandle" prefHeight="32.0" prefWidth="106.0" text="Сменить линию">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
@@ -49,15 +51,21 @@
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <ToggleButton fx:id="turnButton" layoutX="28.0" layoutY="18.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="106.0" text="ВКЛЮЧИТЬ">
+      <ToggleButton fx:id="turnButton" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="106.0" text="ВКЛЮЧИТЬ">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </ToggleButton>
-      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="218.0" layoutY="289.0" prefHeight="147.0" prefWidth="448.0" promptText="Консоль&gt; Статистика работы симуляции">
+      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="199.0" layoutY="312.0" prefHeight="159.0" prefWidth="448.0" promptText="Консоль&gt; Статистика работы симуляции">
          <font>
             <Font name="Calibri" size="14.0" />
          </font>
       </TextArea>
+      <Pane fx:id="lvsPane" layoutX="16.0" layoutY="60.0" prefHeight="211.0" prefWidth="648.0">
+         <children>
+            <Line fx:id="lineA" endX="556.3333129882812" endY="-40.0" layoutX="78.0" layoutY="143.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+            <Line fx:id="lineB" endX="556.3333129882812" endY="-40.0" layoutX="78.0" layoutY="153.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
