@@ -4,6 +4,7 @@ import model.TerminalDevice.DeviceState;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static model.TerminalDevice.DeviceState.WORKING;
@@ -60,28 +61,33 @@ public class LVS {
         return clients;
     }
 
-    public void start(int[] statistics) throws InterruptedException {
+    public void start(List<Double> statistics) throws InterruptedException {
+
 
         //================= Симуляция работы =====================
-        for (TerminalDevice client : clients) client.process();
+        for (TerminalDevice client : clients) {
+            client.changeState(client.getState());
+            client.process();
+        }
 
         //================= Подсчёт ошибок =====================
         for (TerminalDevice client : clients) {
             switch (client.getState()) {
-                case BUSY:
-                    statistics[3]++;
-                    break;
-                case FAILURE:
-                    statistics[2]++;
+                case GENERATOR:
+                    netLine.setState(LineState.A_GENERATION);
+                    statistics.set(0, statistics.get(0)+1);
                     break;
                 case DENIAL:
                     if (client.getPreviousState() == WORKING)
-                        statistics[1]++;
+                        statistics.set(1, statistics.get(1)+1);
                     break;
-                case GENERATOR:
-                    netLine.setState(LineState.A_GENERATION);
-                    statistics[0]++;
+                case FAILURE:
+                    statistics.set(2, statistics.get(2)+1);
                     break;
+                case BUSY:
+                    statistics.set(3, statistics.get(3)+1);
+                    break;
+
                 default:
                     break;
             }
@@ -93,7 +99,7 @@ public class LVS {
         for (TerminalDevice client : clients)
             lineController.reactOn(client);
         //====== Запись общего кол-ва сообщений =====
-        statistics[4] = lineController.getMessageCount();
+        statistics.set(4, (double) lineController.getMessageCount());
     }
 }
 

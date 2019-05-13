@@ -62,20 +62,20 @@ public class TerminalDevice {
 
         if ((state != BLOCKED) && ( state != DENIAL)){
 
-            if (rand.nextInt(chances.get(GENERATOR)) == 0) {
-                state = GENERATOR;
+            if (rand.nextInt(chances.get(GENERATOR)) == 1) {
+                changeState(GENERATOR);
                 return;
             }
-            if (rand.nextInt(chances.get(DENIAL)) == 0) {
-                state = DENIAL;
+            if (rand.nextInt(chances.get(DENIAL)) == 1) {
+                changeState(DENIAL);
                 return;
             }
-            if (rand.nextInt(chances.get(FAILURE)) == 0) {
-                state = FAILURE;
+            if (rand.nextInt(chances.get(FAILURE)) == 1) {
+                changeState(FAILURE);
                 return;
             }
-            if (rand.nextInt(chances.get(BUSY)) == 0)
-                state = BUSY;
+            if (rand.nextInt(chances.get(BUSY)) == 1)
+                changeState(BUSY);
         }
     }
 }

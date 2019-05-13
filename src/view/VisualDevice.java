@@ -97,5 +97,4 @@ public class VisualDevice {
         tdStateButton.setDisable(false);
         terminalDevice.restore();
     }
-
 }

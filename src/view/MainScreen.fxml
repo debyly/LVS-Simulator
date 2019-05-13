@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleButton?>
@@ -36,17 +37,12 @@
          </font>
       </Text>
       <Separator layoutX="2.0" layoutY="279.0" prefHeight="12.0" prefWidth="675.0" />
-      <Button fx:id="execButton" layoutX="342.0" layoutY="17.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="96.0" text="Обход">
+      <Button fx:id="execButton" layoutX="406.0" layoutY="16.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="96.0" text="Обход">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="changeLineButton" layoutX="447.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeLineHandle" prefHeight="32.0" prefWidth="106.0" text="Сменить линию">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Button>
-      <Button layoutX="562.0" layoutY="17.0" mnemonicParsing="false" onAction="#testHandle" prefHeight="32.0" prefWidth="106.0" text="Тестирование">
+      <Button layoutX="512.0" layoutY="17.0" mnemonicParsing="false" onAction="#testHandle" prefHeight="32.0" prefWidth="106.0" text="Тестирование">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
@@ -67,5 +63,25 @@
             <Line fx:id="lineB" endX="556.3333129882812" endY="-40.0" layoutX="78.0" layoutY="153.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
          </children>
       </Pane>
+      <Label layoutX="10.0" layoutY="152.0" text="A">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="10.0" layoutY="163.0" text="B">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="660.0" layoutY="154.0" text="A">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="660.0" layoutY="165.0" text="B">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
