@@ -44,8 +44,15 @@ public class TestScreen {
         int sessions = 55;
 
         Pair<int[][],Integer> output
-                = Tester.simulateX(clientsAmount, genProb, denProb,
-                failProb, busyProb, multiplier, sessions);
+                = null;
+        try {
+            output = Tester.simulateX(clientsAmount, genProb, denProb,
+            failProb, busyProb, multiplier, sessions);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return;
+        }
 
         consoletext.setText("");
         textflow.getChildren().remove(0);

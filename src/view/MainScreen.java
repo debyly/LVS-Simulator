@@ -59,7 +59,6 @@ public class MainScreen {
                 lineA.setStroke(Paint.valueOf( newValue ? "#5bd983" : "#b1b1b1"));
                 lineB.setStroke(Paint.valueOf("#b1b1b1"));
         });
-
     }
 
     public void drawLVS(){
@@ -112,12 +111,28 @@ public class MainScreen {
     @FXML
     void execHandle(){
 
+
+
     }
     @FXML
     void changeLineHandle(){
 
+        if (lvs.getLineCtrl().getLineState() == LVS.LineState.A_WORKING){
 
-    }
+
+            lineB.setStroke(Paint.valueOf("#5bd983"));
+            lineA.setStroke(Paint.valueOf("#b1b1b1"));
+
+        }
+        else
+            if (lvs.getLineCtrl().getLineState() == LVS.LineState.B_WORKING){
+
+
+                lineB.setStroke(Paint.valueOf("#b1b1b1"));
+                lineA.setStroke(Paint.valueOf("#5bd983"));
+            }
+        }
+
     @FXML
     void testHandle(){
 
@@ -125,6 +140,6 @@ public class MainScreen {
 
     public void createLVS(int clientsAmount, int gen, int den, int fail, int busy){
 
-        lvs = new LVS(clientsAmount, gen, den, fail, busy);
+        lvs = new LVS(true, clientsAmount, gen, den, fail, busy);
     }
 }

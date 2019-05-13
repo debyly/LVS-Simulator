@@ -21,6 +21,7 @@ public class TerminalDevice {
 
     private DeviceState state = WORKING;
     private DeviceState previousState;
+    private boolean real;
 
     private Map<DeviceState, Integer> chances;
 
@@ -32,8 +33,9 @@ public class TerminalDevice {
         return previousState;
     }
 
-    TerminalDevice(Map<DeviceState, Integer> chances){
+    TerminalDevice(boolean real, Map<DeviceState, Integer> chances){
 
+        this.real = real;
         this.chances = chances;
     }
 
@@ -53,9 +55,11 @@ public class TerminalDevice {
         previousState = WORKING;
     }
 
-    void process(){
+    void process() throws InterruptedException {
         Random rand = new Random();
-        
+
+        if (real) Thread.sleep(500);
+
         if ((state != BLOCKED) && ( state != DENIAL)){
 
             if (rand.nextInt(chances.get(GENERATOR)) == 0) {

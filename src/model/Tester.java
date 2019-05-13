@@ -5,9 +5,10 @@ import javafx.util.Pair;
 public class Tester {
 
     public static Pair<int[][], Integer> simulateX(
-            int clientsAmount, int gen, int den, int fail, int busy, int multiplier, int sessions){
+            int clientsAmount, int gen, int den, int fail,
+            int busy, int multiplier, int sessions) throws InterruptedException {
 
-        LVS lvs = new LVS(clientsAmount, gen, den, fail, busy);
+        LVS lvs = new LVS(false, clientsAmount, gen, den, fail, busy);
         int[][] statistics = new int[20][8];
 
 

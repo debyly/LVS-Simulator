@@ -1,5 +1,4 @@
 package model;
-import model.TerminalDevice.DeviceState;
 import java.util.ArrayList;
 
 import static model.LVS.LineState.*;
@@ -10,10 +9,18 @@ public class LineController {
     private TimeCounter timer = new TimeCounter();
     private ArrayList<TerminalDevice> clients;
     private LVS.NetLine netLine;
+    private boolean real;
+
+    public LVS.LineState getLineState(){
+
+        return netLine.getState();
+    }
+
     private int messageCount = 0;
 
-    LineController(ArrayList<TerminalDevice> clients, LVS.NetLine netLine){
+    LineController(boolean real, ArrayList<TerminalDevice> clients, LVS.NetLine netLine){
 
+        this.real = real;
         this.clients = clients;
         this.netLine = netLine;
     }
@@ -27,7 +34,7 @@ public class LineController {
     }
 
     //======= Действия при определенных неполадках ============
-    void reactOn(TerminalDevice td){
+    void reactOn(TerminalDevice td) throws InterruptedException {
         switch (td.getState()){
             // Абонент занят
             case BUSY:
@@ -48,63 +55,98 @@ public class LineController {
         normalWork();
     }
 
-    private void failure(){
+    private void failure() throws InterruptedException {
         timer.addTime(COMMAND);
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
+        if (real) Thread.sleep(
+                timer.getTimeMap().get(COMMAND)
+                        + timer.getTimeMap().get(WORD)
+                        + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
         messageCount += 13;
     }
 
-    private void denial(){
+    private void denial() throws InterruptedException {
         for (int i = 0; i < 2; i++){
             timer.addTime(COMMAND);
             timer.addTime(WORD);
             timer.addTime(PAUSE_BEFORE_ANSWER);
+
+            if (real) Thread.sleep(
+                    timer.getTimeMap().get(COMMAND)
+                            + timer.getTimeMap().get(WORD)
+                            + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
+
             messageCount += 13;
         }
         netLine.setState(B_WORKING);
     }
 
-    private void busy(){
+    private void busy() throws InterruptedException {
         timer.addTime(COMMAND);
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
         timer.addTime(ANSWER);
         timer.addTime(PAUSE_IF_BUSY);
+
+        if (real) Thread.sleep(
+                timer.getTimeMap().get(COMMAND)
+                        + timer.getTimeMap().get(WORD)
+                        + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
+                        + timer.getTimeMap().get(ANSWER)
+                        + timer.getTimeMap().get(PAUSE_IF_BUSY));
+
         messageCount += 14;
     }
 
-    private void normalWork(){
+    private void normalWork() throws InterruptedException {
         timer.addTime(COMMAND);
         timer.addTime(WORD);
         timer.addTime(PAUSE_BEFORE_ANSWER);
         timer.addTime(ANSWER);
+
+        if (real) Thread.sleep(
+                timer.getTimeMap().get(COMMAND)
+                        + timer.getTimeMap().get(WORD)
+                        + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
+                        + timer.getTimeMap().get(ANSWER));
+
         messageCount += 14;
         netLine.setState(A_WORKING);
     }
 
-    void findGenerator(){
+    void findGenerator() throws InterruptedException {
 
         // ================ Тест МКО ====================
         for(int i = 0; i < clients.size(); i++){
             timer.addTime(COMMAND);
             timer.addTime(PAUSE_BEFORE_ANSWER);
+
+            if (real) Thread.sleep(
+                    timer.getTimeMap().get(COMMAND)
+                            + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
+
             messageCount += 1;
         }
         //================================================
 
         //=============== Блокировка всех ОУ =============
         netLine.setState(B_WORKING);
-            for(int i = 0; i < clients.size(); i++) {
+        for (TerminalDevice client : clients) {
 
-                timer.addTime(BLOCK);
-                timer.addTime(PAUSE_BEFORE_ANSWER);
-                timer.addTime(ANSWER);
+            timer.addTime(BLOCK);
+            timer.addTime(PAUSE_BEFORE_ANSWER);
+            timer.addTime(ANSWER);
 
-                clients.get(i).changeState(DeviceState.BLOCKED);
+            if (real) Thread.sleep(
+                    timer.getTimeMap().get(BLOCK)
+                            + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
+                            + timer.getTimeMap().get(ANSWER));
 
-                messageCount += 2;
-            }
+            client.changeState(BLOCKED);
+
+            messageCount += 2;
+        }
         //==================================================
             int lastDevice = 0;
             for (int i = 0; i < clients.size(); i++){
@@ -116,6 +158,11 @@ public class LineController {
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
 
+                if (real) Thread.sleep(
+                        timer.getTimeMap().get(UNBLOCK)
+                                + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
+                                + timer.getTimeMap().get(ANSWER));
+
                 clients.get(i).changeState(UNBLOCKING);
 
                 messageCount += 2;
@@ -126,10 +173,19 @@ public class LineController {
                 //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
+
+                if (real) Thread.sleep(
+                        timer.getTimeMap().get(COMMAND)
+                                + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
+
                 messageCount += 1;
 
                 if(!(clients.get(i).getState() == GENERATOR)) {
+
                     timer.addTime(ANSWER);
+                    if (real) Thread.sleep(
+                            timer.getTimeMap().get(ANSWER));
+
                     messageCount += 1;
                 }
                 //==================================================
@@ -138,6 +194,11 @@ public class LineController {
                     //======== Опрос предыдущего ОУ ==========
                     timer.addTime(COMMAND);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
+
+                    if (real) Thread.sleep(
+                            timer.getTimeMap().get(COMMAND)
+                                    + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER));
+
                     messageCount += 1;
                     //========================================
                     netLine.setState(B_WORKING);
@@ -145,6 +206,12 @@ public class LineController {
                     timer.addTime(BLOCK);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     timer.addTime(ANSWER);
+
+                    if (real) Thread.sleep(
+                            timer.getTimeMap().get(BLOCK)
+                                    + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
+                                    + timer.getTimeMap().get(ANSWER));
+
                     clients.get(i).changeState(BLOCKED);
                     messageCount += 2;
                     //===================================================================
@@ -155,10 +222,16 @@ public class LineController {
             }
 
             //===== Разблокировка ОУ после генерящего =====
-            for (int i = lastDevice + 1; i< clients.size(); i++ ){
+            for (int i = lastDevice + 1; i < clients.size(); i++ ){
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
+
+                if (real) Thread.sleep(
+                        timer.getTimeMap().get(UNBLOCK)
+                                + timer.getTimeMap().get(PAUSE_BEFORE_ANSWER)
+                                + timer.getTimeMap().get(ANSWER));
+
                 clients.get(i).changeState(WORKING);
                 messageCount += 2;
             //==============================================
