@@ -6,22 +6,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import model.Tester;
-import util.Reporter;
 
-import java.util.List;
+import java.io.File;
+import java.util.Observable;
 
 public class TestScreen {
 
     @FXML
     private Button startButton;
-    @FXML
-    private Button clearButton;
-    @FXML
-    private TextFlow console;
     @FXML
     private Button profileButton;
     @FXML
@@ -42,9 +37,10 @@ public class TestScreen {
     private TextField genField;
     @FXML
     private ProgressBar progressBar;
+    @FXML
+    private Text progressText;
 
     private Stage initStage;
-    private Text consoleText;
     private WindowManager manager;
 
     void setManager(WindowManager manager) {
@@ -52,7 +48,6 @@ public class TestScreen {
     }
 
     public TestScreen(){
-
 
     }
 
@@ -63,15 +58,13 @@ public class TestScreen {
     @FXML
     private void initialize(){
 
-        consoleText = new Text("Welcome");
-        console.getChildren().add(consoleText);
         progressBar.setVisible(false);
+        progressText.setVisible(false);
     }
 
     private void disableAll(boolean disable){
 
-        startButton.setMouseTransparent(disable);//setDisable(disable);
-        clearButton.setDisable(disable);
+        startButton.setMouseTransparent(disable);
         profileButton.setDisable(disable);
         tdField.setDisable(disable);
         msgField.setDisable(disable);
@@ -84,32 +77,9 @@ public class TestScreen {
 
         if (disable){
             startButton.setText("Тест...");
-            clearButton.setText("");
         } else {
             startButton.setText("Запуск теста");
-            clearButton.setText("Очистить консоль");
         }
-
-    }
-
-    @FXML
-    private void toConsole(Pair<List<List<Double>>,Integer> output){
-        consoleText.setText("");
-        console.getChildren().clear();
-        for (int i = 0; i < 20; i++) {
-
-            String str = "\n\n--Количество ошибок--\n"
-                    + "Генерация: " + output.getKey().get(i).get(4)
-                    + "\r\nОтказ: " + output.getKey().get(i).get(2)
-                    + "\r\nСбой: " + output.getKey().get(i).get(1)
-                    + "\r\nАбонент занят: " + output.getKey().get(i).get(3)
-                    + "\nВремени потрачено: " + (output.getKey().get(i).get(5))
-                    + " сек\nОжидалось потратить: " + (output.getKey().get(i).get(6))
-                    + " сек\n\nПередано сообщений: " + output.getKey().get(i).get(0) + " штук\r\n";
-            consoleText.setText(consoleText.getText() + str);
-        }
-        consoleText.setText("Общее время работы программы: \n" + output.getValue() + " секунд" + consoleText.getText());
-        console.getChildren().add(consoleText);
     }
 
     @FXML
@@ -138,44 +108,51 @@ public class TestScreen {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Внутренняя ошибка");
             alert.setHeaderText("Проверьте значения");
-            alert.setContentText("Что-то у вас явно не то");
+            alert.setContentText("Что-то у вас явно не то\n\n" + "Причина:\n" + e.getCause());
             alert.initOwner(initStage);
             alert.showAndWait();
             return;
         }
-
-        int[] args = new int[]{
-                tds, msg, groups, gen, den, fail, busy
-                };
 
         progressBar.progressProperty().addListener((observable, oldValue, newValue) -> {
 
                 if (newValue.doubleValue() == 1.0){
 
                     progressBar.setVisible(false);
+                    progressText.setVisible(false);
                     disableAll(false);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Запись тестов завершена!");
-                    alert.setHeaderText("Успешно!");
-                    alert.setContentText("Было проведено " + groups * tbls
-                            + " тестов.\nФайл успешно сохранён!");
-                    alert.initOwner(initStage);
-                    alert.showAndWait();
-                }
+                  }
             });
 
         progressBar.setProgress(.0);
         progressBar.setVisible(true);
+        progressText.setVisible(true);
         disableAll(true);
-        progressBar.setProgress(0.05);
-        Tester.test(args, initStage, progressBar.progressProperty());
-    }
+        progressBar.setProgress(0.01);
 
-    @FXML
-    private void clearHandle(){
+        int[] args = new int[]{
+                tds, msg, groups, gen, den, fail, busy
+        };
 
-        console.getChildren().clear();
-        console.getChildren().add(new Text("Console Cleared"));
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Сохранить отчёт");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "XLSX File",
+                        "*.xlsx"));
+        fileChooser.setInitialDirectory(
+                new File(System.getProperty("user.home") + "/Desktop"));
+        File file = fileChooser.showSaveDialog(initStage);
+
+        if (file != null) {
+            Tester tester = new Tester();
+            tester.test(args, tbls,
+                    progressText.textProperty(),
+                    progressBar.progressProperty(),
+                    file);
+        } else {
+            progressBar.setProgress(1.0);
+        }
     }
 
     @FXML

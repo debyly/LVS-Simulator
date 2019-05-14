@@ -62,7 +62,7 @@ public class MainScreen {
         try {
             for (int i = 0; i < lvs.getClientsAmount(); i++){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        i % 2 == 0 ? "view/DeviceUpper.fxml" : "view/DeviceLower.fxml"));
+                        i % 2 == 0 ? "DeviceUpper.fxml" : "DeviceLower.fxml"));
                 Node elm = loader.load();
                 visualDevices.add(loader.getController());
                 visualDevices.get(i).setTerminalDevice(i, lvs.getClients().get(i));

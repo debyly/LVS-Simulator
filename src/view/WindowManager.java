@@ -17,12 +17,17 @@ public class WindowManager {
         this.window = window;
     }
 
+    public void start(){
+        testWindow();
+        //mainWindow();
+    }
+
     void mainWindow() {
 
         if (window.isShowing()) window.close();
 
-        String mainfxml = "view/MainScreen.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
+        String fxml = "MainScreen.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root;
         try {
             root = loader.load();
@@ -41,25 +46,26 @@ public class WindowManager {
         MS.createLVS(18,20000,5000,2000,2000);
         MS.drawLVS();
         window.show();
-
     }
 
     void testWindow() {
 
         if (window.isShowing()) window.close();
 
-        String mainfxml = "view/TestScreen.fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(mainfxml));
+        String fxml = "TestScreen.fxml";
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root;
         try {
             root = loader.load();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Внутренняя ошибка");
-            alert.setContentText("Ошибка загрузки\n" + e.getMessage());
+            alert.setContentText("Ошибка загрузки\nКод ошибки:\n" + e.getMessage() + "\n\nОписание:\n" + e.getCause());
             alert.showAndWait();
+            mainWindow();
             return;
         }
+
         window.setTitle("Симулятор ЛВС 2000");
         window.setScene(new Scene(root));
         window.setResizable(false);

@@ -1,46 +1,51 @@
 package model;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
-import javafx.concurrent.Task;
-import javafx.stage.Stage;
+import javafx.beans.property.StringProperty;
 import javafx.util.Pair;
 import util.Reporter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tester {
 
-    public static void test(int[] args, Stage stage, DoubleProperty progressBarProperty){
 
-        Task testTask = new Task() {
+    private List<List<List<Double>>> tables;
 
-            int groupsAmount = args[2];
-            public List<List<List<Double>>> tables;
+    public void test(int[] args, int tablesAmount, StringProperty progressDetails, DoubleProperty progressBarProperty, File file){
 
-            @Override
-            protected Void call() {
+        Runnable testTask = () -> {
+            tables = new ArrayList<>(tablesAmount);
 
-                progressBarProperty.bind(progressProperty());
+            progressDetails.setValue("Выполнено 0% : Инициализация теста...");
 
-                tables = new ArrayList<>(groupsAmount);
-                for (int i = 0; i < groupsAmount; i++) {
+            for (int i = 0; i < tablesAmount; i++) {
 
-                    updateProgress(0.05 + 0.7 * (i / (double)(groupsAmount-1)), 1);
-                    tables.add(Tester.simulateX(args).getKey());
-                }
+                tables.add(Tester.simulateX(args).getKey());
+                double proDouble = 0.05 + 0.7 * (i / (double)(tablesAmount-1));
 
-                (new Reporter(progressBarProperty)).save(tables,stage);
-                return null;
+                progressBarProperty.setValue(proDouble);
+                progressDetails.setValue(
+                        "Выполнено "
+                                + ((double)((int)(proDouble * 1000))/10)
+                                + "% : Проводится тест №" + (i+1) + " ...");
             }
+
+            Reporter r = new Reporter(progressBarProperty, progressDetails);
+            r.makeReport(tables);
+            r.saveReport(file);
         };
 
-        (new Thread(testTask)).start();
+        Thread th = new Thread(testTask);
+        th.start();
+
     }
 
-    public static Pair<List<List<Double>>, Integer> simulateX(int[] args)
+    private static Pair<List<List<Double>>, Integer> simulateX(int[] args)
     {
-
         LVS lvs = new LVS(false, args[0],args[3], args[4], args[5], args[6]);
         List<List<Double>> statistics = new ArrayList<>(args[2]);
 
