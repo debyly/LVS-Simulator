@@ -1,3 +1,5 @@
+package util;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -58,9 +60,7 @@ class ExcelBook {
         }
         for (int i = 0; i < columns.size(); i ++)
             sheet.autoSizeColumn(i);
-
     }
-
 
     void addToSheet(int fromLine, String sheetName, List<List<Double>> table, ArrayList<String> columns){
 

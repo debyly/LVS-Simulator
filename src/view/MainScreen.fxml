@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainScreen">
+<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
    <children>
       <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="43.0" layoutY="313.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
       <Text fill="#868686" layoutX="83.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">

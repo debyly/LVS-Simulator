@@ -21,7 +21,6 @@ public class TerminalDevice {
 
     private DeviceState state = WORKING;
     private DeviceState previousState = WORKING;
-    private boolean real;
 
     private Map<DeviceState, Integer> chances;
 
@@ -33,14 +32,13 @@ public class TerminalDevice {
         return previousState;
     }
 
-    TerminalDevice(boolean real, Map<DeviceState, Integer> chances){
+    TerminalDevice (Map<DeviceState, Integer> chances){
 
-        this.real = real;
         this.chances = chances;
     }
 
     public void changeState(DeviceState st){
-        if (st == UNBLOCKING){
+        if (st == UNBLOCKING && state == BLOCKED){
             state = previousState;
         }
         else{
@@ -55,10 +53,10 @@ public class TerminalDevice {
         previousState = WORKING;
     }
 
-    void process() throws InterruptedException {
+    void setRandomState() {
         Random rand = new Random();
 
-        if (real) Thread.sleep(500);
+        previousState = state;
 
         if ((state != BLOCKED) && ( state != DENIAL)){
 

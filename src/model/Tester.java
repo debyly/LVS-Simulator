@@ -1,12 +1,42 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.concurrent.Task;
+import javafx.stage.Stage;
 import javafx.util.Pair;
+import util.Reporter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tester {
+
+    public static void test(int[] args, Stage stage, DoubleProperty progressBarProperty){
+
+        Task testTask = new Task() {
+
+            int groupsAmount = args[2];
+            public List<List<List<Double>>> tables;
+
+            @Override
+            protected Void call() {
+
+                progressBarProperty.bind(progressProperty());
+
+                tables = new ArrayList<>(groupsAmount);
+                for (int i = 0; i < groupsAmount; i++) {
+
+                    updateProgress(0.05 + 0.7 * (i / (double)(groupsAmount-1)), 1);
+                    tables.add(Tester.simulateX(args).getKey());
+                }
+
+                (new Reporter(progressBarProperty)).save(tables,stage);
+                return null;
+            }
+        };
+
+        (new Thread(testTask)).start();
+    }
 
     public static Pair<List<List<Double>>, Integer> simulateX(int[] args)
     {
@@ -37,11 +67,7 @@ public class Tester {
             restMessages -= sessions * args[0];
 
             for (int j = 0; j < sessions; j++) {
-                try {
                     lvs.start(temp);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
 
             statistics.get(i).set(0, (double) sessions * args[0]);

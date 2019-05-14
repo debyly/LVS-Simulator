@@ -1,4 +1,5 @@
-import javafx.beans.property.BooleanProperty;
+package view;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -8,8 +9,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import model.Tester;
+import util.Reporter;
 
-import java.io.IOException;
 import java.util.List;
 
 public class TestScreen {
@@ -43,7 +45,11 @@ public class TestScreen {
 
     private Stage initStage;
     private Text consoleText;
-    private Main main;
+    private WindowManager manager;
+
+    void setManager(WindowManager manager) {
+        this.manager = manager;
+    }
 
     public TestScreen(){
 
@@ -62,9 +68,9 @@ public class TestScreen {
         progressBar.setVisible(false);
     }
 
-    public void disableAll(boolean disable){
+    private void disableAll(boolean disable){
 
-        startButton.setDisable(disable);
+        startButton.setMouseTransparent(disable);//setDisable(disable);
         clearButton.setDisable(disable);
         profileButton.setDisable(disable);
         tdField.setDisable(disable);
@@ -111,11 +117,10 @@ public class TestScreen {
 
         // arguments:
         // clientsAmount, messages, groups, genProb, denProb, failProb, busyProb
-        //int[] args = new int[]{18,20000,20,20000,5000,2000,2000};
-
         int tds, msg, groups, gen, den, fail, busy, tbls;
 
         try {
+
             tds = Integer.parseInt(tdField.getText());
             msg = Integer.parseInt(msgField.getText());
             groups = Integer.parseInt(groupField.getText());
@@ -143,25 +148,27 @@ public class TestScreen {
                 tds, msg, groups, gen, den, fail, busy
                 };
 
-        Reporter reporter = new Reporter(progressBar.progressProperty());
-
         progressBar.progressProperty().addListener((observable, oldValue, newValue) -> {
-
-                if (newValue.doubleValue() == .0){
-
-                    progressBar.setVisible(true);
-                    disableAll(true);
-                }
 
                 if (newValue.doubleValue() == 1.0){
 
-                    toConsole(reporter.getOutput());
                     progressBar.setVisible(false);
                     disableAll(false);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Запись тестов завершена!");
+                    alert.setHeaderText("Успешно!");
+                    alert.setContentText("Было проведено " + groups * tbls
+                            + " тестов.\nФайл успешно сохранён!");
+                    alert.initOwner(initStage);
+                    alert.showAndWait();
                 }
             });
 
-            reporter.report(args, tbls, initStage);
+        progressBar.setProgress(.0);
+        progressBar.setVisible(true);
+        disableAll(true);
+        progressBar.setProgress(0.05);
+        Tester.test(args, initStage, progressBar.progressProperty());
     }
 
     @FXML
@@ -172,13 +179,7 @@ public class TestScreen {
     }
 
     @FXML
-    private void profileHandle() throws IOException {
+    private void profileHandle() { manager.mainWindow(); }
 
-        main.mainWindow(initStage);
-    }
-
-    void setMain(Main main){
-        this.main = main;
-    }
 
 }

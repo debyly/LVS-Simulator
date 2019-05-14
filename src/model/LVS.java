@@ -1,7 +1,6 @@
 package model;
 
 import model.TerminalDevice.DeviceState;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,25 +10,24 @@ import static model.TerminalDevice.DeviceState.WORKING;
 
 public class LVS {
 
-    public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
-    class NetLine {
 
-        private LineState state = LineState.A_WORKING;
-        public LineState getState() {
-            return state;
-        }
-        void setState(LineState state) {
-            this.state = state;
-        }
-    }
+
+    public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
 
     private boolean real;
-
-    private ArrayList<TerminalDevice> clients = new ArrayList<>();
-    private NetLine netLine = new NetLine();
     private LineController lineController;
+    private ArrayList<TerminalDevice> clients = new ArrayList<>();
 
-    public LineController getLineCtrl() {
+    private LVS.LineState state = LVS.LineState.A_WORKING;
+    LVS.LineState getLineState() {
+        return state;
+    }
+    void setLineState(LVS.LineState state) {
+        this.state = state;
+    }
+
+
+    LineController getLineCtrl() {
         return lineController;
     }
 
@@ -46,33 +44,28 @@ public class LVS {
 
         this.real = real;
 
-        lineController = new LineController(real, clients, netLine);
+        lineController = new LineController(real, this);
 
         for (int i = 0; i < clientsAmount; i++)
-            clients.add(new TerminalDevice(real, chances));
+            clients.add(new TerminalDevice(chances));
     }
 
-    public int getClientsAmount(){
-
-        return clients.size();
-    }
+    public int getClientsAmount(){ return clients.size(); }
 
     public ArrayList<TerminalDevice> getClients() {
         return clients;
     }
 
-    public void start(List<Double> statistics) throws InterruptedException {
+    void start(List<Double> statistics) {
 
         //================= Симуляция работы =====================
         for (TerminalDevice client : clients) {
-            client.changeState(client.getState());
-            if (!real) client.process();
+            if (!real) client.setRandomState();
         }
 
         //================= Подсчёт ошибок =====================
         for (TerminalDevice client : clients) {
             switch (client.getState()) {
-
                 case FAILURE:
                     statistics.set(0, statistics.get(0)+1);
                     break;
@@ -84,17 +77,17 @@ public class LVS {
                     statistics.set(2, statistics.get(2)+1);
                     break;
                 case GENERATOR:
-                    netLine.setState(LineState.A_GENERATION);
                     statistics.set(3, statistics.get(3)+1);
                     break;
-
                 default:
                     break;
             }
         }
+
         //===== Действия при генерации ======
-        if (netLine.getState() == LineState.A_GENERATION)
+        if (getLineState() == LineState.A_GENERATION)
             lineController.findGenerator();
+
         //====== Запуск действия контроллера =======
         for (TerminalDevice client : clients)
             lineController.reactOn(client);

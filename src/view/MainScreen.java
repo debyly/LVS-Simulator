@@ -1,3 +1,5 @@
+package view;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,9 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import model.LVS;
-import view.VisualDevice;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,11 +36,10 @@ public class MainScreen {
 
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
-    private Stage initStage;
-    private Main main;
+    private WindowManager manager;
 
-    public void setInitStage(Stage initStage) {
-        this.initStage = initStage;
+    void setManager(WindowManager manager) {
+        this.manager = manager;
     }
 
     @FXML
@@ -58,18 +57,19 @@ public class MainScreen {
         });
     }
 
-    public void drawLVS(){
+    void drawLVS(){
 
         try {
             for (int i = 0; i < lvs.getClientsAmount(); i++){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(i % 2 == 0 ? "view/DeviceUpper.fxml" : "view/DeviceLower.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                        i % 2 == 0 ? "view/DeviceUpper.fxml" : "view/DeviceLower.fxml"));
                 Node elm = loader.load();
                 visualDevices.add(loader.getController());
                 visualDevices.get(i).setTerminalDevice(i, lvs.getClients().get(i));
                 visualDevices.get(i).setOff();
                 lvsPane.getChildren().add(elm);
-                elm.setLayoutX(i%2 == 0 ? i*35+4 : i*35 + 10);
-                elm.setLayoutY(i%2 == 0 ? 8 : 115);
+                elm.setLayoutX(i % 2 == 0 ? i*35 + 4 : i*35 + 10);
+                elm.setLayoutY(i % 2 == 0 ? 8 : 115);
             }
 
         } catch (IOException e){
@@ -80,7 +80,6 @@ public class MainScreen {
             alert.setHeaderText("Ошибка инициализации ЛВС");
             alert.setTitle("Error: внутренняя ошибка");
             alert.setContentText("Сообщение ошибки:\n" + e.getMessage());
-            alert.initOwner(initStage);
             alert.showAndWait();
         }
     }
@@ -113,17 +112,11 @@ public class MainScreen {
     }
 
     @FXML
-    void profileHandle() throws IOException {
+    void profileHandle() { manager.testWindow(); }
 
-        main.testWindow(initStage);
-    }
-
-    public void createLVS(int clientsAmount, int gen, int den, int fail, int busy){
+    void createLVS(int clientsAmount, int gen, int den, int fail, int busy){
 
         lvs = new LVS(true, clientsAmount, gen, den, fail, busy);
     }
 
-    public void setMain(Main main){
-        this.main = main;
-    }
 }
