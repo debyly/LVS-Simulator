@@ -96,7 +96,7 @@ public class MyRandom {
         return result;
     }
 
-    public static int[] getRoulette(
+    public static int[] getProportions(
            int[] fractions){
 
         long[] longs = new long[fractions.length];
@@ -147,21 +147,21 @@ public class MyRandom {
         for (int i = 0; i < fractions.length; i++)
             denoms[i] = fractions[i].getDenominator();
 
-        int[] roulette = getRoulette(denoms);
+        int[] proportions = getProportions(denoms);
 
         int sum = 0;
-        int random = r.nextInt(sum(roulette));
+        int random = r.nextInt(sum(proportions));
 
-        for (int i = 0; i < roulette.length; i++){
+        for (int i = 0; i < proportions.length; i++){
 
-            sum += roulette[i];
+            sum += proportions[i];
             if (random <= sum) {
                 events[i+1] ++;
                 return (i + 1);
             }
         }
 
-        return roulette.length;
+        return proportions.length;
     }
 
     public static TerminalDevice.DeviceState getRandomState(int genProb, int denProb, int failProb, int busyProb){
