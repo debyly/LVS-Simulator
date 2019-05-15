@@ -20,13 +20,13 @@
             <Font name="Calibri" size="14.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="32.0" layoutY="354.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="32.0" layoutY="374.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="32.0" layoutY="374.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="32.0" layoutY="354.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="32.0" layoutY="394.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="32.0" layoutY="414.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="32.0" layoutY="434.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Text fill="#868686" layoutX="54.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вык) Выключен" />
-      <Text fill="#868686" layoutX="54.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает" />
+      <Text fill="#868686" layoutX="54.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(блк) Заблокирован" />
+      <Text fill="#868686" layoutX="54.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает" />
       <Text fill="#868686" layoutX="53.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой / Занято" />
       <Text fill="#868686" layoutX="53.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе" />
       <Text fill="#868686" layoutX="53.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация" />

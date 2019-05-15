@@ -32,7 +32,7 @@ public class VisualDevice {
 
     private TerminalDevice terminalDevice;
 
-    public enum VisualState{ONLINE, OFFLINE, GENERATOR, FAILURE, DENIAL}
+    public enum VisualState{ONLINE, BLOCKED, GENERATOR, FAILURE, DENIAL}
 
     public class VisualStateProperty extends SimpleObjectProperty<VisualState> {
 
@@ -58,7 +58,7 @@ public class VisualDevice {
             new HashMap<VisualState, Paint>(){{
 
                 put(ONLINE, Paint.valueOf("#5bd983"));
-                put(OFFLINE, Paint.valueOf("#cc1800"));
+                put(BLOCKED, Paint.valueOf("#cc1800"));
                 put(FAILURE, Paint.valueOf("#ffdf1f"));
                 put(DENIAL, Paint.valueOf("#71725f"));
                 put(GENERATOR, Paint.valueOf("#1f9dff"));
@@ -67,7 +67,7 @@ public class VisualDevice {
     private static Map<VisualState, String> stateAbbr = new HashMap<VisualState, String>(){{
 
         put(ONLINE, "вкл");
-        put(OFFLINE, "вык");
+        put(BLOCKED, "блк");
         put(FAILURE, "сбо");
         put(DENIAL, "отк");
         put(GENERATOR, "ген");
@@ -96,7 +96,7 @@ public class VisualDevice {
                         state.set(ONLINE);
                         break;
                     case BLOCKED:
-                        state.set(OFFLINE);
+                        state.set(BLOCKED);
                         break;
                     case DENIAL:
                         state.set(DENIAL);
@@ -122,7 +122,7 @@ public class VisualDevice {
             case ONLINE:
                 terminalDevice.systemSetState(TerminalDevice.DeviceState.WORKING);
                 break;
-            case OFFLINE:
+            case BLOCKED:
                 terminalDevice.systemSetState(TerminalDevice.DeviceState.BLOCKED);
                 break;
             case GENERATOR:

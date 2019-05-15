@@ -47,6 +47,15 @@ public class MainScreen {
         this.manager = manager;
     }
 
+    void addToConsole(String string){
+
+    }
+
+    private void cleanConsole(String prompt){
+
+        console.setText(prompt);
+    }
+
     @FXML
     void initialize(){
 
@@ -91,7 +100,7 @@ public class MainScreen {
                 visualDevices.get(i).setTerminalDevice(i, lvs.getClients().get(i));
                 visualDevices.get(i).setOff();
                 lvsPane.getChildren().add(elm);
-                elm.setLayoutX(i % 2 == 0 ? i*35 + 4 : i*35 + 10);
+                elm.setLayoutX(i*34 + 10);
                 elm.setLayoutY(i % 2 == 0 ? 8 : 115);
             }
 
@@ -111,7 +120,6 @@ public class MainScreen {
         for (int i = 0; i < visualDevices.size(); i++)
             visualDevices.get(i).getVirtualDeviceState()
                     .bind(lvs.getClients().get(i).getDeviceStateProperty());
-
     }
 
     @FXML
@@ -126,8 +134,14 @@ public class MainScreen {
             statePrompt.setText("ЛВС Отключена");
 
         for (VisualDevice visualDevice : visualDevices){
-            if (turnButton.isSelected()) visualDevice.setOn();
-            else visualDevice.setOff();
+            if (turnButton.isSelected()) {
+                visualDevice.setOn();
+                cleanConsole("> ...");
+            }
+            else {
+                visualDevice.setOff();
+                cleanConsole("*Отключено*");
+            }
         }
     }
 
