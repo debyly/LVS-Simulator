@@ -1,17 +1,28 @@
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-import view.WindowManager;
+
 
 public class Main extends Application {
 
-
-    public static void main(String[] args) { launch(args); }
+    private static String mainfxml = "res/sample.fxml";
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource(mainfxml));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
+        /* test of repo cloning */
+        //Another one shit
+        //second one
+        //I DON UBawfaw
 
-        WindowManager manager = new WindowManager(primaryStage);
-        manager.start();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
