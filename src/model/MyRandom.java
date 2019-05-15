@@ -168,7 +168,7 @@ public class MyRandom {
 
         int[] probs = new int[]{genProb,denProb,failProb,busyProb};
 
-        if (eventsAmount % 20000 == 0) {
+        if (eventsAmount > 0 && eventsAmount % 20000 == 0) {
             steps ++;
 
             for (int i = 0; i < events.length; i++)
