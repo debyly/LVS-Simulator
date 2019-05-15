@@ -71,8 +71,7 @@ public class MainScreen {
                 lineB.setStroke(Paint.valueOf("#b1b1b1"));
         });
 
-        lvs = new LVS(true, 18,20000,5000,2000,2000);
-                            //clientsAmount, gen, den, fail, busy);
+        lvs = new LVS(true, 250, 18,20000,5000,2000,2000);
 
         lineStateProperty.addListener((observable, oldValue, newValue) -> Platform.runLater(()-> {
             if (newValue == LVS.LineState.A_WORKING) {
@@ -145,12 +144,10 @@ public class MainScreen {
         }
     }
 
-
     @FXML
     void execHandle(){
 
         turnUI();
-
         Runnable r = () -> {
             try {
                 lvs.start(new ArrayList<>());
@@ -160,7 +157,6 @@ public class MainScreen {
                 e.printStackTrace();
             }
         };
-
         (new Thread(r)).start();
     }
 

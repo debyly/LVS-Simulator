@@ -18,7 +18,8 @@ public class WindowManager {
     }
 
     public void start(){
-        mainWindow();
+        //mainWindow();
+        testWindow();
     }
 
     void mainWindow() {

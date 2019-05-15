@@ -35,8 +35,13 @@ public class LVS {
         return lineController;
     }
 
-    public LVS(boolean real, int clientsAmount, int gen, int den, int fail, int busy)
+    int sleepAmount = 0;
+    
+    public LVS(boolean real, int sleepAmount, int clientsAmount, int gen, int den, int fail, int busy)
     {
+        
+        this.sleepAmount = sleepAmount;
+        
         Map<DeviceState, Integer> chances
                 = new HashMap<DeviceState, Integer>(){{
 
@@ -68,13 +73,12 @@ public class LVS {
         if (!real)
             for (TerminalDevice client : clients) {
                 client.backup();
-                client.process();
-                switch (client.getState()) {
+                DeviceState finalState = client.process();
+                switch (finalState) {
                     case FAILURE:
                             statistics.set(0, statistics.get(0) + 1);
                         break;
                     case DENIAL:
-                        if (client.getPreviousState() == WORKING)
                             statistics.set(1, statistics.get(1) + 1);
                         break;
                     case BUSY:
@@ -88,7 +92,7 @@ public class LVS {
                 }
             }
 
-        if (real) Thread.sleep(500);
+        if (real) Thread.sleep(sleepAmount);
 
         //======== Действия при генерации ==========
         while (state.get() == LineState.A_GENERATION)

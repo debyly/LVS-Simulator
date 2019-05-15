@@ -1,6 +1,5 @@
 package model;
 
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Pair;
@@ -9,13 +8,16 @@ import util.Reporter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Tester {
 
 
     private List<List<List<Double>>> tables;
 
-    public void test(int[] args, int tablesAmount, StringProperty progressDetails, DoubleProperty progressBarProperty, File file){
+    public void test(int[] args, int sleepAmount, int tablesAmount, StringProperty progressDetails, DoubleProperty progressBarProperty, File file){
+
+        AtomicReference<Double> proDouble = new AtomicReference<>(.0);
 
         Runnable testTask = () -> {
             tables = new ArrayList<>(tablesAmount);
@@ -29,13 +31,13 @@ public class Tester {
 
             for (int i = 0; i < tablesAmount; i++) {
 
-                tables.add(Tester.simulateX(args).getKey());
-                double proDouble = 0.05 + 0.7 * (i / (double)(tablesAmount-1));
+                tables.add(Tester.simulateX(args, sleepAmount).getKey());
+                proDouble.set(0.05 + 0.7 * (i / (double) (tablesAmount - 1)));
 
-                progressBarProperty.setValue(proDouble);
+                progressBarProperty.setValue(proDouble.get());
                 progressDetails.setValue(
                         "Выполнено "
-                                + ((double)((int)(proDouble * 1000))/10)
+                                + ((double)((int)(proDouble.get() * 1000))/10)
                                 + "% : Проводится тест №" + (i+1) + " ...");
 
                 try {
@@ -44,6 +46,11 @@ public class Tester {
                     e.printStackTrace();
                 }
             }
+
+            progressDetails.setValue(
+                    "Выполнено "
+                            + ((double)((int)(proDouble.get() * 1000))/10)
+                            + "% : Завершение тестов...");
 
             Reporter r = new Reporter(progressBarProperty, progressDetails);
             r.makeReport(tables);
@@ -55,9 +62,9 @@ public class Tester {
 
     }
 
-    private static Pair<List<List<Double>>, Integer> simulateX(int[] args)
+    private static Pair<List<List<Double>>, Integer> simulateX(int[] args, int sleepAmount)
     {
-        LVS lvs = new LVS(false, args[0],args[3], args[4], args[5], args[6]);
+        LVS lvs = new LVS(false, sleepAmount, args[0],args[3], args[4], args[5], args[6]);
         List<List<Double>> statistics = new ArrayList<>(args[2]);
 
         int restMessages = args[1];

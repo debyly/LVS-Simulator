@@ -2,10 +2,7 @@ package model;
 
 import javafx.beans.property.SimpleObjectProperty;
 import model.LVS.LineState;
-import view.VisualDevice;
-
 import java.util.Map;
-import java.util.Random;
 
 import static model.TerminalDevice.DeviceState.*;
 
@@ -28,12 +25,10 @@ public class TerminalDevice {
     DeviceState getState() { return state.get(); }
     DeviceState getPreviousState() { return previousState; }
 
-    private LVS lvs;
     private Map<DeviceState, Integer> chances;
 
     TerminalDevice (Map<DeviceState, Integer> chances, LVS lvs){
 
-        this.lvs = lvs;
         this.chances = chances;
         state.addListener((observable, oldValue, newValue) -> {
 
@@ -66,32 +61,27 @@ public class TerminalDevice {
         previousState = WORKING;
     }
 
-    public void backup(){
+    void backup(){
         previousState = state.get();
     }
 
     public void systemSetState(DeviceState st){
-
         state.set(st);
     }
 
-    void process() {
+    DeviceState process() {
 
         if (state.get() == INITIAL)
             changeState(WORKING);
 
-        Random rand = new Random();
-        double randDouble = rand.nextDouble() % 1.0;
+        DeviceState randomState = MyRandom.getRandomState(
+                chances.get(GENERATOR),
+                chances.get(DENIAL),
+                chances.get(FAILURE),
+                chances.get(BUSY)
+        );
 
-        if (state.get() != DENIAL && state.get() != BLOCKED)
-
-            if (randDouble < 1.0 / chances.get(GENERATOR))
-                changeState(GENERATOR);
-            else if (randDouble < 1.0 / chances.get(DENIAL))
-                changeState(DENIAL);
-            else if (randDouble < 1.0 / chances.get(FAILURE))
-                changeState(FAILURE);
-            else if (randDouble < 1.0 / chances.get(BUSY))
-                changeState(BUSY);
+        changeState(randomState);
+        return randomState;
     }
 }

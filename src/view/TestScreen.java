@@ -138,6 +138,7 @@ public class TestScreen {
                 new FileChooser.ExtensionFilter(
                         "XLSX File",
                         "*.xlsx"));
+
         fileChooser.setInitialDirectory(
                 new File(System.getProperty("user.home") + "/Desktop"));
         File file = fileChooser.showSaveDialog(initStage);
@@ -146,9 +147,8 @@ public class TestScreen {
 
             progressBar.setProgress(0.01);
 
-
             Tester tester = new Tester();
-            tester.test(args, tbls,
+            tester.test(args, 0, tbls,
                     progressText.textProperty(),
                     progressBar.progressProperty(),
                     file);

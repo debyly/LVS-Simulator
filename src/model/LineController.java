@@ -40,7 +40,7 @@ class LineController {
         }
         normalWork();
 
-        if (real) Thread.sleep(500);
+        if (real) Thread.sleep(lvs.sleepAmount);
     }
 
     private void failure() {
@@ -93,14 +93,14 @@ class LineController {
             timer.addTime(ANSWER);
             client.changeState(BLOCKED);
 
-            if (real) Thread.sleep(500);
+            if (real) Thread.sleep(lvs.sleepAmount);
         }
         //==================================================
             for (int i = 0; i < lvs.getClients().size(); i++){
 
                 lvs.setLineState(B_WORKING);
 
-                if (real) Thread.sleep(500);
+                if (real) Thread.sleep(lvs.sleepAmount);
 
                 //======= Разблокировка одного ОУ ==========
                 timer.addTime(UNBLOCK);
@@ -111,7 +111,7 @@ class LineController {
 
                 lvs.setLineState(A_WORKING);
 
-                if (real) Thread.sleep(500);
+                if (real) Thread.sleep(lvs.sleepAmount);
 
                 //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
@@ -136,7 +136,7 @@ class LineController {
 
                     lvs.getClients().get(i).changeState(BLOCKED);
 
-                    if (real) Thread.sleep(500);
+                    if (real) Thread.sleep(lvs.sleepAmount);
 
                     //===================================================================
                     //======= Остановка после обнаружения генерящего элемента ===========
@@ -150,10 +150,10 @@ class LineController {
                 timer.addTime(ANSWER);
                 lvs.getClients().get(i).changeState(UNBLOCKING);
 
-                if (real) Thread.sleep(500);
+                if (real) Thread.sleep(lvs.sleepAmount);
 
                 //==============================================
             }*/
-        if (real) Thread.sleep(500);
+        if (real) Thread.sleep(lvs.sleepAmount);
     }
 }
