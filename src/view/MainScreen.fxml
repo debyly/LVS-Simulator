@@ -14,22 +14,22 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
    <children>
-      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="43.0" layoutY="313.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
-      <Text fill="#868686" layoutX="83.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
+      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="32.0" layoutY="314.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
+      <Text fill="#868686" layoutX="72.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
          <font>
             <Font name="Calibri" size="14.0" />
          </font>
       </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="43.0" layoutY="353.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="43.0" layoutY="373.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="43.0" layoutY="393.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="43.0" layoutY="413.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="43.0" layoutY="433.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Text fill="#868686" layoutX="65.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вык) Выключен" />
-      <Text fill="#868686" layoutX="65.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает" />
-      <Text fill="#868686" layoutX="64.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой" />
-      <Text fill="#868686" layoutX="64.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе" />
-      <Text fill="#868686" layoutX="64.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="32.0" layoutY="354.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="32.0" layoutY="374.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="32.0" layoutY="394.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="32.0" layoutY="414.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="32.0" layoutY="434.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
+      <Text fill="#868686" layoutX="54.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вык) Выключен" />
+      <Text fill="#868686" layoutX="54.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает" />
+      <Text fill="#868686" layoutX="53.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой / Занято" />
+      <Text fill="#868686" layoutX="53.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе" />
+      <Text fill="#868686" layoutX="53.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация" />
       <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="32.0" layoutX="496.0" layoutY="18.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="165.0" />
       <Text fx:id="statePrompt" layoutX="507.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
          <font>
@@ -37,12 +37,17 @@
          </font>
       </Text>
       <Separator layoutX="2.0" layoutY="279.0" prefHeight="12.0" prefWidth="675.0" />
-      <Button fx:id="execButton" layoutX="587.0" layoutY="316.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="32.0" prefWidth="62.0" text="Обход">
+      <Button fx:id="execButton" layoutX="568.0" layoutY="313.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="159.0" prefWidth="89.0" text="ЗАПУСК ОБХОДА" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="21.0" layoutY="18.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="32.0" prefWidth="62.0" text="Сменить">
+      <Text fill="#989898" layoutX="130.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="profileButton" layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="18.0" prefWidth="62.0" text="Сменить">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
@@ -52,7 +57,7 @@
             <Font name="Calibri" size="12.0" />
          </font>
       </ToggleButton>
-      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="199.0" layoutY="312.0" prefHeight="159.0" prefWidth="367.0" promptText="Консоль&gt; Статистика работы симуляции">
+      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="189.0" layoutY="312.0" prefHeight="159.0" prefWidth="367.0" promptText="Консоль&gt; Статистика работы симуляции">
          <font>
             <Font name="Calibri" size="14.0" />
          </font>
@@ -83,10 +88,5 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Text fill="#989898" layoutX="100.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

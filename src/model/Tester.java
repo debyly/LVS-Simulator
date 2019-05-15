@@ -21,6 +21,11 @@ public class Tester {
             tables = new ArrayList<>(tablesAmount);
 
             progressDetails.setValue("Выполнено 0% : Инициализация теста...");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             for (int i = 0; i < tablesAmount; i++) {
 
@@ -32,6 +37,12 @@ public class Tester {
                         "Выполнено "
                                 + ((double)((int)(proDouble * 1000))/10)
                                 + "% : Проводится тест №" + (i+1) + " ...");
+
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             Reporter r = new Reporter(progressBarProperty, progressDetails);
@@ -72,7 +83,11 @@ public class Tester {
             restMessages -= sessions * args[0];
 
             for (int j = 0; j < sessions; j++) {
+                try {
                     lvs.start(temp);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             statistics.get(i).set(0, (double) sessions * args[0]);

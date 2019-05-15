@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -26,6 +27,8 @@ public class MainScreen {
     @FXML
     Button execButton;
     @FXML
+    Button profileButton;
+    @FXML
     Text statePrompt;
     @FXML
     Pane lvsPane;
@@ -37,6 +40,8 @@ public class MainScreen {
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
     private WindowManager manager;
+    private LVS.LineStateProperty lineStateProperty = new LVS.LineStateProperty(LVS.LineState.A_WORKING);
+
 
     void setManager(WindowManager manager) {
         this.manager = manager;
@@ -49,15 +54,33 @@ public class MainScreen {
 
         execButton.setDisable(true);
         console.setMouseTransparent(true);
+
         turnButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
 
             execButton.setDisable(!newValue);
                 lineA.setStroke(Paint.valueOf( newValue ? "#5bd983" : "#b1b1b1"));
                 lineB.setStroke(Paint.valueOf("#b1b1b1"));
         });
-    }
 
-    void drawLVS(){
+        lvs = new LVS(true, 18,20000,5000,2000,2000);
+                            //clientsAmount, gen, den, fail, busy);
+
+        lineStateProperty.addListener((observable, oldValue, newValue) -> Platform.runLater(()-> {
+            if (newValue == LVS.LineState.A_WORKING) {
+
+                lineA.setStroke(Paint.valueOf("#5bd983"));
+                lineB.setStroke(Paint.valueOf("#b1b1b1"));
+            }
+            if (newValue == LVS.LineState.B_WORKING) {
+
+                lineA.setStroke(Paint.valueOf("#b1b1b1"));
+                lineB.setStroke(Paint.valueOf("#5bd983"));
+            }
+            if (newValue == LVS.LineState.A_GENERATION) {
+                lineA.setStroke(Paint.valueOf("#1F9DFF"));
+                lineB.setStroke(Paint.valueOf("#b1b1b1"));
+            }
+        }));
 
         try {
             for (int i = 0; i < lvs.getClientsAmount(); i++){
@@ -82,6 +105,13 @@ public class MainScreen {
             alert.setContentText("Сообщение ошибки:\n" + e.getMessage());
             alert.showAndWait();
         }
+
+        lineStateProperty.bind(lvs.getLineStateProperty());
+
+        for (int i = 0; i < visualDevices.size(); i++)
+            visualDevices.get(i).getVirtualDeviceState()
+                    .bind(lvs.getClients().get(i).getDeviceStateProperty());
+
     }
 
     @FXML
@@ -89,34 +119,47 @@ public class MainScreen {
 
         turnButton.setText(turnButton.isSelected() ? "ВЫКЛЮЧИТЬ" : "ВКЛЮЧИТЬ");
 
-        if (turnButton.isSelected()){
+        if (turnButton.isSelected())
             statePrompt.setText("Все ОУ работают");
-        }
-        else {
+
+        else
             statePrompt.setText("ЛВС Отключена");
-        }
 
         for (VisualDevice visualDevice : visualDevices){
-            if (turnButton.isSelected())
-                visualDevice.setOn();
-            else
-                visualDevice.setOff();
-
+            if (turnButton.isSelected()) visualDevice.setOn();
+            else visualDevice.setOff();
         }
     }
+
+
     @FXML
     void execHandle(){
 
+        turnUI();
 
+        Runnable r = () -> {
+            try {
+                lvs.start(new ArrayList<>());
+                Platform.runLater(this::turnUI);
 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
+
+        (new Thread(r)).start();
+    }
+
+    private void turnUI() {
+
+        turnButton.setDisable(!turnButton.isDisabled());
+        execButton.setDisable(!execButton.isDisabled());
+        profileButton.setDisable(!profileButton.isDisabled());
+        for (VisualDevice v : visualDevices)
+            v.disableButton(!v.tdStateButton.isDisabled());
     }
 
     @FXML
     void profileHandle() { manager.testWindow(); }
-
-    void createLVS(int clientsAmount, int gen, int den, int fail, int busy){
-
-        lvs = new LVS(true, clientsAmount, gen, den, fail, busy);
-    }
 
 }

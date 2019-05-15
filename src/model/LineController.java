@@ -6,9 +6,8 @@ import static model.TimeCounter.TimeType.*;
 
 class LineController {
     private TimeCounter timer = new TimeCounter();
-
-    private LVS lvs;
     private boolean real;
+    private LVS lvs;
 
     LineController(boolean real, LVS lvs){
 
@@ -21,7 +20,7 @@ class LineController {
     }
 
     //======= Действия при определенных неполадках ============
-    void reactOn(TerminalDevice td) {
+    void reactOn(TerminalDevice td) throws InterruptedException {
         switch (td.getState()){
             // Абонент занят
             case BUSY:
@@ -40,6 +39,8 @@ class LineController {
                 break;
         }
         normalWork();
+
+        if (real) Thread.sleep(500);
     }
 
     private void failure() {
@@ -72,7 +73,9 @@ class LineController {
         lvs.setLineState(A_WORKING);
     }
 
-    void findGenerator() {
+    void findGenerator() throws InterruptedException {
+
+        int lastDevice = 0;
 
         // ================ Тест МКО ====================
         for(int i = 0; i < lvs.getClients().size(); i++){
@@ -82,19 +85,22 @@ class LineController {
         //================================================
 
         //=============== Блокировка всех ОУ =============
-       lvs.setLineState(B_WORKING);
+        lvs.setLineState(B_WORKING);
         for (TerminalDevice client : lvs.getClients()) {
 
             timer.addTime(BLOCK);
             timer.addTime(PAUSE_BEFORE_ANSWER);
             timer.addTime(ANSWER);
             client.changeState(BLOCKED);
+
+            if (real) Thread.sleep(500);
         }
         //==================================================
-            int lastDevice = 0;
             for (int i = 0; i < lvs.getClients().size(); i++){
 
                 lvs.setLineState(B_WORKING);
+
+                if (real) Thread.sleep(500);
 
                 //======= Разблокировка одного ОУ ==========
                 timer.addTime(UNBLOCK);
@@ -104,6 +110,8 @@ class LineController {
                 //===========================================
 
                 lvs.setLineState(A_WORKING);
+
+                if (real) Thread.sleep(500);
 
                 //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
@@ -127,19 +135,25 @@ class LineController {
                     timer.addTime(ANSWER);
 
                     lvs.getClients().get(i).changeState(BLOCKED);
+
+                    if (real) Thread.sleep(500);
+
                     //===================================================================
                     //======= Остановка после обнаружения генерящего элемента ===========
-                    break;
+                    lastDevice = i;
                 }
             }
-            //===== Разблокировка ОУ после генерящего =====
+          /*  //===== Разблокировка ОУ после генерящего =====
             for (int i = lastDevice + 1; i < lvs.getClients().size(); i++ ){
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                lvs.getClients().get(i).changeState(WORKING);
+                lvs.getClients().get(i).changeState(UNBLOCKING);
+
+                if (real) Thread.sleep(500);
+
                 //==============================================
-            }
-        lvs.setLineState(A_WORKING);
+            }*/
+        if (real) Thread.sleep(500);
     }
 }

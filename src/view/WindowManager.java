@@ -18,8 +18,7 @@ public class WindowManager {
     }
 
     public void start(){
-        testWindow();
-        //mainWindow();
+        mainWindow();
     }
 
     void mainWindow() {
@@ -35,6 +34,7 @@ public class WindowManager {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Внутренняя ошибка");
             alert.setContentText("Ошибка загрузки\n" + e.getMessage());
+            e.printStackTrace();
             alert.showAndWait();
             return;
         }
@@ -43,8 +43,6 @@ public class WindowManager {
         window.setResizable(false);
         MainScreen MS = loader.getController();
         MS.setManager(this);
-        MS.createLVS(18,20000,5000,2000,2000);
-        MS.drawLVS();
         window.show();
     }
 

@@ -115,7 +115,6 @@ public class TestScreen {
         }
 
         progressBar.progressProperty().addListener((observable, oldValue, newValue) -> {
-
                 if (newValue.doubleValue() == 1.0){
 
                     progressBar.setVisible(false);
@@ -124,15 +123,14 @@ public class TestScreen {
                   }
             });
 
+        int[] args = new int[]{
+                tds, msg, groups, gen, den, fail, busy
+        };
+
         progressBar.setProgress(.0);
         progressBar.setVisible(true);
         progressText.setVisible(true);
         disableAll(true);
-        progressBar.setProgress(0.01);
-
-        int[] args = new int[]{
-                tds, msg, groups, gen, den, fail, busy
-        };
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Сохранить отчёт");
@@ -145,6 +143,10 @@ public class TestScreen {
         File file = fileChooser.showSaveDialog(initStage);
 
         if (file != null) {
+
+            progressBar.setProgress(0.01);
+
+
             Tester tester = new Tester();
             tester.test(args, tbls,
                     progressText.textProperty(),

@@ -1,5 +1,7 @@
 package model;
 
+import javafx.beans.property.SimpleObjectProperty;
+import model.LVS.LineState;
 import view.VisualDevice;
 
 import java.util.Map;
@@ -9,71 +11,87 @@ import static model.TerminalDevice.DeviceState.*;
 
 public class TerminalDevice {
 
-    public enum DeviceState {WORKING, BLOCKED, UNBLOCKING,
-        BUSY, FAILURE, DENIAL, GENERATOR;
-        private static DeviceState[] vals = values();
-        public DeviceState next() {
-            return vals[(this.ordinal()+1) % vals.length];
-        }
-        public DeviceState previous(){
-            return vals[(this.ordinal() + vals.length -1) % vals.length];
-        }}
+    public enum DeviceState {INITIAL, WORKING, BLOCKED, UNBLOCKING,
+        BUSY, FAILURE, DENIAL, GENERATOR}
 
-    private DeviceState state = WORKING;
+    private DeviceStateProperty state = new DeviceStateProperty(INITIAL);
     private DeviceState previousState = WORKING;
 
-    private Map<DeviceState, Integer> chances;
-
-    public DeviceState getState() {
+    public static class DeviceStateProperty extends SimpleObjectProperty<DeviceState>{
+        public DeviceStateProperty(DeviceState state){
+            super(state);
+        }
+    }
+    public DeviceStateProperty getDeviceStateProperty(){
         return state;
     }
+    DeviceState getState() { return state.get(); }
+    DeviceState getPreviousState() { return previousState; }
 
-    public DeviceState getPreviousState() {
-        return previousState;
-    }
+    private LVS lvs;
+    private Map<DeviceState, Integer> chances;
 
-    TerminalDevice (Map<DeviceState, Integer> chances){
+    TerminalDevice (Map<DeviceState, Integer> chances, LVS lvs){
 
+        this.lvs = lvs;
         this.chances = chances;
+        state.addListener((observable, oldValue, newValue) -> {
+
+            if (newValue == GENERATOR)
+                lvs.setLineState(LineState.A_GENERATION);
+            if (oldValue == GENERATOR) {
+                for (TerminalDevice device : lvs.getClients()) {
+                    if (device.getState() == GENERATOR)
+                        return;
+                }
+                if (lvs.getLineStateProperty().get() == LineState.A_GENERATION)
+                    lvs.setLineState(LineState.A_WORKING);
+            }
+        });
     }
 
-    public void changeState(DeviceState st){
-        if (st == UNBLOCKING && state == BLOCKED){
-            state = previousState;
+    void changeState(DeviceState st){
+        if (st == UNBLOCKING && state.get() == BLOCKED){
+            state.set(previousState);
         }
-        else{
-            previousState = state;
-            state = st;
+
+        else if (state.get() != BLOCKED && state.get() != DENIAL){
+            previousState = state.get();
+            state.set(st);
         }
     }
 
     public void restore(){
-
-        state = WORKING;
+        state.set(WORKING);
         previousState = WORKING;
     }
 
-    void setRandomState() {
+    public void backup(){
+        previousState = state.get();
+    }
+
+    public void systemSetState(DeviceState st){
+
+        state.set(st);
+    }
+
+    void process() {
+
+        if (state.get() == INITIAL)
+            changeState(WORKING);
+
         Random rand = new Random();
+        double randDouble = rand.nextDouble() % 1.0;
 
-        previousState = state;
+        if (state.get() != DENIAL && state.get() != BLOCKED)
 
-        if ((state != BLOCKED) && ( state != DENIAL)){
-
-            if (rand.nextInt(chances.get(GENERATOR)) == 1) {
+            if (randDouble < 1.0 / chances.get(GENERATOR))
                 changeState(GENERATOR);
-                return;
-            }
-            if (rand.nextInt(chances.get(DENIAL)) == 1) {
+            else if (randDouble < 1.0 / chances.get(DENIAL))
                 changeState(DENIAL);
-                return;
-            }
-            if (rand.nextInt(chances.get(FAILURE)) == 1) {
+            else if (randDouble < 1.0 / chances.get(FAILURE))
                 changeState(FAILURE);
-                return;
-            }
-            if (rand.nextInt(chances.get(BUSY)) == 1)
+            else if (randDouble < 1.0 / chances.get(BUSY))
                 changeState(BUSY);
-        }
     }
 }

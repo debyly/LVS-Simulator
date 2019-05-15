@@ -42,10 +42,9 @@ public class Reporter {
 
                 for (int i = 0; i < outputTables.get(iter).get(0).size(); i++) {
                     get(0).add(.0);
-                    for (int j = 0; j < outputTables.get(iter).size(); j++) {
-
+                    for (int j = 0; j < outputTables.get(iter).size(); j++)
                         get(0).set(i, get(0).get(i) + outputTables.get(iter).get(j).get(i));
-                    }
+
                 }
             }};
 
@@ -56,7 +55,7 @@ public class Reporter {
                 add("Всего отказов");
                 add("Всего 'аб. занят'");
                 add("Всего генераций");
-                add("Суммарное время передачи " + (sumList.get(0).get(0)) + " сообщений");
+                add("Суммарное время передачи " + sumList.get(0).get(0).intValue() + " сообщений");
                 add("Суммарное матем. ожид. времени передачи сообщений");
                 add("Сумарное СКО времени передачи сообщений");
             }};
@@ -73,10 +72,14 @@ public class Reporter {
             double proDouble = 0.75 + 0.25 * ((double) i / (outputTables.size()));
             progress.setValue(proDouble);
 
-            progressDetails.setValue(
-                    "Выполнено "
+            progressDetails.setValue("Выполнено "
                             + ((double) ((int) (proDouble * 1000)) / 10)
                             + "% : Подготовка таблицы " + (i + 1) + " ...");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         progress.setValue(0.99);
         progressDetails.setValue("Почти готово...");
