@@ -13,17 +13,17 @@
    <children>
       <AnchorPane prefHeight="64.0" prefWidth="50.0">
          <children>
-            <Line fx:id="tail" endX="12.0" endY="-70.66665649414062" layoutX="13.0" layoutY="66.0" startX="12.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+            <Line fx:id="tail" endX="12.0" endY="-70.0" layoutX="13.0" layoutY="66.0" startX="12.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
             <Rectangle fx:id="display" arcHeight="5.0" arcWidth="5.0" fill="#d4deff" height="40.0" layoutX="5.0" layoutY="24.0" stroke="#b1b1b1" strokeType="INSIDE" strokeWidth="2.0" width="40.0" />
             <Rectangle fx:id="stateIndicator" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="19.0" layoutY="38.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
          </children>
       </AnchorPane>
-      <Label fx:id="tdLabel" text="ОУ №10">
+      <Label fx:id="tdLabel" text="----">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="tdStateButton" maxWidth="50.0" mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="50.0" text="ССТ">
+      <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="50.0" mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="50.0" text="ССТ">
          <VBox.margin>
             <Insets />
          </VBox.margin>

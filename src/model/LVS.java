@@ -12,8 +12,9 @@ public class LVS {
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
 
     public static class LineStateProperty extends SimpleObjectProperty<LVS.LineState> {
+
       public LineStateProperty(LineState state){
-            super(state);
+          super(state);
         }
     }
     private boolean real;
@@ -22,7 +23,19 @@ public class LVS {
     private LineStateProperty state = new LineStateProperty(LineState.A_WORKING);
 
     void setLineState(LVS.LineState state) {
+
+        if (state == LineState.A_WORKING)
+            for (TerminalDevice device : clients)
+                if (device.getState() == DeviceState.GENERATOR) {
+                    this.state.set(LineState.A_GENERATION);
+                    return;
+                }
+
         this.state.set(state);
+    }
+
+    LineState getLineState(){
+        return state.get();
     }
 
     public LineStateProperty getLineStateProperty(){

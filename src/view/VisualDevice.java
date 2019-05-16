@@ -34,7 +34,7 @@ public class VisualDevice {
 
     private TextArea console = new TextArea();
 
-    private Paint basePaint = Paint.valueOf("#b1b1b1");
+    static Paint baseColor = Paint.valueOf("#b1b1b1");
 
     private TerminalDevice terminalDevice;
     private int deviceNumber;
@@ -60,7 +60,7 @@ public class VisualDevice {
 
     private TerminalDevice.ActiveProperty virtualActive = new TerminalDevice.ActiveProperty(false);
 
-    private static Map<VisualState, Paint> stateColor =
+    static Map<VisualState, Paint> stateColor =
             new HashMap<VisualState, Paint>(){{
 
                 put(ONLINE, Paint.valueOf("#5bd983"));
@@ -83,6 +83,7 @@ public class VisualDevice {
     void initialize(){
         tdStateButton.setText("откл");
         tail.setStroke(Paint.valueOf("#b1b1b1"));
+
         state.addListener((observable, oldValue, newValue) ->
         {
             stateIndicator.setFill(stateColor.get(newValue));
@@ -91,9 +92,33 @@ public class VisualDevice {
         });
 
         virtualActive.addListener((observable, oldValue, newValue) -> setActive(newValue));
+
+        virtualDeviceState.addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> {
+                    switch (newValue) {
+                        case WORKING:
+                            state.set(ONLINE);
+                            break;
+                        case BLOCKED:
+                            state.set(BLOCKED);
+                            break;
+                        case DENIAL:
+                            state.set(DENIAL);
+                            break;
+                        case BUSY:
+                        case FAILURE:
+                            state.set(FAILURE);
+                            break;
+                        case GENERATOR:
+                            state.set(GENERATOR);
+                            break;
+                    }
+                }));
     }
 
-    void setConsole(TextArea c){ console.textProperty().bindBidirectional(c.textProperty()); }
+    void setConsole(TextArea c){
+        console = c;
+    }
 
     void setTerminalDevice(int number, TerminalDevice td){
 
@@ -101,31 +126,22 @@ public class VisualDevice {
         tdLabel.setText("ОУ №" + deviceNumber);
         terminalDevice = td;
 
-        virtualDeviceState.bindBidirectional(td.deviceStateProperty());
-        virtualDeviceState.addListener((observable, oldValue, newValue) ->
-            Platform.runLater(() -> {
-                switch (newValue) {
-                    case WORKING:
-                        state.set(ONLINE);
-                        break;
-                    case BLOCKED:
-                        state.set(BLOCKED);
-                        break;
-                    case DENIAL:
-                        state.set(DENIAL);
-                        break;
-                    case BUSY:
-                    case FAILURE:
-                        state.set(FAILURE);
-                        break;
-                    case GENERATOR:
-                        state.set(GENERATOR);
-                        break;
-                }
-            }));
+        virtualDeviceState.bind(td.deviceStateProperty());
+        virtualActive.bind(td.activeProperty());
+        virtualActive.getLastMessage().bind(td.activeProperty().getLastMessage());
+    }
 
-        virtualActive.bindBidirectional(td.activeProperty());
-        virtualActive.getLastMessage().bindBidirectional(td.activeProperty().getLastMessage());
+    void dropTerminalDevice(){
+
+        terminalDevice = null;
+        tdLabel.setText("----");
+
+        virtualDeviceState.unbind();
+        virtualActive.unbind();
+        virtualActive.getLastMessage().unbind();
+        virtualDeviceState.set(DeviceState.INITIAL);
+        virtualActive.set(false);
+        virtualActive.setLastMessage("");
     }
 
     @FXML
@@ -154,13 +170,12 @@ public class VisualDevice {
     }
 
     private void setActive(boolean active){
-        Platform.runLater(() ->{
                 display.setFill(Paint.valueOf(active? "#C4FFAE": "#D4DEFF"));
-                addToConsole("ОУ №" + deviceNumber + ": " + virtualActive.getLastMessage().getValue());
-        });
+                if (power && !virtualActive.getLastMessage().getValue().isEmpty())
+                    addToConsole("ОУ №" + deviceNumber + ": " + virtualActive.getLastMessage().getValue());
     }
 
-    private boolean power = true;
+    private boolean power = false;
 
     void powerSwitch(){
         if (power) setOff(); else setOn();
@@ -169,8 +184,9 @@ public class VisualDevice {
 
     private void setOff(){
         terminalDevice.deviceStateProperty().set(DeviceState.INITIAL);
-        stateIndicator.setFill(basePaint);
-        tail.setStroke(basePaint);
+        stateIndicator.setFill(baseColor);
+        tail.setStroke(baseColor);
+        display.setFill(Paint.valueOf("#D4DEFF"));
         tdStateButton.setDisable(true);
         tdStateButton.setText("откл");
     }
@@ -188,8 +204,16 @@ public class VisualDevice {
         tdStateButton.setDisable(disable);
     }
 
+    void transparentButton(boolean transparent){
+        tdStateButton.setMouseTransparent(transparent);
+    }
+
     private void addToConsole(String string){
-        Platform.runLater(() ->
-                console.setText(console.getText() + string + "\n" ));
+      Platform.runLater(() ->{
+
+            console.setText(console.getText() + "\n" + string);
+            console.selectPositionCaret(console.getLength());
+            console.deselect();
+        });
     }
 }

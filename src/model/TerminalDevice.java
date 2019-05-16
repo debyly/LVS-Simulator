@@ -22,7 +22,7 @@ public class TerminalDevice {
         private StringProperty lastMessage = new SimpleStringProperty();
         public ActiveProperty(boolean active){ super(active);}
 
-        void setLastMessage(String message){
+        public void setLastMessage(String message){
             lastMessage.setValue(message);
         }
         public StringProperty getLastMessage(){
@@ -42,14 +42,15 @@ public class TerminalDevice {
 
     public ActiveProperty activeProperty() { return active; }
 
-    public void startMessaging(String message){
-        active.set(true);
+    void startMessaging(String message){
         active.setLastMessage(message);
+        active.set(true);
     }
 
-    public void endMessaging(String message){
-        active.set(false);
+    void endMessaging(String message){
+
         active.setLastMessage(message);
+        active.set(false);
     }
 
     private Map<DeviceState, Integer> chances;
@@ -59,8 +60,9 @@ public class TerminalDevice {
         this.chances = chances;
         state.addListener((observable, oldValue, newValue) -> {
 
-            if (newValue == GENERATOR)
+            if (newValue == GENERATOR && lvs.getLineState() == LineState.A_WORKING) {
                 lvs.setLineState(LineState.A_GENERATION);
+            }
             if (oldValue == GENERATOR) {
                 for (TerminalDevice device : lvs.getClients()) {
                     if (device.getState() == GENERATOR)
