@@ -12,18 +12,33 @@ public class TerminalDevice {
         BUSY, FAILURE, DENIAL, GENERATOR}
 
     private DeviceStateProperty state = new DeviceStateProperty(INITIAL);
+    private ActiveProperty active = new ActiveProperty(false);
+
     private DeviceState previousState = WORKING;
+
+    public static class ActiveProperty extends SimpleObjectProperty<Boolean>{
+        public ActiveProperty(boolean active){ super(active);}
+    }
 
     public static class DeviceStateProperty extends SimpleObjectProperty<DeviceState>{
         public DeviceStateProperty(DeviceState state){
             super(state);
         }
     }
-    public DeviceStateProperty getDeviceStateProperty(){
+    public DeviceStateProperty deviceStateProperty(){
         return state;
     }
     DeviceState getState() { return state.get(); }
-    DeviceState getPreviousState() { return previousState; }
+
+    public ActiveProperty activeProperty() { return active; }
+
+    public void startMessaging(){
+        active.set(true);
+    }
+
+    public void endMessaging(){
+        active.set(false);
+    }
 
     private Map<DeviceState, Integer> chances;
 

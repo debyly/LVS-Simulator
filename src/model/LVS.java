@@ -63,7 +63,7 @@ public class LVS {
         return clients;
     }
 
-    public void start(List<Double> statistics) throws InterruptedException {
+    public void start(List<Double> data) throws InterruptedException {
 
         double initTime = lineController.getTime();
 
@@ -75,16 +75,16 @@ public class LVS {
                 //================= Подсчёт ошибок =====================
                 switch (finalState) {
                     case FAILURE:
-                            statistics.set(0, statistics.get(0) + 1);
+                            data.set(0, data.get(0) + 1);
                         break;
                     case DENIAL:
-                            statistics.set(1, statistics.get(1) + 1);
+                            data.set(1, data.get(1) + 1);
                         break;
                     case BUSY:
-                            statistics.set(2, statistics.get(2) + 1);
+                            data.set(2, data.get(2) + 1);
                         break;
                     case GENERATOR:
-                            statistics.set(3, statistics.get(3) + 1);
+                            data.set(3, data.get(3) + 1);
                         break;
                     default:
                         break;
@@ -102,7 +102,7 @@ public class LVS {
             lineController.reactOn(client);
 
         //====== Сохранение времени работы ========
-        statistics.set(4, lineController.getTime()-initTime);
+        data.set(4, lineController.getTime()-initTime);
     }
 }
 

@@ -21,6 +21,10 @@ class LineController {
 
     //======= Действия при определенных неполадках ============
     void reactOn(TerminalDevice td) throws InterruptedException {
+
+        td.startMessaging();
+        if (real) Thread.sleep(lvs.sleepAmount);
+
         switch (td.getState()){
             // Абонент занят
             case BUSY:
@@ -40,6 +44,7 @@ class LineController {
         }
         normalWork();
 
+        td.endMessaging();
         if (real) Thread.sleep(lvs.sleepAmount);
     }
 
@@ -91,35 +96,43 @@ class LineController {
             timer.addTime(BLOCK);
             timer.addTime(PAUSE_BEFORE_ANSWER);
             timer.addTime(ANSWER);
-            client.changeState(BLOCKED);
 
+            client.startMessaging();
             if (real) Thread.sleep(lvs.sleepAmount);
+            client.changeState(BLOCKED);
+            if (real) Thread.sleep(lvs.sleepAmount);
+            client.endMessaging();
         }
         //==================================================
             for (int i = 0; i < lvs.getClients().size(); i++){
 
                 lvs.setLineState(B_WORKING);
-
                 if (real) Thread.sleep(lvs.sleepAmount);
 
                 //======= Разблокировка одного ОУ ==========
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
+                lvs.getClients().get(i).startMessaging();
+                if (real) Thread.sleep(lvs.sleepAmount);
                 lvs.getClients().get(i).changeState(UNBLOCKING);
+                if (real) Thread.sleep(lvs.sleepAmount);
+                lvs.getClients().get(i).endMessaging();
                 //===========================================
 
                 lvs.setLineState(A_WORKING);
-
                 if (real) Thread.sleep(lvs.sleepAmount);
-
                 //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
 
-                if(!(lvs.getClients().get(i).getState() == GENERATOR))
+                if(!(lvs.getClients().get(i).getState() == GENERATOR)) {
+                    lvs.getClients().get(i).startMessaging();
+                    if (real) Thread.sleep(lvs.sleepAmount);
                     timer.addTime(ANSWER);
-                //==================================================
+                    lvs.getClients().get(i).endMessaging();
+                }
+                    //==================================================
 
                 else {
                     //======== Опрос предыдущего ОУ ==========
@@ -133,27 +146,31 @@ class LineController {
                     timer.addTime(BLOCK);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     timer.addTime(ANSWER);
-
-                    lvs.getClients().get(i).changeState(BLOCKED);
-
+                    lvs.getClients().get(i).startMessaging();
                     if (real) Thread.sleep(lvs.sleepAmount);
+                    lvs.getClients().get(i).changeState(DENIAL);
+                    if (real) Thread.sleep(lvs.sleepAmount);
+                    lvs.getClients().get(i).endMessaging();
+                    //=========================================
 
-                    //===================================================================
                     //======= Остановка после обнаружения генерящего элемента ===========
                     lastDevice = i;
+                    break;
                 }
             }
-          /*  //===== Разблокировка ОУ после генерящего =====
+            //===== Разблокировка ОУ после генерящего =====
             for (int i = lastDevice + 1; i < lvs.getClients().size(); i++ ){
+
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                lvs.getClients().get(i).changeState(UNBLOCKING);
-
+                lvs.getClients().get(i).startMessaging();
                 if (real) Thread.sleep(lvs.sleepAmount);
-
+                lvs.getClients().get(i).changeState(UNBLOCKING);
+                if (real) Thread.sleep(lvs.sleepAmount);
+                lvs.getClients().get(i).endMessaging();
                 //==============================================
-            }*/
+            }
         if (real) Thread.sleep(lvs.sleepAmount);
     }
 }

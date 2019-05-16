@@ -26,6 +26,8 @@ public class VisualDevice {
     @FXML
     Rectangle stateIndicator;
     @FXML
+    Rectangle display;
+    @FXML
     Line tail;
 
     private Paint basePaint = Paint.valueOf("#b1b1b1");
@@ -47,11 +49,18 @@ public class VisualDevice {
     }
 
     private VisualStateProperty state = new VisualStateProperty(ONLINE);
+
     private TerminalDevice.DeviceStateProperty virtualDeviceState
             = new TerminalDevice.DeviceStateProperty(TerminalDevice.DeviceState.INITIAL);
 
+    private TerminalDevice.ActiveProperty virtualActive
+            = new TerminalDevice.ActiveProperty(false);
+
     TerminalDevice.DeviceStateProperty getVirtualDeviceState(){
         return virtualDeviceState;
+    }
+    TerminalDevice.ActiveProperty getVirtualActive(){
+        return virtualActive;
     }
 
     private static Map<VisualState, Paint> stateColor =
@@ -83,6 +92,8 @@ public class VisualDevice {
             tdStateButton.setText(stateAbbr.get(newValue));
             tail.setStroke(stateColor.get(newValue));
         });
+
+        virtualActive.addListener((observable, oldValue, newValue) -> setActive(newValue));
     }
 
     void setTerminalDevice(int number, TerminalDevice td){
@@ -137,8 +148,13 @@ public class VisualDevice {
         }
     }
 
+    private void setActive(boolean active){
+        Platform.runLater(() ->
+                display.setFill(Paint.valueOf(active? "#C4FFAE" : "#D4DEFF")));
+    }
+
     void setOff(){
-        terminalDevice.getDeviceStateProperty().set(TerminalDevice.DeviceState.INITIAL);
+        terminalDevice.deviceStateProperty().set(TerminalDevice.DeviceState.INITIAL);
         stateIndicator.setFill(basePaint);
         tail.setStroke(basePaint);
         tdStateButton.setDisable(true);

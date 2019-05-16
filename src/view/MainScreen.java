@@ -116,9 +116,11 @@ public class MainScreen {
 
         lineStateProperty.bind(lvs.getLineStateProperty());
 
-        for (int i = 0; i < visualDevices.size(); i++)
+        for (int i = 0; i < visualDevices.size(); i++) {
             visualDevices.get(i).getVirtualDeviceState()
-                    .bind(lvs.getClients().get(i).getDeviceStateProperty());
+                    .bind(lvs.getClients().get(i).deviceStateProperty());
+            visualDevices.get(i).getVirtualActive().bind(lvs.getClients().get(i).activeProperty());
+        }
     }
 
     @FXML
@@ -150,7 +152,11 @@ public class MainScreen {
         turnUI();
         Runnable r = () -> {
             try {
-                lvs.start(new ArrayList<>());
+
+                lvs.start(new ArrayList<Double>(){{
+                    for (int i = 0; i < 5; i++) add(.0);
+
+                }});
                 Platform.runLater(this::turnUI);
 
             } catch (InterruptedException e) {

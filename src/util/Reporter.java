@@ -95,7 +95,7 @@ public class Reporter {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Запись тестов завершена!");
                 alert.setHeaderText("Успешно!");
-                alert.setContentText("Excel-книга " + file.getName() + " успешно сохранёна!");
+                alert.setContentText("Excel-книга \"" + file.getName() + "\" успешно сохранёна!");
                 alert.show();
             });
         }
