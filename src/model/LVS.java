@@ -103,9 +103,8 @@ public class LVS {
         else Thread.sleep(sleepAmount);
 
         //======== Действия при генерации ==========
-        while (state.get() == LineState.A_GENERATION) {
+        while (state.get() == LineState.A_GENERATION)
             lineController.findGenerator();
-        }
 
         //====== Запуск действия контроллера =======
         for (TerminalDevice client : clients)

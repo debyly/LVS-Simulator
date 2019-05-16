@@ -83,6 +83,7 @@ public class Tester {
 
             double M = .0;
             double SKO = .0;
+
             double[] intervals = new double[sessions];
 
             List<Double> data = new ArrayList<Double>(){{
@@ -92,25 +93,24 @@ public class Tester {
             for (int j = 0; j < sessions; j++)
                 try {
                     lvs.start(data);
-                    M += data.get(4);
-                    intervals[j] = data.get(4);
+                    M += data.get(4)/(sessions*args[0]);
+                    intervals[j] = data.get(4) / args[0];
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
             for (int j = 0; j < sessions; j++)
-                SKO += Math.pow(intervals[j]-(M/(sessions)), 2);
+                SKO += Math.pow(intervals[j] - M, 2);
 
-            SKO = Math.sqrt(SKO / sessions);
+            SKO = Math.sqrt(SKO / (sessions*args[0]));
 
             statistics.get(i).set(0, (double) sessions * args[0]);
             statistics.get(i).set(1,data.get(0));
             statistics.get(i).set(2,data.get(1));
             statistics.get(i).set(3,data.get(2));
             statistics.get(i).set(4,data.get(3));
-            statistics.get(i).set(5, M);
-            M /= sessions;
+            statistics.get(i).set(5, M * (sessions*args[0]));
             statistics.get(i).set(6, M);
             statistics.get(i).set(7, SKO);
         }

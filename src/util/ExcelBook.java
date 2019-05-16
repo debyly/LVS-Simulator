@@ -6,7 +6,6 @@ import org.apache.poi.xssf.usermodel.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 class ExcelBook {
@@ -34,7 +33,7 @@ class ExcelBook {
     }
 
 
-    void addSheet(String sheetName, List<List<Double>> table, ArrayList<String> columns){
+    void addSheet(String sheetName, List<List<Double>> table, List<String> columns){
 
         XSSFSheet sheet = workbook.createSheet(sheetName);
         Cell cell;
@@ -62,7 +61,7 @@ class ExcelBook {
             sheet.autoSizeColumn(i);
     }
 
-    void addToSheet(int fromLine, String sheetName, List<List<Double>> table, ArrayList<String> columns){
+    void addToSheet(int fromLine, String sheetName, List<List<Double>> table, List<String> columns){
 
         XSSFSheet sheet = workbook.getSheet(sheetName);
         Cell cell;
