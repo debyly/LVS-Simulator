@@ -155,7 +155,7 @@ public class MyRandom {
         for (int i = 0; i < proportions.length; i++){
 
             sum += proportions[i];
-            if (random <= sum) {
+            if (random < sum) {
                 events[i+1] ++;
                 return (i + 1);
             }
@@ -168,13 +168,13 @@ public class MyRandom {
 
         int[] probs = new int[]{genProb,denProb,failProb,busyProb};
 
-        if (eventsAmount > 0 && eventsAmount % 20000 == 0) {
+        if (eventsAmount > 0 && eventsAmount % 19998 == 0) {
             steps ++;
 
             for (int i = 0; i < events.length; i++)
                 mEvents[i] += events[i];
 
-            System.out.println("Значения: Норма = "
+           /* System.out.println("Значения: Норма = "
                     + events[0]
                     + ", ген = "
                     + events[1]
@@ -184,17 +184,18 @@ public class MyRandom {
                     + events[3]
                     + ", занят = "
                     + events[4]);
-
+*/
             System.out.println("Средние значения: Норма = "
-                    + mEvents[0]/steps
+                    + (double)(mEvents[0]*1000/steps)/1000
                     + ", ген = "
-                    + mEvents[1]/steps
+                    + (double)(mEvents[1]*1000/steps)/1000
                     + ", отк = "
-                    + mEvents[2]/steps
+                    + (double)(mEvents[2]*1000/steps)/1000
                     + ", сбой = "
-                    + mEvents[3]/steps
+                    + (double)(mEvents[3]*1000/steps)/1000
                     + ", занят = "
-                    + mEvents[4]/steps);
+                    + (double)(mEvents[4]*1000/steps)/1000
+            );
 
 
 

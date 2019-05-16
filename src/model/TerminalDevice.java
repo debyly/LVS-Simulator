@@ -61,18 +61,14 @@ public class TerminalDevice {
         previousState = WORKING;
     }
 
-    void backup(){
-        previousState = state.get();
-    }
-
     public void systemSetState(DeviceState st){
         state.set(st);
     }
 
     DeviceState process() {
 
-        if (state.get() == INITIAL)
-            changeState(WORKING);
+        if (state.get() == INITIAL) changeState(WORKING);
+        previousState = state.get();
 
         DeviceState randomState = MyRandom.getRandomState(
                 chances.get(GENERATOR),

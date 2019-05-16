@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static model.TerminalDevice.DeviceState.WORKING;
-
 public class LVS {
 
 
@@ -67,13 +65,14 @@ public class LVS {
 
     public void start(List<Double> statistics) throws InterruptedException {
 
+        double initTime = lineController.getTime();
 
-        //================= Симуляция работы ===================
-        //================= Подсчёт ошибок =====================
         if (!real)
             for (TerminalDevice client : clients) {
-                client.backup();
+
+                //================= Симуляция работы ===================
                 DeviceState finalState = client.process();
+                //================= Подсчёт ошибок =====================
                 switch (finalState) {
                     case FAILURE:
                             statistics.set(0, statistics.get(0) + 1);
@@ -92,7 +91,7 @@ public class LVS {
                 }
             }
 
-        if (real) Thread.sleep(sleepAmount);
+        else Thread.sleep(sleepAmount);
 
         //======== Действия при генерации ==========
         while (state.get() == LineState.A_GENERATION)
@@ -101,6 +100,9 @@ public class LVS {
         //====== Запуск действия контроллера =======
         for (TerminalDevice client : clients)
             lineController.reactOn(client);
+
+        //====== Сохранение времени работы ========
+        statistics.set(4, lineController.getTime()-initTime);
     }
 }
 

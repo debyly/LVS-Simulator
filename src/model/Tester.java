@@ -31,9 +31,9 @@ public class Tester {
 
             for (int i = 0; i < tablesAmount; i++) {
 
-                tables.add(Tester.simulateX(args, sleepAmount).getKey());
-                proDouble.set(0.05 + 0.7 * (i / (double) (tablesAmount - 1)));
+                tables.add(Tester.simulateX(args, sleepAmount));
 
+                proDouble.set(0.05 + 0.7 * (i / (double) (tablesAmount - 1)));
                 progressBarProperty.setValue(proDouble.get());
                 progressDetails.setValue(
                         "Выполнено "
@@ -62,7 +62,7 @@ public class Tester {
 
     }
 
-    private static Pair<List<List<Double>>, Integer> simulateX(int[] args, int sleepAmount)
+    private static List<List<Double>> simulateX(int[] args, int sleepAmount)
     {
         LVS lvs = new LVS(false, sleepAmount, args[0],args[3], args[4], args[5], args[6]);
         List<List<Double>> statistics = new ArrayList<>(args[2]);
@@ -79,19 +79,22 @@ public class Tester {
             List<Double> temp = new ArrayList<Double>(){{
                 for (int i = 0; i < 5; i++)
                     add(.0);
-
             }};
 
-            double initTime = (double) lvs.getLineCtrl().getTime();
-
+            //double initTime = (double) lvs.getLineCtrl().getTime();
             int step = args[1] / (args[2] * args[0]) + 1;
             int sessions = restMessages < step * args[0] ? restMessages / args[0] : step;
 
             restMessages -= sessions * args[0];
 
+            double D = .0;
+            double M = .0;
             for (int j = 0; j < sessions; j++) {
                 try {
                     lvs.start(temp);
+                    M += temp.get(4);
+                    D += temp.get(4)*temp.get(4);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -102,18 +105,12 @@ public class Tester {
             statistics.get(i).set(2,temp.get(1));
             statistics.get(i).set(3,temp.get(2));
             statistics.get(i).set(4,temp.get(3));
-
-            statistics.get(i).set(5, lvs.getLineCtrl().getTime() - initTime);
-
-            Double M = (lvs.getLineCtrl().getTime() - initTime) / (sessions * args[0]);
-
-            Double D = .0;
-
+            statistics.get(i).set(5, M);
+            M /= sessions * args[0];
+            D /= sessions * args[0];
             statistics.get(i).set(6, M);
-            statistics.get(i).set(7, D);
+            statistics.get(i).set(7, D - Math.pow(M, 2));
         }
-        Integer totalTime = lvs.getLineCtrl().getTime();
-
-        return new Pair<>(statistics, totalTime);
+        return statistics;
     }
 }
