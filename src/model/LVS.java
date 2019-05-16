@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class LVS {
 
-
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
 
     public static class LineStateProperty extends SimpleObjectProperty<LVS.LineState> {
-        public LineStateProperty(LineState state){ super(state); }
+      public LineStateProperty(LineState state){
+            super(state);
+        }
     }
-
     private boolean real;
     private LineController lineController;
     private ArrayList<TerminalDevice> clients = new ArrayList<>();
@@ -29,11 +29,7 @@ public class LVS {
         return state;
     }
 
-    LineController getLineCtrl() {
-        return lineController;
-    }
-
-    int sleepAmount = 0;
+    int sleepAmount;
     
     public LVS(boolean real, int sleepAmount, int clientsAmount, int gen, int den, int fail, int busy)
     {
@@ -94,8 +90,9 @@ public class LVS {
         else Thread.sleep(sleepAmount);
 
         //======== Действия при генерации ==========
-        while (state.get() == LineState.A_GENERATION)
+        while (state.get() == LineState.A_GENERATION) {
             lineController.findGenerator();
+        }
 
         //====== Запуск действия контроллера =======
         for (TerminalDevice client : clients)

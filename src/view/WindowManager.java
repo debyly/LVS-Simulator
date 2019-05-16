@@ -18,8 +18,8 @@ public class WindowManager {
     }
 
     public void start(){
-        //mainWindow();
-        testWindow();
+        mainWindow();
+        //testWindow();
     }
 
     void mainWindow() {
@@ -34,9 +34,9 @@ public class WindowManager {
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Внутренняя ошибка");
-            alert.setContentText("Ошибка загрузки\n" + e.getMessage());
-            e.printStackTrace();
-            alert.showAndWait();
+            alert.setContentText("Ошибка загрузки\n" + e.getCause() + "\n" + e.getMessage());
+            //e.printStackTrace();
+            alert.show();
             return;
         }
         window.setTitle("Симулятор ЛВС 2000");

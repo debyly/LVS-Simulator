@@ -22,29 +22,38 @@ class LineController {
     //======= Действия при определенных неполадках ============
     void reactOn(TerminalDevice td) throws InterruptedException {
 
-        td.startMessaging();
+        td.startMessaging("Опрос компьютера");
         if (real) Thread.sleep(lvs.sleepAmount);
 
         switch (td.getState()){
             // Абонент занят
             case BUSY:
+                td.endMessaging("Компьютер занят : ожидание...");
                 busy();
                 td.changeState(WORKING);
                 break;
             // Сбой
             case FAILURE:
+                td.endMessaging("Компьютер содержит ошибку : исправление...");
                 failure();
                 td.changeState(WORKING);
                 break;
             // Отказ или блокировка ОУ
             case DENIAL:
+                denial();
+                td.endMessaging("Компьютер вышел из строя! : невозможно исправить");
+                break;
             case BLOCKED:
                 denial();
+                td.endMessaging("Компьютер заблокирован администратором");
                 break;
+            default:
+                td.endMessaging("Компьютер в порядке");
+                break;
+
         }
         normalWork();
 
-        td.endMessaging();
         if (real) Thread.sleep(lvs.sleepAmount);
     }
 
@@ -60,7 +69,6 @@ class LineController {
             timer.addTime(WORD);
             timer.addTime(PAUSE_BEFORE_ANSWER);
            }
-        lvs.setLineState(B_WORKING);
     }
 
     private void busy() {
@@ -97,11 +105,11 @@ class LineController {
             timer.addTime(PAUSE_BEFORE_ANSWER);
             timer.addTime(ANSWER);
 
-            client.startMessaging();
+            client.startMessaging("Блокировка компьютера");
             if (real) Thread.sleep(lvs.sleepAmount);
             client.changeState(BLOCKED);
             if (real) Thread.sleep(lvs.sleepAmount);
-            client.endMessaging();
+            client.endMessaging("Заблокировано");
         }
         //==================================================
             for (int i = 0; i < lvs.getClients().size(); i++){
@@ -113,11 +121,11 @@ class LineController {
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                lvs.getClients().get(i).startMessaging();
+                lvs.getClients().get(i).startMessaging("Разблокировка");
                 if (real) Thread.sleep(lvs.sleepAmount);
                 lvs.getClients().get(i).changeState(UNBLOCKING);
                 if (real) Thread.sleep(lvs.sleepAmount);
-                lvs.getClients().get(i).endMessaging();
+                lvs.getClients().get(i).endMessaging("Успешно");
                 //===========================================
 
                 lvs.setLineState(A_WORKING);
@@ -125,12 +133,12 @@ class LineController {
                 //============= Опрос текущего ОУ =================
                 timer.addTime(COMMAND);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
-
+                lvs.getClients().get(i).startMessaging("Опрос текущего ОУ");
                 if(!(lvs.getClients().get(i).getState() == GENERATOR)) {
-                    lvs.getClients().get(i).startMessaging();
+
                     if (real) Thread.sleep(lvs.sleepAmount);
                     timer.addTime(ANSWER);
-                    lvs.getClients().get(i).endMessaging();
+                    lvs.getClients().get(i).endMessaging("ОУ не является генератором");
                 }
                     //==================================================
 
@@ -146,11 +154,11 @@ class LineController {
                     timer.addTime(BLOCK);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     timer.addTime(ANSWER);
-                    lvs.getClients().get(i).startMessaging();
+                    lvs.getClients().get(i).startMessaging("Устройство является генератором!");
                     if (real) Thread.sleep(lvs.sleepAmount);
                     lvs.getClients().get(i).changeState(DENIAL);
                     if (real) Thread.sleep(lvs.sleepAmount);
-                    lvs.getClients().get(i).endMessaging();
+                    lvs.getClients().get(i).endMessaging("Блокировка генерящего элемента");
                     //=========================================
 
                     //======= Остановка после обнаружения генерящего элемента ===========
@@ -164,11 +172,11 @@ class LineController {
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
                 timer.addTime(ANSWER);
-                lvs.getClients().get(i).startMessaging();
+                lvs.getClients().get(i).startMessaging("Разблокировка компьютера");
                 if (real) Thread.sleep(lvs.sleepAmount);
                 lvs.getClients().get(i).changeState(UNBLOCKING);
                 if (real) Thread.sleep(lvs.sleepAmount);
-                lvs.getClients().get(i).endMessaging();
+                lvs.getClients().get(i).endMessaging("Успешно");
                 //==============================================
             }
         if (real) Thread.sleep(lvs.sleepAmount);

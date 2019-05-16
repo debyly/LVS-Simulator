@@ -1,6 +1,8 @@
 package model;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import model.LVS.LineState;
 import java.util.Map;
 
@@ -17,7 +19,15 @@ public class TerminalDevice {
     private DeviceState previousState = WORKING;
 
     public static class ActiveProperty extends SimpleObjectProperty<Boolean>{
+        private StringProperty lastMessage = new SimpleStringProperty();
         public ActiveProperty(boolean active){ super(active);}
+
+        void setLastMessage(String message){
+            lastMessage.setValue(message);
+        }
+        public StringProperty getLastMessage(){
+            return lastMessage;
+        }
     }
 
     public static class DeviceStateProperty extends SimpleObjectProperty<DeviceState>{
@@ -32,12 +42,14 @@ public class TerminalDevice {
 
     public ActiveProperty activeProperty() { return active; }
 
-    public void startMessaging(){
+    public void startMessaging(String message){
         active.set(true);
+        active.setLastMessage(message);
     }
 
-    public void endMessaging(){
+    public void endMessaging(String message){
         active.set(false);
+        active.setLastMessage(message);
     }
 
     private Map<DeviceState, Integer> chances;

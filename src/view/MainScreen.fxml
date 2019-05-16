@@ -30,29 +30,29 @@
       <Text fill="#868686" layoutX="53.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой / Занято" />
       <Text fill="#868686" layoutX="53.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе" />
       <Text fill="#868686" layoutX="53.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация" />
-      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="32.0" layoutX="496.0" layoutY="18.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="165.0" />
-      <Text fx:id="statePrompt" layoutX="507.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
+      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="32.0" layoutX="496.0" layoutY="13.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="165.0" />
+      <Text fx:id="statePrompt" layoutX="507.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
          <font>
             <Font name="Calibri Italic" size="12.0" />
          </font>
       </Text>
-      <Separator layoutX="2.0" layoutY="279.0" prefHeight="12.0" prefWidth="675.0" />
-      <Button fx:id="execButton" layoutX="568.0" layoutY="313.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="159.0" prefWidth="89.0" text="ЗАПУСК ОБХОДА" textAlignment="CENTER" wrapText="true">
+      <Separator layoutX="2.0" layoutY="289.0" prefHeight="12.0" prefWidth="675.0" />
+      <Button fx:id="execButton" layoutX="568.0" layoutY="313.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="51.0" prefWidth="89.0" text="Запуск Контроллера" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Text fill="#989898" layoutX="130.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
+      <Text fill="#989898" layoutX="120.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
          <font>
             <Font name="Calibri" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="profileButton" layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="18.0" prefWidth="62.0" text="Сменить">
+      <Button fx:id="profileButton" layoutX="18.0" layoutY="13.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="31.0" prefWidth="62.0" text="Сменить">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <ToggleButton fx:id="turnButton" layoutX="394.0" layoutY="18.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="89.0" text="ВКЛЮЧИТЬ">
+      <ToggleButton fx:id="turnButton" layoutX="365.0" layoutY="13.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="118.0" text="ВКЛЮЧИТЬ CЕТЬ">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
@@ -62,31 +62,37 @@
             <Font name="Calibri" size="14.0" />
          </font>
       </TextArea>
-      <Pane fx:id="lvsPane" layoutX="16.0" layoutY="60.0" prefHeight="211.0" prefWidth="648.0">
+      <Pane fx:id="lvsPane" layoutX="7.0" layoutY="66.0" prefHeight="221.0" prefWidth="665.0">
          <children>
-            <Line fx:id="lineA" endX="556.3333129882812" endY="-40.0" layoutX="78.0" layoutY="143.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
-            <Line fx:id="lineB" endX="556.3333129882812" endY="-40.0" layoutX="78.0" layoutY="153.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+            <Label layoutX="4.0" layoutY="91.0" text="A">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="4.0" layoutY="105.0" text="B">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Line fx:id="lineA" endX="556.3333129882812" endY="-40.0" layoutX="85.0" layoutY="142.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+            <Line fx:id="lineB" endX="556.3333129882812" endY="-40.0" layoutX="85.0" layoutY="154.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+            <Label layoutX="649.0" layoutY="91.0" text="A">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="649.0" layoutY="105.0" text="B">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Label layoutX="10.0" layoutY="152.0" text="A">
+      <Button fx:id="stopButton" layoutX="568.0" layoutY="373.0" mnemonicParsing="false" onAction="#stopHandle" prefHeight="51.0" prefWidth="89.0" text="Стоп" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="Calibri" size="12.0" />
          </font>
-      </Label>
-      <Label layoutX="10.0" layoutY="163.0" text="B">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="660.0" layoutY="154.0" text="A">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="660.0" layoutY="165.0" text="B">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
+      </Button>
+      <Separator layoutX="2.0" layoutY="50.0" prefHeight="12.0" prefWidth="675.0" />
    </children>
 </AnchorPane>
