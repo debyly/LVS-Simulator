@@ -5,22 +5,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class WindowManager {
 
     private Stage window;
 
-    public WindowManager(Stage window){
+    public WindowManager(Stage window){ this.window = window;}
 
-        this.window = window;
-    }
-
-    public void start(){
-        mainWindow();
-        //testWindow();
-    }
+    public void start(){ mainWindow(); }
 
     void mainWindow() {
 
@@ -34,8 +27,8 @@ public class WindowManager {
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Внутренняя ошибка");
-            alert.setContentText("Ошибка загрузки\n" + e.getCause() + "\n" + e.getMessage());
-            //e.printStackTrace();
+            alert.setContentText("Ошибка загрузки\n"
+                    + e.getCause() + "\n" + e.getMessage());
             alert.show();
             return;
         }
@@ -59,7 +52,8 @@ public class WindowManager {
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Внутренняя ошибка");
-            alert.setContentText("Ошибка загрузки\nКод ошибки:\n" + e.getMessage() + "\n\nОписание:\n" + e.getCause());
+            alert.setContentText("Ошибка загрузки\n"
+                    + e.getCause() + "\n" + e.getMessage());
             alert.showAndWait();
             mainWindow();
             return;

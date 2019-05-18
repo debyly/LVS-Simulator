@@ -2,41 +2,15 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="RSKBPNetSim:jar" />
+      <artifact name="RSKBPNetSim" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Курсач 1.0!">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/RSKBPNetSim.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/apache.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/apache.xml" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Курсач 1.1! Вероятности в десятичных дробях! Улучшен и почищен код! (Возможны баги с потоками)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IPO_KURS_Metod_LVS_GOST_R_52070_1553V.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Otchet_6411.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/activation-1.1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/commons-codec-1.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/commons-collections4-4.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/commons-logging-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/commons-math3-3.6.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/jaxb-api-2.3.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/jaxb-core-2.3.0.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/jaxb-impl-2.3.0.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/junit-4.12.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/lib/log4j-1.2.17.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/poi-examples-4.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/poi-excelant-3.17.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/poi-excelant-4.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/apache/poi-scratchpad-4.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/LVS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/LVS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/LineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/LineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/MyRandom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/MyRandom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TerminalDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TerminalDevice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Tester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/ExcelBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/ExcelBook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/Reporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Reporter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/MainScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/TestScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/TestScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/TestScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/TestScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Исходники.pdf" beforeDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -96,11 +70,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/Reporter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11">
-              <caret line="137" column="33" selection-start-line="137" selection-start-column="33" selection-end-line="137" selection-end-column="33" />
+            <state relative-caret-position="321">
+              <caret line="175" column="29" selection-start-line="171" selection-start-column="15" selection-end-line="175" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -111,25 +85,84 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/ExcelBook.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="35" column="15" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
+            <state relative-caret-position="-459">
+              <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#930#931#0" expanded="true" />
-                <element signature="e#993#994#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/MainScreen.java">
+        <entry file="file://$PROJECT_DIR$/src/model/Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="49" column="65" selection-start-line="49" selection-start-column="65" selection-end-line="49" selection-end-column="65" />
+            <state relative-caret-position="199">
+              <caret line="59" selection-start-line="59" selection-end-line="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/TestScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="267">
+              <caret line="150" column="24" selection-start-line="150" selection-start-column="24" selection-end-line="150" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/TimeCounter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="334">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/LVS.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="470">
+              <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1065#1066#0" expanded="true" />
+                <element signature="e#1099#1100#0" expanded="true" />
+                <element signature="e#1153#1154#0" expanded="true" />
+                <element signature="e#1181#1182#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -144,16 +177,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/LVS.java">
+        <entry file="file://$PROJECT_DIR$/src/model/TerminalDevice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+            <state relative-caret-position="17">
+              <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1065#1066#0" expanded="true" />
-                <element signature="e#1099#1100#0" expanded="true" />
-                <element signature="e#1153#1154#0" expanded="true" />
-                <element signature="e#1181#1182#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -246,23 +275,23 @@
         <option value="$PROJECT_DIR$/src/view/MessageSettings.fxml" />
         <option value="$PROJECT_DIR$/src/FileWorker.java" />
         <option value="$PROJECT_DIR$/src/ExcelBook.java" />
-        <option value="$PROJECT_DIR$/src/model/TimeCounter.java" />
         <option value="$PROJECT_DIR$/src/MainScreen.java" />
         <option value="$PROJECT_DIR$/src/TestScreen.java" />
         <option value="$PROJECT_DIR$/src/Reporter.java" />
         <option value="$PROJECT_DIR$/src/view/ScreenManager.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/view/WindowManager.java" />
         <option value="$PROJECT_DIR$/src/view/VisualDevice.java" />
         <option value="$PROJECT_DIR$/src/model/LineController.java" />
         <option value="$PROJECT_DIR$/src/model/TerminalDevice.java" />
         <option value="$PROJECT_DIR$/src/view/MainScreen.java" />
-        <option value="$PROJECT_DIR$/src/view/TestScreen.java" />
-        <option value="$PROJECT_DIR$/src/model/LVS.java" />
-        <option value="$PROJECT_DIR$/src/model/Tester.java" />
         <option value="$PROJECT_DIR$/src/model/MyRandom.java" />
         <option value="$PROJECT_DIR$/src/util/ExcelBook.java" />
         <option value="$PROJECT_DIR$/src/util/Reporter.java" />
+        <option value="$PROJECT_DIR$/src/model/LVS.java" />
+        <option value="$PROJECT_DIR$/src/model/TimeCounter.java" />
+        <option value="$PROJECT_DIR$/src/view/TestScreen.java" />
+        <option value="$PROJECT_DIR$/src/model/Tester.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
   </component>
@@ -337,7 +366,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/apache/xmlbeans-3.0.1.jar!/" />
-    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15298805" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -704,7 +733,21 @@
       <option name="project" value="LOCAL" />
       <updated>1558102676092</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Курсач 1.1! Вероятности в десятичных дробях! Улучшен и почищен код! (Возможны баги с потоками)">
+      <created>1558195327806</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1558195327806</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Курсач 1.1! Вероятности в десятичных дробях! Улучшен и почищен код! (Возможны баги с потоками)">
+      <created>1558195431423</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1558195431423</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -714,7 +757,7 @@
     <frame x="-7" y="23" width="1295" height="704" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.26115167" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.26115167" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -797,7 +840,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="state" />
     <MESSAGE value="lineController update" />
     <MESSAGE value="UNBLOCKIN - new Device State" />
     <MESSAGE value="Splitted LVS creating from MainScreen" />
@@ -822,7 +864,8 @@
     <MESSAGE value="полностью исправный визуал. Баги не искал :)" />
     <MESSAGE value="Полностью рабочий визуал, рабочая кнопка стоп. Баги не искал, могут возникнуть." />
     <MESSAGE value="Курсач 1.0!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Курсач 1.0!" />
+    <MESSAGE value="Курсач 1.1! Вероятности в десятичных дробях! Улучшен и почищен код! (Возможны баги с потоками)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Курсач 1.1! Вероятности в десятичных дробях! Улучшен и почищен код! (Возможны баги с потоками)" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -922,33 +965,6 @@
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="12" column="45" selection-start-line="12" selection-start-column="45" selection-end-line="12" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/WindowManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Amazon Corretto/jdk1.8.0_202/src.zip!/java/lang/Runnable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="409">
@@ -980,27 +996,7 @@
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/TimeCounter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/MessageSettings.java" />
-    <entry file="file://$PROJECT_DIR$/src/model/LineController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2873">
-          <caret line="173" column="46" selection-start-line="173" selection-start-column="46" selection-end-line="173" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/apache/poi-3.17.jar!/org/apache/poi/ss/format/SimpleFraction.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1058">
@@ -1025,16 +1021,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/TerminalDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-515">
-          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/MainScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
@@ -1047,7 +1033,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/VisualDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2312">
+        <state relative-caret-position="238">
           <caret line="172" column="30" selection-start-line="172" selection-start-column="30" selection-end-line="172" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1055,10 +1041,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/TestScreen.java">
+    <entry file="file://$PROJECT_DIR$/src/view/WindowManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="151" selection-start-line="151" selection-end-line="151" />
+        <state relative-caret-position="209">
+          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/LineController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="173" column="46" selection-start-line="173" selection-start-column="46" selection-end-line="173" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1067,8 +1063,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/LVS.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="73" column="25" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
+        <state relative-caret-position="470">
+          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1065#1066#0" expanded="true" />
@@ -1079,13 +1075,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Tester.java">
+    <entry file="file://$PROJECT_DIR$/src/model/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="60" lean-forward="true" selection-start-line="60" selection-end-line="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1096,22 +1089,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/ExcelBook.java">
+    <entry file="file://$PROJECT_DIR$/src/model/TerminalDevice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="35" column="15" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
+        <state relative-caret-position="17">
+          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#930#931#0" expanded="true" />
-            <element signature="e#993#994#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/TimeCounter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/ExcelBook.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-459">
+          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Reporter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="137" column="33" selection-start-line="137" selection-start-column="33" selection-end-line="137" selection-end-column="33" />
+        <state relative-caret-position="321">
+          <caret line="175" column="29" selection-start-line="171" selection-start-column="15" selection-end-line="175" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/TestScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="150" column="24" selection-start-line="150" selection-start-column="24" selection-end-line="150" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Tester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

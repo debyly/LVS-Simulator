@@ -9,10 +9,26 @@
       <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml-4.0.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml-schemas-4.0.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/apache/xmlbeans-3.0.1.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib/apache/lib" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/activation-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/commons-codec-1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/commons-collections4-4.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/commons-math3-3.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/jaxb-api-2.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/jaxb-core-2.3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/jaxb-impl-2.3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/lib/log4j-1.2.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi-examples-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi-excelant-3.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi-excelant-4.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi-scratchpad-4.0.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.ideaLibSources/poi-3.17-sources.jar!/" />
     </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/lib/apache/lib" recursive="false" />
   </library>
 </component>

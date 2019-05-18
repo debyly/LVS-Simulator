@@ -148,8 +148,7 @@ public class TestScreen {
 
             Tester tester = new Tester();
             tester.test(args, probs, sessions, progressText.textProperty(),
-                    progressBar.progressProperty(), file);
-
+                        progressBar.progressProperty(), file);
         } else {
             progressBar.setProgress(1.0);
         }

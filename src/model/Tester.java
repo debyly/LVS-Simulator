@@ -1,7 +1,9 @@
 package model;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Alert;
 import util.Reporter;
 
 import java.io.File;
@@ -50,10 +52,14 @@ public class Tester {
                     "Выполнено "
                             + (double)((int)(proDouble * 1000))/10
                             + "% : Завершение тестов...");
-
-            Reporter r = new Reporter(progressBarProperty, progressDetails);
-            r.makeReport(tables);
-            r.saveReport(file);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+                Reporter r = new Reporter(progressBarProperty, progressDetails);
+                r.makeReport(tables);
+                r.saveReport(file);
         };
 
         (new Thread(testTask)).start();
