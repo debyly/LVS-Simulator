@@ -17,11 +17,13 @@ public class Reporter {
     private ExcelBook excelBook = new ExcelBook();
 
     public Reporter(DoubleProperty progress, StringProperty progressDetails) {
+
         this.progress = progress;
         this.progressDetails = progressDetails;
     }
 
     public void makeReport(List<List<List<Double>>> outputTables) {
+
 
         ArrayList<String> totalColumnNames = new ArrayList<String>(){{
 
@@ -44,6 +46,19 @@ public class Reporter {
             }}};
 
         for (int i = 0; i < outputTables.size(); i++) {
+
+            double proDouble = 0.75 + 0.24 * ((double) i / (outputTables.size()));
+            progress.setValue(proDouble);
+
+            progressDetails.setValue("Выполнено "
+                    + ((double) ((int) (proDouble * 1000)) / 10)
+                    + "% : Подготовка таблицы " + (i + 1) + " ...");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             ArrayList<String> columnNames = new ArrayList<String>() {{
                 add("Число сообщений в группе");
                 add("Наличие сбоя в группе");
@@ -96,18 +111,6 @@ public class Reporter {
                     outputTables.get(i).size() + 1,
                     "Тест №"
                             + (i + 1), sumList, sumColumnNames);
-
-            double proDouble = 0.75 + 0.24 * ((double) i / (outputTables.size()));
-            progress.setValue(proDouble);
-
-            progressDetails.setValue("Выполнено "
-                            + ((double) ((int) (proDouble * 1000)) / 10)
-                            + "% : Подготовка таблицы " + (i + 1) + " ...");
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         excelBook.addSheet("Итоговый лист", totalList, totalColumnNames);
