@@ -71,7 +71,7 @@ public class LVS {
         return new LVS(true, sleepAmount, devicesAmount,0,0,0,0);
     }
 
-    public static LVS testLVS(int devicesAmount, double gen, double den, double fail, double busy){
+    static LVS testLVS(int devicesAmount, double gen, double den, double fail, double busy){
 
         return new LVS(false, 0, devicesAmount,gen,den,fail,busy);
     }
