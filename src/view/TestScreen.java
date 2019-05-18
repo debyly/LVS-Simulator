@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Tester;
 import java.io.File;
+import java.io.IOException;
 
 public class TestScreen {
 
@@ -155,7 +156,15 @@ public class TestScreen {
     }
 
     @FXML
-    private void profileHandle() { manager.mainWindow(); }
-
-
+    private void profileHandle() {
+        try {
+            manager.mainWindow();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Внутренняя ошибка");
+            alert.setContentText("Ошибка загрузки\n"
+                    + e.getCause() + "\n" + e.getMessage());
+            alert.show();
+        }
+    }
 }

@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="RSKBPNetSim">
-    <output-path>$PROJECT_DIR$/out/artifacts/RSKBPNetSim_JAR</output-path>
-    <root id="archive" name="RSKBPNetSim.jar">
-      <element id="module-output" name="RSKBPNetSim" />
-      <element id="library" level="project" name="apache" />
-    </root>
-  </artifact>
-</component>

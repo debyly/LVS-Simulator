@@ -3,7 +3,6 @@ package view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -13,25 +12,18 @@ public class WindowManager {
 
     public WindowManager(Stage window){ this.window = window;}
 
-    public void start(){ mainWindow(); }
+    public void start() throws IOException { mainWindow(); }
 
-    void mainWindow() {
+    void mainWindow() throws IOException {
 
         if (window.isShowing()) window.close();
 
         String fxml = "MainScreen.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Внутренняя ошибка");
-            alert.setContentText("Ошибка загрузки\n"
-                    + e.getCause() + "\n" + e.getMessage());
-            alert.show();
-            return;
-        }
+
+        root = loader.load();
+
         window.setTitle("Симулятор ЛВС 2000");
         window.setScene(new Scene(root));
         window.setResizable(false);
@@ -40,24 +32,14 @@ public class WindowManager {
         window.show();
     }
 
-    void testWindow() {
+    void testWindow() throws IOException {
 
         if (window.isShowing()) window.close();
 
         String fxml = "TestScreen.fxml";
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
         Parent root;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Внутренняя ошибка");
-            alert.setContentText("Ошибка загрузки\n"
-                    + e.getCause() + "\n" + e.getMessage());
-            alert.showAndWait();
-            mainWindow();
-            return;
-        }
+        root = loader.load();
 
         window.setTitle("Симулятор ЛВС 2000");
         window.setScene(new Scene(root));
