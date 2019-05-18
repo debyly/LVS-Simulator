@@ -53,9 +53,9 @@ public class TerminalDevice {
         active.set(false);
     }
 
-    private Map<DeviceState, Integer> chances;
+    private Map <DeviceState, Double> chances;
 
-    TerminalDevice (Map<DeviceState, Integer> chances, LVS lvs){
+    TerminalDevice (Map<DeviceState, Double> chances, LVS lvs){
 
         this.chances = chances;
         state.addListener((observable, oldValue, newValue) -> {
@@ -64,7 +64,7 @@ public class TerminalDevice {
                 lvs.setLineState(LineState.A_GENERATION);
             }
             if (oldValue == GENERATOR) {
-                for (TerminalDevice device : lvs.getClients()) {
+                for (TerminalDevice device : lvs.getDevices()) {
                     if (device.getState() == GENERATOR)
                         return;
                 }

@@ -41,12 +41,13 @@ public class MainScreen {
     @FXML
     Line lineB;
 
+    private int devicesAmount = 18;
+    private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
     private WindowManager manager;
-    private LVS.LineStateProperty lineStateProperty = new LVS.LineStateProperty(LVS.LineState.A_WORKING);
-
-    private Thread dangerousThread = null;
+    private LVS.LineStateProperty lineStateProperty
+            = new LVS.LineStateProperty(LVS.LineState.A_WORKING);
 
     void setManager(WindowManager manager) {
         this.manager = manager;
@@ -101,7 +102,7 @@ public class MainScreen {
         });
 
         try {
-            for (int i = 0; i < 18; i++){
+            for (int i = 0; i < devicesAmount; i++){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(
                         i % 2 == 0 ? "DeviceUpper.fxml" : "DeviceLower.fxml"));
 
@@ -141,12 +142,13 @@ public class MainScreen {
 
         if (turnButton.isSelected()){
 
-            lvs = new LVS(true, 250, 18,20000,5000,2000,2000);
+            int sleepAmount = 250;
+            lvs = LVS.realLVS(sleepAmount,devicesAmount);
             lineStateProperty.bind(lvs.getLineStateProperty());
 
             for (int vdi = 0; vdi < visualDevices.size(); vdi++) {
 
-                visualDevices.get(vdi).setTerminalDevice(vdi, lvs.getClients().get(vdi));
+                visualDevices.get(vdi).setTerminalDevice(vdi, lvs.getDevices().get(vdi));
                 visualDevices.get(vdi).setConsole(console);
                 visualDevices.get(vdi).powerSwitch();
             }
@@ -199,20 +201,20 @@ public class MainScreen {
                }
         };
 
-        dangerousThread = new Thread(r);
-        dangerousThread.start();
+        modelThread = new Thread(r);
+        modelThread.start();
     }
 
     @FXML
     void stopHandle(){
 
-        if (dangerousThread == null) return;
+        if (modelThread == null) return;
 
-        if (dangerousThread.isAlive()) {
-            dangerousThread.interrupt();
+        if (modelThread.isAlive()) {
+            modelThread.interrupt();
         }
 
-        dangerousThread = null;
+        modelThread = null;
     }
 
     private void turnUI() {

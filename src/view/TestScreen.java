@@ -9,9 +9,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Tester;
-
 import java.io.File;
-import java.util.Observable;
 
 public class TestScreen {
 
@@ -45,10 +43,6 @@ public class TestScreen {
 
     void setManager(WindowManager manager) {
         this.manager = manager;
-    }
-
-    public TestScreen(){
-
     }
 
     void setInitStage(Stage initStage){
@@ -85,23 +79,26 @@ public class TestScreen {
     @FXML
     private void handleStart(){
 
-        // arguments:
-        // clientsAmount, messages, groups, genProb, denProb, failProb, busyProb
-        int tds, msg, groups, gen, den, fail, busy, tbls;
+        int tds, messages, groupAmount, sessions;
+        double gen, den, fail, busy;
 
         try {
 
             tds = Integer.parseInt(tdField.getText());
-            msg = Integer.parseInt(msgField.getText());
-            groups = Integer.parseInt(groupField.getText());
-            gen = Integer.parseInt(genField.getText());
-            den = Integer.parseInt(denyField.getText());
-            fail = Integer.parseInt(failField.getText());
-            busy = Integer.parseInt(busyField.getText());
-            tbls = Integer.parseInt(tablesField.getText());
+            messages = Integer.parseInt(msgField.getText());
+            groupAmount = Integer.parseInt(groupField.getText());
+            sessions = Integer.parseInt(tablesField.getText());
 
-            if (tds < 2 || msg < 100 || groups < 2 || tbls < 1 || gen < 100 || den < 50 || fail < 10 || busy < 10)
-                throw new NumberFormatException("Выход за пределы");
+            gen = Double.parseDouble(genField.getText());
+            den = Double.parseDouble(denyField.getText());
+            fail = Double.parseDouble(failField.getText());
+            busy = Double.parseDouble(busyField.getText());
+
+            if (tds < 2 || messages < 100 || groupAmount < 2 || sessions < 1 ||
+                    gen <= .0 || den <= .0 || fail <= .0 || busy <= .0 ||
+                    gen >= 1.0 || den >= 1.0 || fail >= 1.0 || busy >= 1.0 )
+
+                throw new NumberFormatException("Выход значений за допустимые пределы");
 
         } catch (NumberFormatException e){
 
@@ -124,8 +121,10 @@ public class TestScreen {
             });
 
         int[] args = new int[]{
-                tds, msg, groups, gen, den, fail, busy
+                tds, messages, groupAmount
         };
+
+        double[] probs = new double[]{gen, den, fail, busy};
 
         progressBar.setProgress(.0);
         progressBar.setVisible(true);
@@ -148,10 +147,9 @@ public class TestScreen {
             progressBar.setProgress(0.01);
 
             Tester tester = new Tester();
-            tester.test(args, 0, tbls,
-                    progressText.textProperty(),
-                    progressBar.progressProperty(),
-                    file);
+            tester.test(args, probs, sessions, progressText.textProperty(),
+                    progressBar.progressProperty(), file);
+
         } else {
             progressBar.setProgress(1.0);
         }

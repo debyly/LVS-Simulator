@@ -19,13 +19,13 @@ public class LVS {
     }
     private boolean real;
     private LineController lineController;
-    private ArrayList<TerminalDevice> clients = new ArrayList<>();
+    private ArrayList<TerminalDevice> devices = new ArrayList<>();
     private LineStateProperty state = new LineStateProperty(LineState.A_WORKING);
 
     void setLineState(LVS.LineState state) {
 
         if (state == LineState.A_WORKING)
-            for (TerminalDevice device : clients)
+            for (TerminalDevice device : devices)
                 if (device.getState() == DeviceState.GENERATOR) {
                     this.state.set(LineState.A_GENERATION);
                     return;
@@ -44,13 +44,13 @@ public class LVS {
 
     int sleepAmount;
     
-    public LVS(boolean real, int sleepAmount, int clientsAmount, int gen, int den, int fail, int busy)
+    private LVS(boolean real, int sleepAmount, int devicesAmount, double gen, double den, double fail, double busy)
     {
         
         this.sleepAmount = sleepAmount;
         
-        Map<DeviceState, Integer> chances
-                = new HashMap<DeviceState, Integer>(){{
+        Map<DeviceState, Double> chances
+                = new HashMap<DeviceState, Double>(){{
 
             put(DeviceState.GENERATOR, gen);
             put(DeviceState.DENIAL, den);
@@ -62,14 +62,22 @@ public class LVS {
 
         lineController = new LineController(real, this);
 
-        for (int i = 0; i < clientsAmount; i++)
-            clients.add(new TerminalDevice(chances, this));
+        for (int i = 0; i < devicesAmount; i++)
+            devices.add(new TerminalDevice(chances, this));
     }
 
-    public int getClientsAmount(){ return clients.size(); }
+    public static LVS realLVS(int sleepAmount, int devicesAmount){
 
-    public ArrayList<TerminalDevice> getClients() {
-        return clients;
+        return new LVS(true, sleepAmount, devicesAmount,0,0,0,0);
+    }
+
+    public static LVS testLVS(int devicesAmount, double gen, double den, double fail, double busy){
+
+        return new LVS(false, 0, devicesAmount,gen,den,fail,busy);
+    }
+
+    public ArrayList<TerminalDevice> getDevices() {
+        return devices;
     }
 
     public void start(List<Double> data) throws InterruptedException {
@@ -77,7 +85,7 @@ public class LVS {
         double initTime = lineController.getTime();
 
         if (!real)
-            for (TerminalDevice client : clients) {
+            for (TerminalDevice client : devices) {
 
                 //================= Симуляция работы ===================
                 DeviceState finalState = client.process();
@@ -107,7 +115,7 @@ public class LVS {
             lineController.findGenerator();
 
         //====== Запуск действия контроллера =======
-        for (TerminalDevice client : clients)
+        for (TerminalDevice client : devices)
             lineController.reactOn(client);
 
         //====== Сохранение времени работы ========

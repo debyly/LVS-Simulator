@@ -97,7 +97,7 @@ public class Reporter {
                     "Тест №"
                             + (i + 1), sumList, sumColumnNames);
 
-            double proDouble = 0.75 + 0.25 * ((double) i / (outputTables.size()));
+            double proDouble = 0.75 + 0.24 * ((double) i / (outputTables.size()));
             progress.setValue(proDouble);
 
             progressDetails.setValue("Выполнено "
@@ -142,10 +142,11 @@ public class Reporter {
             add("---");
             add("СКО");
             add("Среднее время одного сообщения");
-
         }};
 
         excelBook.addToSheet(totalList.size() + 1, "Итоговый лист", finalist, finalistColumnNames);
+
+        excelBook.orderSheet("Итоговый лист", 0);
 
         progress.setValue(0.99);
         progressDetails.setValue("Почти готово...");

@@ -30,19 +30,19 @@
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="failField" layoutX="32.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Ошибка" text="2000">
+      <TextField fx:id="failField" layoutX="32.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Ошибка" text="0.0005">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="denyField" layoutX="115.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Отказ" text="5000">
+      <TextField fx:id="denyField" layoutX="115.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Отказ" text="0.0002">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="busyField" layoutX="198.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Занят" text="2000">
+      <TextField fx:id="busyField" layoutX="198.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Занят" text="0.0005">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="genField" layoutX="282.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Генерация" text="20000">
+      <TextField fx:id="genField" layoutX="282.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Генерация" text="0.00005">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
@@ -58,7 +58,7 @@
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
-      <Label layoutX="17.0" layoutY="223.0" text="Вероятности (1/n):">
+      <Label layoutX="17.0" layoutY="223.0" text="Вероятности ошибок:">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>

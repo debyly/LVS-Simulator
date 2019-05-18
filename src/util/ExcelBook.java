@@ -32,6 +32,10 @@ class ExcelBook {
         return style;
     }
 
+    void orderSheet(String sheetName, int position){
+        workbook.setSheetOrder(sheetName, position);
+    }
+
 
     void addSheet(String sheetName, List<List<Double>> table, List<String> columns){
 

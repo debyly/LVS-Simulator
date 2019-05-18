@@ -1,42 +1,20 @@
 package model;
-
-import org.apache.poi.ss.format.SimpleFraction;
-
 import java.util.Random;
 
 class MyRandom {
 
-    private static int sum(int[] ints){
+    private static int sum(long[] ints){
 
         int res = 0;
-        for (int i : ints) res += i;
+        for (long i : ints) res += i;
         return res;
     }
 
-    private static SimpleFraction shorted(SimpleFraction a){
+    private static double sum(double[] doubles){
 
-        long denominator = a.getDenominator();
-        long numerator = a.getNumerator();
-        long gcd = gcd(denominator, numerator);
-
-        return new SimpleFraction((int)(numerator/gcd),(int)(denominator/gcd));
-    }
-
-    private static SimpleFraction sum(SimpleFraction a, SimpleFraction b){
-
-        return shorted(new SimpleFraction(
-                a.getNumerator()*b.getDenominator() + b.getNumerator()*a.getDenominator(),
-                a.getDenominator() * b.getDenominator()));
-    }
-
-    private static SimpleFraction sum (SimpleFraction[] fractions){
-
-        SimpleFraction result = new SimpleFraction(0,1);
-
-        for (SimpleFraction fraction : fractions)
-            result = sum(result, fraction);
-
-        return result;
+        double res = .0;
+        for (double d : doubles) res += d;
+        return res;
     }
 
     private static long gcd(long a, long b){
@@ -63,19 +41,18 @@ class MyRandom {
         return result;
     }
 
-    private static int[] getProportions(
-            int[] fractions){
+    private static long[] getProportions(
+            long[] fractions){
 
         long[] longs = new long[fractions.length];
-        int[] out = new int[fractions.length];
+        long[] out = new long[fractions.length];
 
-        for (int i = 0; i < longs.length; i++)
-            longs[i] = fractions[i];
+        System.arraycopy(fractions, 0, longs, 0, longs.length);
 
         long gcd = gcd(longs);
 
         for (int i = 0; i < longs.length; i++)
-            longs[i] = (int) (longs[i] / gcd);
+            longs[i] = (longs[i] / gcd);
 
         long lcm = lcm(longs);
 
@@ -85,25 +62,19 @@ class MyRandom {
         return out;
     }
 
-    private static int getBalancedRandom(int[] probs) {
+    private static int getNBRandom(double[] probs){
 
-        SimpleFraction[] fracts = new SimpleFraction[probs.length];
-
-        for (int i = 0; i < probs.length; i++)
-            fracts[i] = (new SimpleFraction(
-                    1, probs[i]));
-
-        SimpleFraction totalProb = sum(fracts);
+        long [] denoms = new long[probs.length];
+        for (int i = 0; i < probs.length; i++) {
+            denoms[i] = Math.round(1 / probs[i]);
+        }
 
         Random r = new Random();
-        if (r.nextInt(totalProb.getDenominator())
-                >= totalProb.getNumerator()) return 0;
 
-        int[] denoms = new int[fracts.length];
-        for (int i = 0; i < fracts.length; i++)
-            denoms[i] = fracts[i].getDenominator();
+        if (r.nextDouble() < 1.0 - sum(probs))
+            return 0;
 
-        int[] proportions = getProportions(denoms);
+        long[] proportions = getProportions(denoms);
         int sum = 0;
         int random = r.nextInt(sum(proportions));
 
@@ -114,11 +85,10 @@ class MyRandom {
         return proportions.length;
     }
 
-    static TerminalDevice.DeviceState getRandomState(int genProb, int denProb, int failProb, int busyProb){
+    static TerminalDevice.DeviceState getRandomState(
+            double genProb, double denProb, double failProb, double busyProb){
 
-        int[] probs = new int[]{genProb,denProb,failProb,busyProb};
-
-        int randomState = getBalancedRandom(probs);
+        int randomState = getNBRandom(new double[]{genProb,denProb,failProb,busyProb});
 
         switch (randomState){
             case 1:
