@@ -7,43 +7,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static model.TerminalDevice.DeviceState.WORKING;
-
 public class LVS {
-
 
     public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
 
     public static class LineStateProperty extends SimpleObjectProperty<LVS.LineState> {
-        public LineStateProperty(LineState state){ super(state); }
-    }
 
+      public LineStateProperty(LineState state){
+          super(state);
+        }
+    }
     private boolean real;
     private LineController lineController;
-    private ArrayList<TerminalDevice> clients = new ArrayList<>();
+    private ArrayList<TerminalDevice> devices = new ArrayList<>();
     private LineStateProperty state = new LineStateProperty(LineState.A_WORKING);
 
     void setLineState(LVS.LineState state) {
+
+        if (state == LineState.A_WORKING)
+            for (TerminalDevice device : devices)
+                if (device.getState() == DeviceState.GENERATOR) {
+                    this.state.set(LineState.A_GENERATION);
+                    return;
+                }
+
         this.state.set(state);
+    }
+
+    LineState getLineState(){
+        return state.get();
     }
 
     public LineStateProperty getLineStateProperty(){
         return state;
     }
 
-    LineController getLineCtrl() {
-        return lineController;
-    }
-
-    int sleepAmount = 0;
+    int sleepAmount;
     
-    public LVS(boolean real, int sleepAmount, int clientsAmount, int gen, int den, int fail, int busy)
+    private LVS(boolean real, int sleepAmount, int devicesAmount, double gen, double den, double fail, double busy)
     {
         
         this.sleepAmount = sleepAmount;
         
-        Map<DeviceState, Integer> chances
-                = new HashMap<DeviceState, Integer>(){{
+        Map<DeviceState, Double> chances
+                = new HashMap<DeviceState, Double>(){{
 
             put(DeviceState.GENERATOR, gen);
             put(DeviceState.DENIAL, den);
@@ -55,52 +62,64 @@ public class LVS {
 
         lineController = new LineController(real, this);
 
-        for (int i = 0; i < clientsAmount; i++)
-            clients.add(new TerminalDevice(chances, this));
+        for (int i = 0; i < devicesAmount; i++)
+            devices.add(new TerminalDevice(chances, this));
     }
 
-    public int getClientsAmount(){ return clients.size(); }
+    public static LVS realLVS(int sleepAmount, int devicesAmount){
 
-    public ArrayList<TerminalDevice> getClients() {
-        return clients;
+        return new LVS(true, sleepAmount, devicesAmount,0,0,0,0);
     }
 
-    public void start(List<Double> statistics) throws InterruptedException {
+    static LVS testLVS(int devicesAmount, double gen, double den, double fail, double busy){
 
+        return new LVS(false, 0, devicesAmount,gen,den,fail,busy);
+    }
 
-        //================= Симуляция работы ===================
-        //================= Подсчёт ошибок =====================
+    public ArrayList<TerminalDevice> getDevices() {
+        return devices;
+    }
+
+    public void start(List<Double> data) throws InterruptedException {
+
+        double initTime = lineController.getTime();
+
         if (!real)
-            for (TerminalDevice client : clients) {
-                client.backup();
+            for (TerminalDevice client : devices) {
+
+                //================= Симуляция работы ===================
                 DeviceState finalState = client.process();
+                //================= Подсчёт ошибок =====================
                 switch (finalState) {
                     case FAILURE:
-                            statistics.set(0, statistics.get(0) + 1);
+                            data.set(0, data.get(0) + 1);
                         break;
                     case DENIAL:
-                            statistics.set(1, statistics.get(1) + 1);
+                            data.set(1, data.get(1) + 1);
                         break;
                     case BUSY:
-                            statistics.set(2, statistics.get(2) + 1);
+                            data.set(2, data.get(2) + 1);
                         break;
                     case GENERATOR:
-                            statistics.set(3, statistics.get(3) + 1);
+                            data.set(3, data.get(3) + 1);
                         break;
                     default:
                         break;
                 }
             }
 
-        if (real) Thread.sleep(sleepAmount);
+        else Thread.sleep(sleepAmount);
 
         //======== Действия при генерации ==========
         while (state.get() == LineState.A_GENERATION)
             lineController.findGenerator();
 
         //====== Запуск действия контроллера =======
-        for (TerminalDevice client : clients)
+        for (TerminalDevice client : devices)
             lineController.reactOn(client);
+
+        //====== Сохранение времени работы ========
+        data.set(4, lineController.getTime()-initTime);
     }
 }
 

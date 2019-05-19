@@ -23,10 +23,6 @@ class TimeCounter {
         put(ANSWER, 20);
     }};
 
-    HashMap<TimeType, Integer> getTimeMap() {
-        return timeMap;
-    }
-
     void addTime(TimeType type) {
         total_time += timeMap.get(type);
     }

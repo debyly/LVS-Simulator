@@ -1,6 +1,8 @@
 package model;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import model.LVS.LineState;
 import java.util.Map;
 
@@ -12,30 +14,57 @@ public class TerminalDevice {
         BUSY, FAILURE, DENIAL, GENERATOR}
 
     private DeviceStateProperty state = new DeviceStateProperty(INITIAL);
+    private ActiveProperty active = new ActiveProperty(false);
+
     private DeviceState previousState = WORKING;
+
+    public static class ActiveProperty extends SimpleObjectProperty<Boolean>{
+        private StringProperty lastMessage = new SimpleStringProperty();
+        public ActiveProperty(boolean active){ super(active);}
+
+        public void setLastMessage(String message){
+            lastMessage.setValue(message);
+        }
+        public StringProperty getLastMessage(){
+            return lastMessage;
+        }
+    }
 
     public static class DeviceStateProperty extends SimpleObjectProperty<DeviceState>{
         public DeviceStateProperty(DeviceState state){
             super(state);
         }
     }
-    public DeviceStateProperty getDeviceStateProperty(){
+    public DeviceStateProperty deviceStateProperty(){
         return state;
     }
     DeviceState getState() { return state.get(); }
-    DeviceState getPreviousState() { return previousState; }
 
-    private Map<DeviceState, Integer> chances;
+    public ActiveProperty activeProperty() { return active; }
 
-    TerminalDevice (Map<DeviceState, Integer> chances, LVS lvs){
+    void startMessaging(String message){
+        active.setLastMessage(message);
+        active.set(true);
+    }
+
+    void endMessaging(String message){
+
+        active.setLastMessage(message);
+        active.set(false);
+    }
+
+    private Map <DeviceState, Double> chances;
+
+    TerminalDevice (Map<DeviceState, Double> chances, LVS lvs){
 
         this.chances = chances;
         state.addListener((observable, oldValue, newValue) -> {
 
-            if (newValue == GENERATOR)
+            if (newValue == GENERATOR && lvs.getLineState() == LineState.A_WORKING) {
                 lvs.setLineState(LineState.A_GENERATION);
+            }
             if (oldValue == GENERATOR) {
-                for (TerminalDevice device : lvs.getClients()) {
+                for (TerminalDevice device : lvs.getDevices()) {
                     if (device.getState() == GENERATOR)
                         return;
                 }
@@ -61,18 +90,14 @@ public class TerminalDevice {
         previousState = WORKING;
     }
 
-    void backup(){
-        previousState = state.get();
-    }
-
     public void systemSetState(DeviceState st){
         state.set(st);
     }
 
     DeviceState process() {
 
-        if (state.get() == INITIAL)
-            changeState(WORKING);
+        if (state.get() == INITIAL) changeState(WORKING);
+        previousState = state.get();
 
         DeviceState randomState = MyRandom.getRandomState(
                 chances.get(GENERATOR),

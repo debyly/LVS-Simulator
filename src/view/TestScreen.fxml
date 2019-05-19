@@ -10,74 +10,74 @@
 
 <Pane fx:id="progText" prefHeight="415.0" prefWidth="401.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TestScreen">
    <children>
-      <Button fx:id="startButton" layoutX="117.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleStart" prefHeight="25.0" prefWidth="168.0" text="Запуск теста">
+      <Button fx:id="startButton" layoutX="117.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleStart" prefHeight="32.0" prefWidth="168.0" text="Запуск теста">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Button>
-      <TextField fx:id="tdField" layoutX="157.0" layoutY="88.0" prefHeight="25.0" prefWidth="79.0" text="18">
+      <TextField fx:id="tdField" layoutX="199.0" layoutY="88.0" prefHeight="25.0" prefWidth="79.0" text="18">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="msgField" layoutX="157.0" layoutY="119.0" prefHeight="25.0" prefWidth="79.0" text="20000">
+      <TextField fx:id="msgField" layoutX="199.0" layoutY="119.0" prefHeight="25.0" prefWidth="79.0" text="20000">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="groupField" layoutX="156.0" layoutY="150.0" prefHeight="25.0" prefWidth="79.0" text="20">
+      <TextField fx:id="groupField" layoutX="198.0" layoutY="150.0" prefHeight="25.0" prefWidth="79.0" text="20">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="tablesField" layoutX="157.0" layoutY="182.0" prefHeight="25.0" prefWidth="79.0" text="50">
+      <TextField fx:id="tablesField" layoutX="199.0" layoutY="182.0" prefHeight="25.0" prefWidth="79.0" text="50">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="failField" layoutX="32.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Ошибка" text="2000">
+      <TextField fx:id="failField" layoutX="32.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Ошибка" text="0.0005">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="denyField" layoutX="115.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Отказ" text="5000">
+      <TextField fx:id="denyField" layoutX="115.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Отказ" text="0.0002">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="busyField" layoutX="198.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Занят" text="2000">
+      <TextField fx:id="busyField" layoutX="198.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Занят" text="0.0005">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <TextField fx:id="genField" layoutX="282.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Генерация" text="20000">
+      <TextField fx:id="genField" layoutX="282.0" layoutY="263.0" prefHeight="25.0" prefWidth="79.0" promptText="Генерация" text="0.00005">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></TextField>
-      <Label layoutX="61.0" layoutY="93.0" text="Количество ОУ">
+      <Label layoutX="103.0" layoutY="93.0" text="Количество ОУ">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
-      <Label layoutX="42.0" layoutY="123.0" text="Кол-во сообщений">
+      <Label layoutX="84.0" layoutY="123.0" text="Кол-во сообщений">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
-      <Label layoutX="41.0" layoutY="186.0" text="Количество таблиц">
+      <Label layoutX="83.0" layoutY="186.0" text="Количество таблиц">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
-      <Label layoutX="19.0" layoutY="224.0" text="Вероятности (1/n):">
+      <Label layoutX="17.0" layoutY="223.0" text="Вероятности ошибок:">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
-      <Button fx:id="profileButton" focusTraversable="false" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="18.0" prefWidth="62.0" text="Сменить">
+      <Button fx:id="profileButton" focusTraversable="false" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="32.0" prefWidth="115.0" text="Сменить режим" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Calibri" size="12.0" />
          </font>
       </Button>
-      <Text fill="#989898" layoutX="105.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   т е с т и р о в а н и я">
+      <Text fill="#989898" layoutX="146.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   т е с т и р о в а н и я">
          <font>
             <Font name="Calibri" size="18.0" />
          </font>
       </Text>
-      <Label layoutX="10.0" layoutY="67.0" text="Основные параметры:">
+      <Label layoutX="17.0" layoutY="67.0" text="Основные параметры:">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
       <ProgressBar fx:id="progressBar" disable="true" layoutX="32.0" layoutY="303.0" prefHeight="41.0" prefWidth="330.0" progress="0.0" />
-      <Label layoutX="47.0" layoutY="154.0" text="Количество групп">
+      <Label layoutX="89.0" layoutY="154.0" text="Количество групп">
          <font>
             <Font name="Calibri" size="12.0" />
          </font></Label>
