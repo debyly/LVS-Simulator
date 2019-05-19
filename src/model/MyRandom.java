@@ -104,7 +104,4 @@ class MyRandom {
         return TerminalDevice.DeviceState.WORKING;
 
     }
-
-
-
 }

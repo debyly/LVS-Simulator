@@ -110,7 +110,7 @@ public class MainScreen {
 
                 visualDevices.add(loader.getController());
                 lvsPane.getChildren().add(elm);
-                elm.setLayoutX(i*34 + 10);
+                elm.setLayoutX(12 +(devicesAmount>1? 578*i/(devicesAmount-1):0));//i*34 + 10);
                 elm.setLayoutY(i % 2 == 0 ? 10 : 106);
             }
 
@@ -142,8 +142,8 @@ public class MainScreen {
 
         if (turnButton.isSelected()){
 
-            int sleepAmount = 250;
-            lvs = LVS.realLVS(sleepAmount,devicesAmount);
+            int sleepAmount = 150;
+            lvs = LVS.realLVS(sleepAmount, devicesAmount);
             lineStateProperty.bind(lvs.getLineStateProperty());
 
             for (int vdi = 0; vdi < visualDevices.size(); vdi++) {
