@@ -6,22 +6,21 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="&#10;nnvnmmvnb">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="v 1.1.3 code cleanup">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/RSKBP.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/RSKBP.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/apache.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/apache.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/LVS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/LVS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/LineController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/LineController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TerminalDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TerminalDevice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Tester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/TimeCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/TimeCounter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/Reporter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Reporter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/DeviceLower.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/DeviceLower.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/DeviceUpper.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/DeviceUpper.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/commons-collections4-4.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/curvesapi-1.05.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/poi-3.17.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/poi-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/poi-ooxml-3.17.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/poi-ooxml-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/poi-ooxml-schemas-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/apache/xmlbeans-3.0.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/ExcelBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/ExcelBook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/MainScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/MainScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/TestScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/TestScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/VisualDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/VisualDevice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/WindowManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/WindowManager.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,27 +79,16 @@
     <favorites_list name="JavaFxApplication" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/util/ExcelBook.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="17">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
               <folding>
-                <element signature="e#928#929#0" expanded="true" />
-                <element signature="e#987#988#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1086#1087#0" expanded="true" />
+                <element signature="e#1145#1146#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,10 +112,14 @@
       <find>[i][7]</find>
       <find>amou</find>
       <find>xls</find>
+      <find>XSSF</find>
+      <find>HSSF</find>
     </findStrings>
     <replaceStrings>
       <replace>timer.</replace>
       <replace>.get(i).get(7)</replace>
+      <replace>HSSF</replace>
+      <replace>XSSF</replace>
     </replaceStrings>
   </component>
   <component name="FindManager">
@@ -182,8 +174,8 @@
         <option value="$PROJECT_DIR$/src/view/VisualDevice.java" />
         <option value="$PROJECT_DIR$/src/model/Tester.java" />
         <option value="$PROJECT_DIR$/src/view/DeviceLower.fxml" />
-        <option value="$PROJECT_DIR$/src/view/MainScreen.java" />
         <option value="$PROJECT_DIR$/src/view/TestScreen.java" />
+        <option value="$PROJECT_DIR$/src/view/MainScreen.java" />
         <option value="$PROJECT_DIR$/src/util/ExcelBook.java" />
       </list>
     </option>
@@ -219,13 +211,24 @@
             <path>
               <item name="kursach" type="b2602c69:ProjectViewProjectNode" />
               <item name="kursach" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kursach" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kursach" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="apache" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="kursach" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kursach" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="kursach" type="b2602c69:ProjectViewProjectNode" />
               <item name="kursach" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -250,8 +253,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/apache/xmlbeans.jar!/" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15298805" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -521,7 +524,21 @@
       <option name="project" value="LOCAL" />
       <updated>1558354306205</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="v 1.1.3 code cleanup">
+      <created>1558374695023</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1558374695023</updated>
+    </task>
+    <task id="LOCAL-00031" summary="v 1.1.3 code cleanup">
+      <created>1558376239923</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1558376239923</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -529,19 +546,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="23" width="1550" height="848" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.2738255" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.28590605" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="Image Layers" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Capture Tool" order="6" />
-      <window_info anchor="bottom" id="Inspection Results" weight="0.32960895" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32807016" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3226257" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3226257" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.41340783" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -554,6 +569,7 @@
       <window_info anchor="bottom" id="Event Log" order="12" weight="0.32982457" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.3263158" />
       <window_info anchor="bottom" id="Terminal" order="14" />
+      <window_info anchor="bottom" id="Inspection Results" order="15" weight="0.32960895" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -594,7 +610,8 @@
     <MESSAGE value="очень опасный коммит!" />
     <MESSAGE value="новый комит с красивостями" />
     <MESSAGE value="v 1.1.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.1.2" />
+    <MESSAGE value="v 1.1.3 code cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.1.3 code cleanup" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -728,18 +745,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/MainScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="22" column="7" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1209#1210#0" expanded="true" />
-            <element signature="e#1247#1248#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/TestScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -797,13 +802,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/MainScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-277">
+          <caret line="184" column="53" selection-start-line="184" selection-start-column="53" selection-end-line="184" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1209#1210#0" expanded="true" />
+            <element signature="e#1247#1248#0" expanded="true" />
+            <element signature="e#6833#6834#0" expanded="true" />
+            <element signature="e#6863#6864#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/util/ExcelBook.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
           <folding>
-            <element signature="e#928#929#0" expanded="true" />
-            <element signature="e#987#988#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1086#1087#0" expanded="true" />
+            <element signature="e#1145#1146#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -814,7 +834,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>JavaFXApp</last-edited>
+          <last-edited>RSKBP</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

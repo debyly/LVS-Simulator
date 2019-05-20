@@ -1,18 +1,14 @@
 <component name="libraryTable">
   <library name="apache">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/apache/commons-collections4-4.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/curvesapi-1.05.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/poi-3.17.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/poi-4.0.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml-3.17.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml-4.0.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml-schemas-4.0.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/apache/xmlbeans-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/commons-collections.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/commons-compress.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml-schemas.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi-ooxml.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/poi.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apache/xmlbeans.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.ideaLibSources/poi-3.17-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

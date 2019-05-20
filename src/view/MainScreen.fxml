@@ -61,12 +61,22 @@
           <Font name="Calibri" size="12.0" />
         </font>
     </Button>
+    <Button fx:id="stopButton" layoutX="568.0" layoutY="377.0" mnemonicParsing="false" onAction="#stopHandle" prefHeight="51.0" prefWidth="89.0" text="Стоп" textAlignment="CENTER" wrapText="true">
+        <font>
+          <Font name="Calibri" size="12.0" />
+        </font>
+    </Button>
+   <Button fx:id="cleanButton" focusTraversable="false" layoutX="568.0" layoutY="439.0" mnemonicParsing="false" onAction="#cleanHandle" prefHeight="29.0" prefWidth="89.0" text="Очистить" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font name="Calibri" size="12.0" />
+      </font>
+   </Button>
     <Text fill="#989898" layoutX="140.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
         <font>
           <Font name="Calibri" size="18.0" />
         </font>
     </Text>
-    <Button fx:id="profileButton" layoutX="18.0" layoutY="13.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="31.0" prefWidth="107.0" text="Сменить режим">
+    <Button fx:id="profileButton" focusTraversable="false" layoutX="18.0" layoutY="13.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="31.0" prefWidth="107.0" text="Сменить режим">
         <font>
           <Font name="Calibri" size="12.0" />
         </font>
@@ -105,15 +115,5 @@
             </font>
         </Label>
     </Pane>
-    <Button fx:id="stopButton" layoutX="568.0" layoutY="377.0" mnemonicParsing="false" onAction="#stopHandle" prefHeight="51.0" prefWidth="89.0" text="Стоп" textAlignment="CENTER" wrapText="true">
-        <font>
-          <Font name="Calibri" size="12.0" />
-        </font>
-    </Button>
     <Separator layoutX="-3.0" layoutY="50.0" prefHeight="12.0" prefWidth="711.0" />
-   <Button fx:id="cleanButton" layoutX="568.0" layoutY="439.0" mnemonicParsing="false" onAction="#cleanHandle" prefHeight="29.0" prefWidth="89.0" text="Очистить" textAlignment="CENTER" wrapText="true">
-      <font>
-         <Font name="Calibri" size="12.0" />
-      </font>
-   </Button>
 </AnchorPane>

@@ -16,7 +16,9 @@
     <root id="root">
       <element id="archive" name="RSKBPNetSim.jar">
         <element id="module-output" name="RSKBPNetSim" />
-        <element id="library" level="project" name="apache" />
+        <element id="directory" name="libs">
+          <element id="library" level="project" name="apache" />
+        </element>
       </element>
     </root>
   </artifact>

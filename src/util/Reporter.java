@@ -151,7 +151,7 @@ public class Reporter {
 
         excelBook.orderSheet("Итоговый лист", 0);
 
-        progress.setValue(0.99);
+        progress.setValue(0.995);
         progressDetails.setValue("Почти готово...");
     }
 
