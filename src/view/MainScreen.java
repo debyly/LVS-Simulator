@@ -42,6 +42,7 @@ public class MainScreen {
     Line lineB;
 
     private int devicesAmount = 18;
+    private int sleepAmount = 150;
     private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
@@ -56,7 +57,7 @@ public class MainScreen {
     private void addToConsole(String string){
         Platform.runLater(() -> {
 
-            console.setText(console.getText() + "\n" + string);
+            console.setText(console.getText() + string + "\n" );
             console.selectPositionCaret(console.getLength());
             console.deselect();
         });
@@ -80,21 +81,21 @@ public class MainScreen {
         lineStateProperty.addListener((o, old, value) -> {
             if (value == LVS.LineState.A_WORKING) {
 
-                addToConsole("*Линия А активна*");
+                addToConsole("ЛВС: * Линия А - активна *");
 
                 lineA.setStroke(stateColor.get(ONLINE));
                 lineB.setStroke(baseColor);
             }
             if (value == LVS.LineState.B_WORKING) {
 
-                addToConsole("*Запущена линия B*");
+                addToConsole("ЛВС: * Линия B - активна *");
 
                 lineA.setStroke(baseColor);
                 lineB.setStroke(stateColor.get(ONLINE));
             }
             if (value == LVS.LineState.A_GENERATION) {
 
-                addToConsole("*Обнаружена генерация на линии А*");
+                addToConsole("ЛВС: * Линия А - обнаружена генерация *");
 
                 lineA.setStroke(stateColor.get(GENERATOR));
                 lineB.setStroke(baseColor);
@@ -110,7 +111,7 @@ public class MainScreen {
 
                 visualDevices.add(loader.getController());
                 lvsPane.getChildren().add(elm);
-                elm.setLayoutX(12 +(devicesAmount>1? 578*i/(devicesAmount-1):0));//i*34 + 10);
+                elm.setLayoutX(16 +(devicesAmount>1? 578*i/(devicesAmount-1):0));
                 elm.setLayoutY(i % 2 == 0 ? 10 : 106);
             }
 
@@ -142,7 +143,6 @@ public class MainScreen {
 
         if (turnButton.isSelected()){
 
-            int sleepAmount = 150;
             lvs = LVS.realLVS(sleepAmount, devicesAmount);
             lineStateProperty.bind(lvs.getLineStateProperty());
 
@@ -170,20 +170,18 @@ public class MainScreen {
     @FXML
     void execHandle(){
 
-        addToConsole("*Запуск контроллера сети*\n");
+        addToConsole("Контроллер сети: * Запуск *");
 
         turnUI();
 
         Runnable r = () -> {
             try {
 
-                lvs.start(new ArrayList<Double>(){{
-                    for (int i = 0; i < 5; i++) add(.0);
-                }});
-
+                lvs.start();
                 Platform.runLater(this::turnUI);
+                Platform.runLater(()-> addToConsole("*Контроллер сети: * Завершение работы *"));
 
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
 
                 Platform.runLater(() -> {
                     turnUI();

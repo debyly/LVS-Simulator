@@ -106,7 +106,7 @@ public class TestScreen {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Внутренняя ошибка");
             alert.setHeaderText("Проверьте значения");
-            alert.setContentText("Что-то у вас явно не то\n\n" + "Причина:\n" + e.getCause());
+            alert.setContentText("Что-то у вас явно не то\n\n" + "Причина:\n" + e.getMessage());
             alert.initOwner(initStage);
             alert.showAndWait();
             return;

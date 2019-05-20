@@ -80,7 +80,13 @@ public class LVS {
         return devices;
     }
 
-    public void start(List<Double> data) throws InterruptedException {
+    public void start() throws Exception{
+
+        if (real) start(new ArrayList<>());
+        else throw new IllegalAccessException("Вызов неподходящего метода работы ЛВС!");
+    }
+
+    void start(List<Double> data) throws InterruptedException {
 
         double initTime = lineController.getTime();
 
@@ -119,7 +125,7 @@ public class LVS {
             lineController.reactOn(client);
 
         //====== Сохранение времени работы ========
-        data.set(4, lineController.getTime()-initTime);
+        if (!real) data.set(4, lineController.getTime()-initTime);
     }
 }
 

@@ -211,7 +211,7 @@ public class VisualDevice {
     private void addToConsole(String string){
       Platform.runLater(() ->{
 
-            console.setText(console.getText() + "\n" + string);
+            console.setText(console.getText() + string + "\n" );
             console.selectPositionCaret(console.getLength());
             console.deselect();
         });

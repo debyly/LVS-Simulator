@@ -52,7 +52,6 @@ class LineController {
             default:
                 td.endMessaging("Компьютер в порядке");
                 break;
-
         }
         normalWork();
 
@@ -119,7 +118,6 @@ class LineController {
 
                 lvs.setLineState(B_WORKING);
                 if (real) Thread.sleep(lvs.sleepAmount);
-
                 //======= Разблокировка одного ОУ ==========
                 timer.addTime(UNBLOCK);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
@@ -137,53 +135,45 @@ class LineController {
                         timer.addTime(WORD);
                         timer.addTime(PAUSE_BEFORE_ANSWER);
                     }
-
                     lvs.getDevices().get(i).endMessaging("Устройство не отвечает");
                     if (real) Thread.sleep(lvs.sleepAmount / 2);
                     continue;
                 }
-
                 lvs.getDevices().get(i).endMessaging("");
                 if (real) Thread.sleep(lvs.sleepAmount / 2);
                 //===========================================
-
-                lvs.setLineState(A_WORKING);
-                if (real) Thread.sleep(lvs.sleepAmount);
                 //============= Опрос текущего ОУ =================
+                lvs.getDevices().get(i).startMessaging("Опрос текущего ОУ по линии А");
+                if (real) Thread.sleep(lvs.sleepAmount / 2);
+                lvs.setLineState(A_WORKING);
                 timer.addTime(COMMAND);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
-                lvs.getDevices().get(i).startMessaging("Опрос текущего ОУ");
 
                 //=========== Если элемент сети не генерирует сигнала =========
                 if(!(lvs.getDevices().get(i).getState() == GENERATOR)) {
-
                     timer.addTime(ANSWER);
-
-                    if (real) Thread.sleep(lvs.sleepAmount / 2);
+                    if (real) Thread.sleep(lvs.sleepAmount);
                     lvs.getDevices().get(i).endMessaging("ОУ не является генератором");
                     if (real) Thread.sleep(lvs.sleepAmount / 2);
                 }
-
-
                 //================ Если элемент - генератор ===================
                 else {
                     //======== Опрос предыдущего ОУ ==========
                     timer.addTime(COMMAND);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
-
                     //========================================
+                    if (real) Thread.sleep(lvs.sleepAmount);
                     lvs.setLineState(B_WORKING);
-                    if (real) Thread.sleep(lvs.sleepAmount / 4);
-
+                    if (real) Thread.sleep(lvs.sleepAmount / 2);
                     //====== Блокируем генерящий элемент ======
                     timer.addTime(BLOCK);
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     timer.addTime(ANSWER);
                     lvs.getDevices().get(i).startMessaging("Устройство является генератором!");
-                    if (real) Thread.sleep(lvs.sleepAmount);
+                    if (real) Thread.sleep(lvs.sleepAmount / 2);
+                    lvs.getDevices().get(i).endMessaging("Является генератором. Блокировка...");
+                    if (real) Thread.sleep(lvs.sleepAmount / 2);
                     lvs.getDevices().get(i).changeState(DENIAL);
-                    if (real) Thread.sleep(lvs.sleepAmount);
-                    lvs.getDevices().get(i).endMessaging("Блокировка генерящего элемента");
                     //=========================================
 
                     //======= Остановка после обнаружения генерящего элемента ===========
@@ -191,7 +181,6 @@ class LineController {
                     break;
                 }
             }
-
             //===== Разблокировка ОУ после генерящего =====
             for (int i = lastDevice + 1; i < lvs.getDevices().size(); i++ ) {
                 timer.addTime(UNBLOCK);
@@ -204,7 +193,6 @@ class LineController {
                 lvs.getDevices().get(i).endMessaging("");
                 //==============================================
             }
-
             lvs.setLineState(A_WORKING);
             if (real) Thread.sleep(lvs.sleepAmount);
     }
