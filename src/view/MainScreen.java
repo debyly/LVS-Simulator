@@ -31,6 +31,8 @@ public class MainScreen {
     @FXML
     Button stopButton;
     @FXML
+    Button cleanButton;
+    @FXML
     Button profileButton;
     @FXML
     Text statePrompt;
@@ -75,6 +77,7 @@ public class MainScreen {
 
         execButton.setDisable(true);
         stopButton.setDisable(true);
+        cleanButton.setDisable(true);
         console.setEditable(false);
 
         lineStateProperty.addListener((o, old, value) -> {
@@ -129,7 +132,7 @@ public class MainScreen {
     void turnHandle(){
 
         execButton.setDisable(!turnButton.isSelected());
-
+        cleanButton.setDisable(!turnButton.isSelected());
         turnButton.setText(turnButton.isSelected() ? "ВЫКЛЮЧИТЬ СЕТЬ" : "ВКЛЮЧИТЬ СЕТЬ");
 
         statePrompt.setText("ЛВС "
@@ -179,7 +182,7 @@ public class MainScreen {
 
                 lvs.start();
                 Platform.runLater(this::turnUI);
-                Platform.runLater(()-> addToConsole("*Контроллер сети: * Завершение работы *"));
+                Platform.runLater(()-> addToConsole("Контроллер сети: * Завершение работы *"));
 
             } catch (Exception e) {
 
@@ -210,6 +213,7 @@ public class MainScreen {
 
         if (modelThread.isAlive()) {
             modelThread.interrupt();
+            addToConsole("Контроллер сети: * Работа прервана! *");
         }
 
         modelThread = null;
@@ -224,6 +228,11 @@ public class MainScreen {
 
         for (VisualDevice v : visualDevices)
             v.transparentButton(execButton.isDisabled());
+    }
+
+    @FXML
+    void cleanHandle(){
+        cleanConsole("*СИСТЕМА ЛВС ВКЛЮЧЕНА*");
     }
 
     @FXML

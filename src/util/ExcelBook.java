@@ -91,7 +91,6 @@ class ExcelBook {
         }
         for (int i = 0; i < columns.size(); i ++)
             sheet.autoSizeColumn(i);
-
     }
 
     void SaveXLS(File file)
