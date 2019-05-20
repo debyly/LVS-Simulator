@@ -2,12 +2,12 @@ package model;
 
 import java.util.HashMap;
 
-public class Message {
+class Message {
 
     String state;
-    private HashMap<String,Integer> commands;
-    private HashMap<String, Integer> modes;
-    private HashMap<Integer,String> IntStr;
+    private final HashMap<String,Integer> commands;
+    private final HashMap<String, Integer> modes;
+    private final HashMap<Integer,String> IntStr;
     String type;
     int address_from;
     int address_to;

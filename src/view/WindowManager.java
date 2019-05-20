@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class WindowManager {
 
-    private Stage window;
+    private final Stage window;
 
     public WindowManager(Stage window){ this.window = window;}
 

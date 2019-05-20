@@ -13,13 +13,13 @@ public class TerminalDevice {
     public enum DeviceState {INITIAL, WORKING, BLOCKED, UNBLOCKING,
         BUSY, FAILURE, DENIAL, GENERATOR}
 
-    private DeviceStateProperty state = new DeviceStateProperty(INITIAL);
-    private ActiveProperty active = new ActiveProperty(false);
+    private final DeviceStateProperty state = new DeviceStateProperty(INITIAL);
+    private final ActiveProperty active = new ActiveProperty(false);
 
     private DeviceState previousState = WORKING;
 
     public static class ActiveProperty extends SimpleObjectProperty<Boolean>{
-        private StringProperty lastMessage = new SimpleStringProperty();
+        private final StringProperty lastMessage = new SimpleStringProperty();
         public ActiveProperty(boolean active){ super(active);}
 
         public void setLastMessage(String message){
@@ -53,7 +53,7 @@ public class TerminalDevice {
         active.set(false);
     }
 
-    private Map <DeviceState, Double> chances;
+    private final Map <DeviceState, Double> chances;
 
     TerminalDevice (Map<DeviceState, Double> chances, LVS lvs){
 

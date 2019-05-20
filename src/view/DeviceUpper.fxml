@@ -8,24 +8,25 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VisualDevice">
-   <children>
-      <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="50.0" text="ССТ">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Button>
-      <Label fx:id="tdLabel" text="----">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Label>
-      <AnchorPane>
-         <children>
-            <Line fx:id="tail" endX="12.0" endY="-70.0" layoutX="13.0" layoutY="108.0" startX="12.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
-            <Rectangle fx:id="display" arcHeight="5.0" arcWidth="5.0" fill="#d4deff" height="40.0" layoutX="5.0" stroke="#b1b1b1" strokeType="INSIDE" strokeWidth="2.0" width="40.0" />
-            <Rectangle fx:id="stateIndicator" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="19.0" layoutY="14.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-         </children>
-      </AnchorPane>
-   </children>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VisualDevice">
+    <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="50.0" minWidth="50.0"
+            mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="50.0" text="ССТ">
+        <font>
+          <Font name="Calibri" size="12.0"/>
+        </font>
+    </Button>
+    <Label fx:id="tdLabel" text="----">
+        <font>
+          <Font name="Calibri" size="12.0"/>
+        </font>
+    </Label>
+    <AnchorPane>
+        <Line fx:id="tail" endX="12.0" endY="-70.0" layoutX="13.0" layoutY="108.0" startX="12.0" startY="-40.0"
+              stroke="#b1b1b1" strokeWidth="8.0"/>
+        <Rectangle fx:id="display" arcHeight="5.0" arcWidth="5.0" fill="#d4deff" height="40.0" layoutX="5.0"
+                   stroke="#b1b1b1" strokeType="INSIDE" strokeWidth="2.0" width="40.0"/>
+        <Rectangle fx:id="stateIndicator" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="19.0"
+                   layoutY="14.0" stroke="#868686" strokeType="INSIDE" width="12.0"/>
+    </AnchorPane>
 </VBox>

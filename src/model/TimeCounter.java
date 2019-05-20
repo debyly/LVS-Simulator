@@ -11,7 +11,7 @@ class TimeCounter {
     public enum TimeType {WORD, COMMAND, ANSWER, BLOCK, UNBLOCK,
         PAUSE_IF_BUSY, PAUSE_BEFORE_ANSWER, PAUSE_BETWEEN_MESSAGES}
 
-    private HashMap<TimeType,Integer> timeMap = new HashMap<TimeType,Integer>(){{
+    private final HashMap<TimeType,Integer> timeMap = new HashMap<TimeType,Integer>(){{
 
         put(PAUSE_IF_BUSY, 5000);
         put(COMMAND, 20);

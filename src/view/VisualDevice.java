@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static view.VisualDevice.VisualState.*;
+@SuppressWarnings("ALL")
 public class VisualDevice {
 
     @FXML
@@ -34,16 +35,17 @@ public class VisualDevice {
 
     private TextArea console = new TextArea();
 
-    static Paint baseColor = Paint.valueOf("#b1b1b1");
+    static final Paint baseColor = Paint.valueOf("#b1b1b1");
 
     private TerminalDevice terminalDevice;
     private int deviceNumber;
 
     public enum VisualState{ONLINE, BLOCKED, GENERATOR, FAILURE, DENIAL}
 
-    public class VisualStateProperty extends SimpleObjectProperty<VisualState> {
+    @SuppressWarnings("WeakerAccess")
+    class VisualStateProperty extends SimpleObjectProperty<VisualState> {
 
-        private VisualState[] vals = values();
+        private final VisualState[] vals = values();
 
         VisualStateProperty(VisualState state) {
             super(state);
@@ -53,14 +55,14 @@ public class VisualDevice {
         }
     }
 
-    private VisualStateProperty state = new VisualStateProperty(ONLINE);
+    private final VisualStateProperty state = new VisualStateProperty(ONLINE);
 
-    private TerminalDevice.DeviceStateProperty virtualDeviceState
+    private final TerminalDevice.DeviceStateProperty virtualDeviceState
             = new TerminalDevice.DeviceStateProperty(DeviceState.INITIAL);
 
-    private TerminalDevice.ActiveProperty virtualActive = new TerminalDevice.ActiveProperty(false);
+    private final TerminalDevice.ActiveProperty virtualActive = new TerminalDevice.ActiveProperty(false);
 
-    static Map<VisualState, Paint> stateColor =
+    static final Map<VisualState, Paint> stateColor =
             new HashMap<VisualState, Paint>(){{
 
                 put(ONLINE, Paint.valueOf("#5bd983"));
@@ -70,7 +72,7 @@ public class VisualDevice {
                 put(GENERATOR, Paint.valueOf("#1f9dff"));
             }};
 
-    private static Map<VisualState, String> stateAbbr = new HashMap<VisualState, String>(){{
+    private static final Map<VisualState, String> stateAbbr = new HashMap<VisualState, String>(){{
 
         put(ONLINE, "вкл");
         put(BLOCKED, "блк");

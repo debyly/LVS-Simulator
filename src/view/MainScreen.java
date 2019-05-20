@@ -41,13 +41,12 @@ public class MainScreen {
     @FXML
     Line lineB;
 
-    private int devicesAmount = 18;
-    private int sleepAmount = 150;
+    private final int devicesAmount = 18;
     private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
     private WindowManager manager;
-    private LVS.LineStateProperty lineStateProperty
+    private final LVS.LineStateProperty lineStateProperty
             = new LVS.LineStateProperty(LVS.LineState.A_WORKING);
 
     void setManager(WindowManager manager) {
@@ -111,7 +110,7 @@ public class MainScreen {
 
                 visualDevices.add(loader.getController());
                 lvsPane.getChildren().add(elm);
-                elm.setLayoutX(16 +(devicesAmount>1? 578*i/(devicesAmount-1):0));
+                elm.setLayoutX(16 + 578 * i / ((devicesAmount > 1 ? devicesAmount : 2) - 1));
                 elm.setLayoutY(i % 2 == 0 ? 10 : 106);
             }
 
@@ -143,6 +142,7 @@ public class MainScreen {
 
         if (turnButton.isSelected()){
 
+            int sleepAmount = 150;
             lvs = LVS.realLVS(sleepAmount, devicesAmount);
             lineStateProperty.bind(lvs.getLineStateProperty());
 

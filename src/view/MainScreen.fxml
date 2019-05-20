@@ -12,102 +12,123 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
-   <children>
-      <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="32.0" layoutY="314.0" stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0" />
-      <Text fill="#868686" layoutX="72.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
-         <font>
-            <Font name="Calibri" size="14.0" />
-         </font>
-      </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="32.0" layoutY="374.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="32.0" layoutY="354.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="32.0" layoutY="414.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="32.0" layoutY="434.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="32.0" layoutY="394.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
-      <Text fill="#868686" layoutX="54.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(блк) Заблокирован">
-         <font>
-            <Font size="12.0" />
-         </font></Text>
-      <Text fill="#868686" layoutX="54.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает">
-         <font>
-            <Font size="12.0" />
-         </font></Text>
-      <Text fill="#868686" layoutX="53.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(сбо) Сбой / Занято">
-         <font>
-            <Font size="12.0" />
-         </font></Text>
-      <Text fill="#868686" layoutX="53.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(отк) Отказ в работе">
-         <font>
-            <Font size="12.0" />
-         </font></Text>
-      <Text fill="#868686" layoutX="53.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация">
-         <font>
-            <Font size="12.0" />
-         </font></Text>
-      <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="32.0" layoutX="496.0" layoutY="13.0" stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="165.0" />
-      <Text fx:id="statePrompt" layoutX="507.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена" textAlignment="CENTER">
-         <font>
-            <Font name="Calibri Italic" size="12.0" />
-         </font>
-      </Text>
-      <Separator layoutX="2.0" layoutY="289.0" prefHeight="12.0" prefWidth="675.0" />
-      <Button fx:id="execButton" layoutX="568.0" layoutY="313.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="51.0" prefWidth="89.0" text="Запуск Контроллера" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Button>
-      <Text fill="#989898" layoutX="120.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="р е ж и м   с и м у л я ц и и">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Text>
-      <Button fx:id="profileButton" layoutX="18.0" layoutY="13.0" mnemonicParsing="false" onAction="#profileHandle" prefHeight="31.0" prefWidth="62.0" text="Сменить">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Button>
-      <ToggleButton fx:id="turnButton" layoutX="365.0" layoutY="13.0" mnemonicParsing="false" onAction="#turnHandle" prefHeight="31.0" prefWidth="118.0" text="ВКЛЮЧИТЬ CЕТЬ">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </ToggleButton>
-      <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="189.0" layoutY="312.0" prefHeight="159.0" prefWidth="367.0" promptText="*ОТКЛЮЧЕНО*">
-         <font>
-            <Font name="Calibri" size="14.0" />
-         </font>
-      </TextArea>
-      <Pane fx:id="lvsPane" layoutX="7.0" layoutY="66.0" prefHeight="221.0" prefWidth="665.0">
-         <children>
-            <Label layoutX="4.0" layoutY="91.0" text="A">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="4.0" layoutY="105.0" text="B">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Line fx:id="lineA" endX="556.3333129882812" endY="-40.0" layoutX="85.0" layoutY="142.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
-            <Line fx:id="lineB" endX="556.3333129882812" endY="-40.0" layoutX="85.0" layoutY="154.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
-            <Label layoutX="649.0" layoutY="91.0" text="A">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="649.0" layoutY="105.0" text="B">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Button fx:id="stopButton" layoutX="568.0" layoutY="373.0" mnemonicParsing="false" onAction="#stopHandle" prefHeight="51.0" prefWidth="89.0" text="Стоп" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Calibri" size="12.0" />
-         </font>
-      </Button>
-      <Separator layoutX="2.0" layoutY="50.0" prefHeight="12.0" prefWidth="675.0" />
-   </children>
+<AnchorPane prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainScreen">
+    <Rectangle arcHeight="24.0" arcWidth="24.0" fill="#f6f6f6" height="28.0" layoutX="32.0" layoutY="314.0"
+               stroke="#c3c3c3" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="138.0"/>
+    <Text fill="#868686" layoutX="72.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Состояния">
+        <font>
+          <Font name="Calibri" size="14.0"/>
+        </font>
+    </Text>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cc1800" height="12.0" layoutX="32.0" layoutY="374.0"
+               stroke="#868686" strokeType="INSIDE" width="12.0"/>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5bd983" height="12.0" layoutX="32.0" layoutY="354.0"
+               stroke="#868686" strokeType="INSIDE" width="12.0"/>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffdf1f" height="12.0" layoutX="32.0" layoutY="414.0"
+               stroke="#868686" strokeType="INSIDE" width="12.0"/>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#71725f" height="12.0" layoutX="32.0" layoutY="434.0"
+               stroke="#868686" strokeType="INSIDE" width="12.0"/>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f9dff" height="12.0" layoutX="32.0" layoutY="394.0"
+               stroke="#868686" strokeType="INSIDE" width="12.0"/>
+    <Text fill="#868686" layoutX="54.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0"
+          text="(блк) Заблокирован">
+        <font>
+          <Font size="12.0"/>
+        </font>
+    </Text>
+    <Text fill="#868686" layoutX="54.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(вкл) Работает">
+        <font>
+          <Font size="12.0"/>
+        </font>
+    </Text>
+    <Text fill="#868686" layoutX="53.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0"
+          text="(сбо) Сбой / Занято">
+        <font>
+          <Font size="12.0"/>
+        </font>
+    </Text>
+    <Text fill="#868686" layoutX="53.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0"
+          text="(отк) Отказ в работе">
+        <font>
+          <Font size="12.0"/>
+        </font>
+    </Text>
+    <Text fill="#868686" layoutX="53.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(ген) Генерация">
+        <font>
+          <Font size="12.0"/>
+        </font>
+    </Text>
+    <Rectangle arcHeight="4.0" arcWidth="4.0" fill="#f6f6f6" height="32.0" layoutX="496.0" layoutY="13.0"
+               stroke="#cecece" strokeLineCap="ROUND" strokeLineJoin="ROUND" width="165.0"/>
+    <Text fx:id="statePrompt" layoutX="507.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЛВС Отключена"
+          textAlignment="CENTER">
+        <font>
+          <Font name="Calibri Italic" size="12.0"/>
+        </font>
+    </Text>
+    <Separator layoutX="2.0" layoutY="289.0" prefHeight="12.0" prefWidth="675.0"/>
+    <Button fx:id="execButton" layoutX="568.0" layoutY="313.0" mnemonicParsing="false" onAction="#execHandle"
+            prefHeight="51.0" prefWidth="89.0" text="Запуск Контроллера" textAlignment="CENTER" wrapText="true">
+        <font>
+          <Font name="Calibri" size="12.0"/>
+        </font>
+    </Button>
+    <Text fill="#989898" layoutX="120.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0"
+          text="р е ж и м   с и м у л я ц и и">
+        <font>
+          <Font name="Calibri" size="18.0"/>
+        </font>
+    </Text>
+    <Button fx:id="profileButton" layoutX="18.0" layoutY="13.0" mnemonicParsing="false" onAction="#profileHandle"
+            prefHeight="31.0" prefWidth="62.0" text="Сменить">
+        <font>
+          <Font name="Calibri" size="12.0"/>
+        </font>
+    </Button>
+    <ToggleButton fx:id="turnButton" layoutX="365.0" layoutY="13.0" mnemonicParsing="false" onAction="#turnHandle"
+                  prefHeight="31.0" prefWidth="118.0" text="ВКЛЮЧИТЬ CЕТЬ">
+        <font>
+          <Font name="Calibri" size="12.0"/>
+        </font>
+    </ToggleButton>
+    <TextArea fx:id="console" editable="false" focusTraversable="false" layoutX="189.0" layoutY="312.0"
+              prefHeight="159.0" prefWidth="367.0" promptText="*ОТКЛЮЧЕНО*">
+        <font>
+          <Font name="Calibri" size="14.0"/>
+        </font>
+    </TextArea>
+    <Pane fx:id="lvsPane" layoutX="7.0" layoutY="66.0" prefHeight="221.0" prefWidth="665.0">
+        <Label layoutX="4.0" layoutY="91.0" text="A">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </Label>
+        <Label layoutX="4.0" layoutY="105.0" text="B">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </Label>
+        <Line fx:id="lineA" endX="556.3333129882812" endY="-40.0" layoutX="85.0" layoutY="142.0" startX="-65.0"
+              startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0"/>
+        <Line fx:id="lineB" endX="556.3333129882812" endY="-40.0" layoutX="85.0" layoutY="154.0" startX="-65.0"
+              startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0"/>
+        <Label layoutX="649.0" layoutY="91.0" text="A">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </Label>
+        <Label layoutX="649.0" layoutY="105.0" text="B">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </Label>
+    </Pane>
+    <Button fx:id="stopButton" layoutX="568.0" layoutY="373.0" mnemonicParsing="false" onAction="#stopHandle"
+            prefHeight="51.0" prefWidth="89.0" text="Стоп" textAlignment="CENTER" wrapText="true">
+        <font>
+          <Font name="Calibri" size="12.0"/>
+        </font>
+    </Button>
+    <Separator layoutX="2.0" layoutY="50.0" prefHeight="12.0" prefWidth="675.0"/>
 </AnchorPane>

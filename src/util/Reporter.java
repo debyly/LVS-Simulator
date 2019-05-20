@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Reporter {
 
-    private StringProperty progressDetails;
-    private DoubleProperty progress;
-    private ExcelBook excelBook = new ExcelBook();
+    private final StringProperty progressDetails;
+    private final DoubleProperty progress;
+    private final ExcelBook excelBook = new ExcelBook();
 
     public Reporter(DoubleProperty progress, StringProperty progressDetails) {
 

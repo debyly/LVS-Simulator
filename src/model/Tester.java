@@ -1,9 +1,7 @@
 package model;
 
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.Alert;
 import util.Reporter;
 
 import java.io.File;

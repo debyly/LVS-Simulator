@@ -17,10 +17,10 @@ public class LVS {
           super(state);
         }
     }
-    private boolean real;
-    private LineController lineController;
-    private ArrayList<TerminalDevice> devices = new ArrayList<>();
-    private LineStateProperty state = new LineStateProperty(LineState.A_WORKING);
+    private final boolean real;
+    private final LineController lineController;
+    private final ArrayList<TerminalDevice> devices = new ArrayList<>();
+    private final LineStateProperty state = new LineStateProperty(LineState.A_WORKING);
 
     void setLineState(LVS.LineState state) {
 
@@ -42,7 +42,7 @@ public class LVS {
         return state;
     }
 
-    int sleepAmount;
+    final int sleepAmount;
     
     private LVS(boolean real, int sleepAmount, int devicesAmount, double gen, double den, double fail, double busy)
     {
