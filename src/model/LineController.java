@@ -4,12 +4,12 @@ import static model.LVS.LineState.*;
 import static model.TerminalDevice.DeviceState.*;
 import static model.TimeCounter.TimeType.*;
 
-class LineController {
+public class LineController {
     private final TimeCounter timer = new TimeCounter();
     private final boolean real;
     private final LVS lvs;
 
-    LineController(boolean real, LVS lvs){
+    public LineController(boolean real, LVS lvs){
 
         this.real = real;
         this.lvs = lvs;

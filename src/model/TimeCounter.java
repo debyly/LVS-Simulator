@@ -16,7 +16,7 @@ class TimeCounter {
         put(PAUSE_IF_BUSY, 5000);
         put(COMMAND, 20);
         put(PAUSE_BEFORE_ANSWER, 12);
-        put(WORD, 12*20);
+        put(WORD, 12 * 20);
         put(BLOCK, 20);
         put(UNBLOCK, 20);
         put(PAUSE_BETWEEN_MESSAGES, 1000);
