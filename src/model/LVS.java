@@ -1,7 +1,7 @@
 package model;
 
 import javafx.beans.property.SimpleObjectProperty;
-import model.TerminalDevice.DeviceState;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,20 +9,18 @@ import java.util.Map;
 
 public class LVS {
 
-    public enum LineState{A_WORKING, A_GENERATION, B_WORKING}
+    public static class LineStateProperty extends SimpleObjectProperty<LineState> {
 
-    public static class LineStateProperty extends SimpleObjectProperty<LVS.LineState> {
-
-      public LineStateProperty(LineState state){
-          super(state);
+      public LineStateProperty(){
+          super(LineState.A_WORKING);
         }
     }
     private final boolean real;
     private final LineController lineController;
     private final ArrayList<TerminalDevice> devices = new ArrayList<>();
-    private final LineStateProperty state = new LineStateProperty(LineState.A_WORKING);
+    private final LineStateProperty state = new LineStateProperty();
 
-    void setLineState(LVS.LineState state) {
+    void setLineState(LineState state) {
 
         if (state == LineState.A_WORKING)
             for (TerminalDevice device : devices)
@@ -38,7 +36,7 @@ public class LVS {
         return state.get();
     }
 
-    public LineStateProperty getLineStateProperty(){
+    public LineStateProperty lineStateProperty(){
         return state;
     }
 

@@ -85,23 +85,23 @@ class MyRandom {
         return proportions.length;
     }
 
-    public static TerminalDevice.DeviceState getRandomState(
+    public static DeviceState getRandomState(
             double genProb, double denProb, double failProb, double busyProb){
 
         int randomState = getNBRandom(new double[]{genProb,denProb,failProb,busyProb});
 
         switch (randomState){
             case 1:
-                return TerminalDevice.DeviceState.GENERATOR;
+                return DeviceState.GENERATOR;
             case 2:
-                return TerminalDevice.DeviceState.DENIAL;
+                return DeviceState.DENIAL;
             case 3:
-                return TerminalDevice.DeviceState.FAILURE;
+                return DeviceState.FAILURE;
             case 4:
-                return TerminalDevice.DeviceState.BUSY;
+                return DeviceState.BUSY;
         }
 
-        return TerminalDevice.DeviceState.WORKING;
+        return DeviceState.WORKING;
 
     }
 }

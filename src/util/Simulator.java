@@ -12,7 +12,7 @@ public class Simulator {
 
     private List<List<List<Double>>> tables;
 
-    public void test(int[] args, double[] probs, int tablesAmount, StringProperty progressDetails, DoubleProperty progressBarProperty, File file){
+    public void testX(int[] args, double[] probs, int tablesAmount, StringProperty progressDetails, DoubleProperty progressBarProperty, File file){
 
         Runnable testTask = () -> {
 
@@ -30,7 +30,7 @@ public class Simulator {
 
             for (int i = 0; i < tablesAmount; i++) {
 
-                tables.add(Simulator.simulateX(args, probs));
+                tables.add(Simulator.test(args, probs));
 
                 proDouble = 0.05 + 0.7 * (i / (double) (tablesAmount - 1));
                 progressBarProperty.setValue(proDouble);
@@ -63,7 +63,7 @@ public class Simulator {
         (new Thread(testTask)).start();
     }
 
-    private static List<List<Double>> simulateX(int[] args, double[] probs)
+    private static List<List<Double>> test(int[] args, double[] probs)
     {
         // arguments (args):
         // 0 clientsAmount, 1 messages, 2 groups,

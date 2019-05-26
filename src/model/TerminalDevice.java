@@ -3,15 +3,12 @@ package model;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import model.LVS.LineState;
 import java.util.Map;
 
-import static model.TerminalDevice.DeviceState.*;
+import static model.DeviceState.*;
 
 public class TerminalDevice {
 
-    public enum DeviceState {INITIAL, WORKING, BLOCKED, UNBLOCKING,
-        BUSY, FAILURE, DENIAL, GENERATOR}
 
     private final DeviceStateProperty state = new DeviceStateProperty(INITIAL);
     private final ActiveProperty active = new ActiveProperty(false);
@@ -68,7 +65,7 @@ public class TerminalDevice {
                     if (device.getState() == GENERATOR)
                         return;
                 }
-                if (lvs.getLineStateProperty().get() == LineState.A_GENERATION)
+                if (lvs.lineStateProperty().get() == LineState.A_GENERATION)
                     lvs.setLineState(LineState.A_WORKING);
             }
         });
@@ -83,15 +80,6 @@ public class TerminalDevice {
             previousState = state.get();
             state.set(st);
         }
-    }
-
-    public void restore(){
-        state.set(WORKING);
-        previousState = WORKING;
-    }
-
-    public void systemSetState(DeviceState st){
-        state.set(st);
     }
 
     DeviceState process() {

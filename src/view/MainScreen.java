@@ -12,13 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import model.LVS;
+import model.LineState;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static view.VisualDevice.*;
-import static view.VisualDevice.VisualState.*;
-
+import static view.VisualState.*;
 
 public class MainScreen {
 
@@ -45,12 +45,13 @@ public class MainScreen {
 
     private final int devicesAmount = 18;
     private int sleepAmount = 200;
+
     private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
     private WindowManager manager;
     private final LVS.LineStateProperty lineStateProperty
-            = new LVS.LineStateProperty(LVS.LineState.A_WORKING);
+            = new LVS.LineStateProperty();
 
     void setManager(WindowManager manager) {
         this.manager = manager;
@@ -82,21 +83,22 @@ public class MainScreen {
         console.setEditable(false);
 
         lineStateProperty.addListener((o, old, value) -> {
-            if (value == LVS.LineState.A_WORKING) {
+
+            if (value == LineState.A_WORKING) {
 
                 addToConsole("ЛВС: * Линия А - активна *");
 
                 lineA.setStroke(stateColor.get(ONLINE));
                 lineB.setStroke(baseColor);
             }
-            if (value == LVS.LineState.B_WORKING) {
+            if (value == LineState.B_WORKING) {
 
                 addToConsole("ЛВС: * Линия B - активна *");
 
                 lineA.setStroke(baseColor);
                 lineB.setStroke(stateColor.get(ONLINE));
             }
-            if (value == LVS.LineState.A_GENERATION) {
+            if (value == LineState.A_GENERATION) {
 
                 addToConsole("ЛВС: * Линия А - обнаружена генерация *");
 
@@ -142,31 +144,36 @@ public class MainScreen {
         for (VisualDevice visualDevice : visualDevices) {
             visualDevice.transparentButton(!turnButton.isSelected());
             visualDevice.disableButton(!turnButton.isSelected());
+            visualDevice.setConsole(console);
+
         }
 
         if (turnButton.isSelected()){
 
             lvs = LVS.realLVS(sleepAmount, devicesAmount);
-            lineStateProperty.bind(lvs.getLineStateProperty());
+
+            lineStateProperty.bindBidirectional(lvs.lineStateProperty());
 
             for (int vdi = 0; vdi < visualDevices.size(); vdi++) {
 
-                visualDevices.get(vdi).setTerminalDevice(vdi, lvs.getDevices().get(vdi));
-                visualDevices.get(vdi).setConsole(console);
-                visualDevices.get(vdi).powerSwitch();
+                visualDevices.get(vdi).setOn(vdi, lvs.getDevices().get(vdi));
             }
+
+
         } else {
 
-            lineStateProperty.unbind();
-            for (VisualDevice visualDevice : visualDevices) {
-                visualDevice.powerSwitch();
-                visualDevice.dropTerminalDevice();
+            lineStateProperty.unbindBidirectional(lvs.lineStateProperty());
+
+            for (int vdi = 0; vdi < visualDevices.size(); vdi++) {
+                visualDevices.get(vdi).setOff(lvs.getDevices().get(vdi));
             }
+
             lvs = null;
         }
 
         lineA.setStroke(turnButton.isSelected() ? stateColor.get(ONLINE) : baseColor);
         lineB.setStroke(baseColor);
+
         cleanConsole(turnButton.isSelected() ? "*СИСТЕМА ЛВС ВКЛЮЧЕНА*" : "*ОТКЛЮЧЕНО*");
     }
 

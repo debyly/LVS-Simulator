@@ -10,14 +10,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import model.DeviceState;
 import model.TerminalDevice;
-import model.TerminalDevice.DeviceState;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static view.VisualDevice.VisualState.*;
-@SuppressWarnings("ALL")
+import static view.VisualState.*;
+
 public class VisualDevice {
 
     @FXML
@@ -37,13 +37,9 @@ public class VisualDevice {
 
     static final Paint baseColor = Paint.valueOf("#b1b1b1");
 
-    private TerminalDevice terminalDevice;
     private int deviceNumber;
 
-    public enum VisualState{ONLINE, BLOCKED, GENERATOR, FAILURE, DENIAL}
-
-    @SuppressWarnings("WeakerAccess")
-    class VisualStateProperty extends SimpleObjectProperty<VisualState> {
+    public class VisualStateProperty extends SimpleObjectProperty<VisualState> {
 
         private final VisualState[] vals = values();
 
@@ -122,28 +118,41 @@ public class VisualDevice {
         console = c;
     }
 
-    void setTerminalDevice(int number, TerminalDevice td){
+    void setOn(int number, TerminalDevice td){
+
+        virtualDeviceState.bindBidirectional(td.deviceStateProperty());
+        virtualActive.bind(td.activeProperty());
+        virtualActive.getLastMessage().bind(td.activeProperty().getLastMessage());
 
         deviceNumber = number+1;
         tdLabel.setText("ОУ №" + deviceNumber);
-        terminalDevice = td;
 
-        virtualDeviceState.bind(td.deviceStateProperty());
-        virtualActive.bind(td.activeProperty());
-        virtualActive.getLastMessage().bind(td.activeProperty().getLastMessage());
+        virtualDeviceState.set(DeviceState.WORKING);
+        stateIndicator.setFill(stateColor.get(ONLINE));
+        tdStateButton.setText(stateAbbr.get(ONLINE));
+        tail.setStroke(stateColor.get(ONLINE));
+        tdStateButton.setDisable(false);
+
+        power = true;
+
     }
 
-    void dropTerminalDevice(){
+    void setOff(TerminalDevice td){
 
-        terminalDevice = null;
-        tdLabel.setText("----");
-
-        virtualDeviceState.unbind();
+        virtualDeviceState.unbindBidirectional(td.deviceStateProperty());
         virtualActive.unbind();
         virtualActive.getLastMessage().unbind();
-        virtualDeviceState.set(DeviceState.INITIAL);
-        virtualActive.set(false);
-        virtualActive.setLastMessage("");
+      //  virtualActive.set(false);
+      //  virtualActive.setLastMessage("");
+
+        stateIndicator.setFill(baseColor);
+        tail.setStroke(baseColor);
+        tdLabel.setText("----");
+        display.setFill(Paint.valueOf("#D4DEFF"));
+        tdStateButton.setDisable(true);
+        tdStateButton.setText("откл");
+
+        power = false;
     }
 
     @FXML
@@ -154,19 +163,19 @@ public class VisualDevice {
         switch (state.get()){
 
             case ONLINE:
-                terminalDevice.systemSetState(DeviceState.WORKING);
+                virtualDeviceState.set(DeviceState.WORKING);
                 break;
             case BLOCKED:
-                terminalDevice.systemSetState(DeviceState.BLOCKED);
+                virtualDeviceState.set(DeviceState.BLOCKED);
                 break;
             case GENERATOR:
-                terminalDevice.systemSetState(DeviceState.GENERATOR);
+                virtualDeviceState.set(DeviceState.GENERATOR);
                 break;
             case FAILURE:
-                terminalDevice.systemSetState(DeviceState.FAILURE);
+                virtualDeviceState.set(DeviceState.FAILURE);
                 break;
             case DENIAL:
-                terminalDevice.systemSetState(DeviceState.DENIAL);
+                virtualDeviceState.set(DeviceState.DENIAL);
                 break;
         }
     }
@@ -179,28 +188,6 @@ public class VisualDevice {
 
     private boolean power = false;
 
-    void powerSwitch(){
-        if (power) setOff(); else setOn();
-        power = !power;
-    }
-
-    private void setOff(){
-        terminalDevice.deviceStateProperty().set(DeviceState.INITIAL);
-        stateIndicator.setFill(baseColor);
-        tail.setStroke(baseColor);
-        display.setFill(Paint.valueOf("#D4DEFF"));
-        tdStateButton.setDisable(true);
-        tdStateButton.setText("откл");
-    }
-
-    private void setOn(){
-        terminalDevice.restore();
-        stateIndicator.setFill(stateColor.get(ONLINE));
-        tdStateButton.setText(stateAbbr.get(ONLINE));
-        tail.setStroke(stateColor.get(ONLINE));
-        tdStateButton.setDisable(false);
-    }
-
     void disableButton(boolean disable){
 
         tdStateButton.setDisable(disable);
@@ -211,6 +198,7 @@ public class VisualDevice {
     }
 
     private void addToConsole(String string){
+
       Platform.runLater(() ->{
 
             console.setText(console.getText() + string + "\n" );

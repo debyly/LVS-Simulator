@@ -1,7 +1,6 @@
 package model;
 
-import static model.LVS.LineState.*;
-import static model.TerminalDevice.DeviceState.*;
+import static model.DeviceState.*;
 import static model.TimeCounter.TimeType.*;
 
 public class LineController {
@@ -100,7 +99,7 @@ public class LineController {
         //================================================
 
         //=============== Блокировка всех ОУ =============
-        lvs.setLineState(B_WORKING);
+        lvs.setLineState(LineState.B_WORKING);
         for (TerminalDevice client : lvs.getDevices()) {
 
             timer.addTime(BLOCK);
@@ -117,7 +116,7 @@ public class LineController {
         //==================================================
             for (int i = 0; i < lvs.getDevices().size(); i++){
 
-                lvs.setLineState(B_WORKING);
+                lvs.setLineState(LineState.B_WORKING);
                 if (real) Thread.sleep(lvs.sleepAmount);
                 //======= Разблокировка одного ОУ ==========
                 timer.addTime(UNBLOCK);
@@ -146,7 +145,7 @@ public class LineController {
                 //============= Опрос текущего ОУ =================
                 lvs.getDevices().get(i).startMessaging("Опрос текущего ОУ по линии А");
                 if (real) Thread.sleep(lvs.sleepAmount / 2);
-                lvs.setLineState(A_WORKING);
+                lvs.setLineState(LineState.A_WORKING);
                 timer.addTime(COMMAND);
                 timer.addTime(PAUSE_BEFORE_ANSWER);
 
@@ -164,7 +163,7 @@ public class LineController {
                     timer.addTime(PAUSE_BEFORE_ANSWER);
                     //========================================
                     if (real) Thread.sleep(lvs.sleepAmount);
-                    lvs.setLineState(B_WORKING);
+                    lvs.setLineState(LineState.B_WORKING);
                     if (real) Thread.sleep(lvs.sleepAmount / 2);
                     //====== Блокируем генерящий элемент ======
                     timer.addTime(BLOCK);
@@ -194,7 +193,7 @@ public class LineController {
                 lvs.getDevices().get(i).endMessaging("");
                 //==============================================
             }
-            lvs.setLineState(A_WORKING);
+            lvs.setLineState(LineState.A_WORKING);
             if (real) Thread.sleep(lvs.sleepAmount);
     }
 }

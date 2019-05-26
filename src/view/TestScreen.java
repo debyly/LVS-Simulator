@@ -148,7 +148,7 @@ public class TestScreen {
             progressBar.setProgress(0.01);
 
             Simulator simulator = new Simulator();
-            simulator.test(args, probs, sessions, progressText.textProperty(),
+            simulator.testX(args, probs, sessions, progressText.textProperty(),
                         progressBar.progressProperty(), file);
         } else {
             progressBar.setProgress(1.0);
