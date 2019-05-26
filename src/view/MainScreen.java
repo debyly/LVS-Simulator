@@ -44,7 +44,7 @@ public class MainScreen {
     Line lineB;
 
     private final int devicesAmount = 18;
-    private int sleepAmount;
+    private int sleepAmount = 200;
     private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
     private LVS lvs;
@@ -146,7 +146,6 @@ public class MainScreen {
 
         if (turnButton.isSelected()){
 
-            sleepAmount = 150;
             lvs = LVS.realLVS(sleepAmount, devicesAmount);
             lineStateProperty.bind(lvs.getLineStateProperty());
 
