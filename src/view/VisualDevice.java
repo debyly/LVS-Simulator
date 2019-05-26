@@ -142,8 +142,6 @@ public class VisualDevice {
         virtualDeviceState.unbindBidirectional(td.deviceStateProperty());
         virtualActive.unbind();
         virtualActive.getLastMessage().unbind();
-      //  virtualActive.set(false);
-      //  virtualActive.setLastMessage("");
 
         stateIndicator.setFill(baseColor);
         tail.setStroke(baseColor);
