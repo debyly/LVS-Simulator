@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Tester;
+import util.Simulator;
 import java.io.File;
 import java.io.IOException;
 
@@ -147,8 +147,8 @@ public class TestScreen {
 
             progressBar.setProgress(0.01);
 
-            Tester tester = new Tester();
-            tester.test(args, probs, sessions, progressText.textProperty(),
+            Simulator simulator = new Simulator();
+            simulator.test(args, probs, sessions, progressText.textProperty(),
                         progressBar.progressProperty(), file);
         } else {
             progressBar.setProgress(1.0);

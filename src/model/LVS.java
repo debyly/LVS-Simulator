@@ -71,9 +71,9 @@ public class LVS {
         return new LVS(true, sleepAmount, devicesAmount,0,0,0,0);
     }
 
-    static LVS testLVS(int devicesAmount, double gen, double den, double fail, double busy){
+    public static LVS testLVS(int devicesAmount, double gen, double den, double fail, double busy){
 
-        return new LVS(false, 0, devicesAmount,gen,den,fail,busy);
+        return new LVS(false, 0, devicesAmount, gen, den, fail, busy);
     }
 
     public ArrayList<TerminalDevice> getDevices() {
@@ -86,7 +86,7 @@ public class LVS {
         else throw new IllegalAccessException("Вызов неподходящего метода работы ЛВС!");
     }
 
-    void start(List<Double> data) throws InterruptedException {
+    public void start(List<Double> data) throws InterruptedException {
 
         double initTime = lineController.getTime();
 
@@ -128,4 +128,3 @@ public class LVS {
         if (!real) data.set(4, lineController.getTime()-initTime);
     }
 }
-

@@ -1,14 +1,14 @@
-package model;
+package util;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.StringProperty;
-import util.Reporter;
+import model.LVS;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tester {
+public class Simulator {
 
     private List<List<List<Double>>> tables;
 
@@ -30,7 +30,7 @@ public class Tester {
 
             for (int i = 0; i < tablesAmount; i++) {
 
-                tables.add(Tester.simulateX(args, probs));
+                tables.add(Simulator.simulateX(args, probs));
 
                 proDouble = 0.05 + 0.7 * (i / (double) (tablesAmount - 1));
                 progressBarProperty.setValue(proDouble);

@@ -247,5 +247,4 @@ public class MainScreen {
             alert.show();
         }
     }
-
 }
