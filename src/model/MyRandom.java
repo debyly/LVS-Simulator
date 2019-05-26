@@ -85,7 +85,7 @@ class MyRandom {
         return proportions.length;
     }
 
-    static TerminalDevice.DeviceState getRandomState(
+    public static TerminalDevice.DeviceState getRandomState(
             double genProb, double denProb, double failProb, double busyProb){
 
         int randomState = getNBRandom(new double[]{genProb,denProb,failProb,busyProb});

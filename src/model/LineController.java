@@ -5,6 +5,7 @@ import static model.TerminalDevice.DeviceState.*;
 import static model.TimeCounter.TimeType.*;
 
 public class LineController {
+
     private final TimeCounter timer = new TimeCounter();
     private final boolean real;
     private final LVS lvs;
