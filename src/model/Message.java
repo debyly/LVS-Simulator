@@ -2,12 +2,11 @@ package model;
 
 import java.util.HashMap;
 
-class Message {
+public class Message {
 
     String state;
-    private final HashMap<String,Integer> commands;
-    private final HashMap<String, Integer> modes;
-    private final HashMap<Integer,String> IntStr;
+    private HashMap<String,Integer> commands;
+    private HashMap<String, Integer> modes;
     String type;
     int address_from;
     int address_to;
@@ -15,7 +14,6 @@ class Message {
     Message(){
         commands = new HashMap<>();
         modes = new HashMap<>();
-        IntStr = new HashMap<>();
 
         commands.put("give_response",1);
         commands.put("block",2);
@@ -23,44 +21,66 @@ class Message {
 
         modes.put("command", 31);
         modes.put("subaddr", 30);
-
-        IntStr.put(0,"00000"); IntStr.put(1,"00001"); IntStr.put(2,"00010"); IntStr.put(3,"00011");
-        IntStr.put(4,"00100"); IntStr.put(5,"00101"); IntStr.put(6,"00110"); IntStr.put(7,"00111");
-        IntStr.put(8,"01000"); IntStr.put(9,"01001"); IntStr.put(10,"01010");IntStr.put(11,"01011");
-        IntStr.put(12,"01100"); IntStr.put(13,"01101"); IntStr.put(14,"01110"); IntStr.put(15,"01111");
-        IntStr.put(16,"10000"); IntStr.put(17,"10001"); IntStr.put(18,"10010");  IntStr.put(31, "11111");
-        IntStr.put(30, "11110");
     }
 
-    String encodeMessage(int address, int type, String mode_name, String command)
+    private String IntStr(int num){
+        if (num < 32) {
+            int tmp = num;
+            char[] buf = new char[5];
+            int i = 4;
+            for (; tmp != 0; i--) {
+                buf[i] = ((tmp % 2 == 1) ? '1' : '0');
+                tmp = tmp / 2;
+            }
+            for (; i >= 0; i--) {
+                buf[i] = '0';
+            }
+            return new String(buf);
+        }
+        return "Error";
+    }
+
+    String encodeMessage(int address, int type, String mode_name, String command, int[] respattr)
     {
         String message = "";
         String synchr = "111"; // Синхросигнал
-        String addrTo = IntStr.get(address); // Адрес ОУ
-        String K = "0"; // Разряд "Прием/Передача"
-        String mode; // Подадрес или режим управления
-        String wordCount; // Количество СД или КУ
+        String addrTo = IntStr(address); // Адрес ОУ
+
         int lastbit = 0; // Бит четности
         switch (type){
             case 1:
+                String K = "0"; // Разряд "Прием/Передача"
+                String mode; // Подадрес или режим управления
+                String wordCount; // Количество СД или КУ
                 //Кодирование режима управления
                 int nmode = modes.get(mode_name);
-                mode = IntStr.get(nmode);
+                mode = IntStr(nmode);
 
                 //Кодирование КУ или числа СД
-                if (nmode == 30) wordCount = IntStr.get(12);
+                if (nmode == 30) wordCount = IntStr(12);
                 else{
                     int nCom = commands.get(command);
-                    wordCount = IntStr.get(nCom);
+                    wordCount = IntStr(nCom);
                 }
 
                 message = synchr + addrTo + K + mode + wordCount;
                 break;
             case 2:
+                // Слово данных
                 message = synchr + "0110101001010010";
                 break;
             case 3:
-                message = synchr + addrTo + "010000000000";
+                // Ответное слово
+                String meserr = ((respattr[0] == 1)? "1":"0");
+                String resp = "1";
+                String req = ((respattr[1] == 1)? "1":"0");
+                String reserve = "000";
+                String group = ((respattr[2] == 1)? "1":"0");
+                String busy = ((respattr[3] == 1)? "1":"0");
+                String abfail = ((respattr[4] == 1)? "1":"0");
+                String control = ((respattr[5] == 1)? "1":"0");
+                String oufail = ((respattr[6] == 1)? "1":"0");
+                message = synchr + addrTo + meserr + resp + req + reserve + group + busy + abfail + control + oufail;
         }
         for(int i = 0; i < 19; i++){
             int bit = (message.charAt(i) == '1') ? 1 : 0;
