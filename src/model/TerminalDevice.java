@@ -35,7 +35,8 @@ public class TerminalDevice {
     public DeviceStateProperty deviceStateProperty(){
         return state;
     }
-    DeviceState getState() { return state.get(); }
+
+    public DeviceState getState() { return state.get(); }
 
     public ActiveProperty activeProperty() { return active; }
 
@@ -71,7 +72,7 @@ public class TerminalDevice {
         });
     }
 
-    void changeState(DeviceState st){
+    public void changeState(DeviceState st){
         if (st == UNBLOCKING && state.get() == BLOCKED){
             state.set(previousState);
         }
