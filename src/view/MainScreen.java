@@ -4,13 +4,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 import model.LVS;
 import model.LineState;
 
@@ -25,6 +21,8 @@ public class MainScreen {
     @FXML
     TextArea console;
     @FXML
+    TextField amountField;
+    @FXML
     ToggleButton turnButton;
     @FXML
     Button execButton;
@@ -35,19 +33,18 @@ public class MainScreen {
     @FXML
     Button profileButton;
     @FXML
-    Text statePrompt;
-    @FXML
     Pane lvsPane;
     @FXML
     Line lineA;
     @FXML
     Line lineB;
 
-    private final int devicesAmount = 18;
+    private int devicesAmount = 32;
     private int sleepAmount = 200;
 
     private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
+    private ArrayList<Node> elements;
     private LVS lvs;
     private WindowManager manager;
     private final LVS.LineStateProperty lineStateProperty
@@ -76,6 +73,7 @@ public class MainScreen {
     void initialize(){
 
         visualDevices = new ArrayList<>();
+        elements = new ArrayList<>();
 
         execButton.setDisable(true);
         stopButton.setDisable(true);
@@ -107,74 +105,87 @@ public class MainScreen {
             }
         });
 
-        try {
-            for (int i = 0; i < devicesAmount; i++){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        i % 2 == 0 ? "DeviceUpper.fxml" : "DeviceLower.fxml"));
 
-                Node elm = loader.load();
-
-                visualDevices.add(loader.getController());
-                lvsPane.getChildren().add(elm);
-                elm.setLayoutX(16 + 578 * i / ((devicesAmount > 1 ? devicesAmount : 2) - 1));
-                elm.setLayoutY(i % 2 == 0 ? 10 : 106);
-            }
-
-        } catch (IOException e){
-
-            lvsPane.getChildren().clear();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Ошибка инициализации ЛВС");
-            alert.setTitle("Error: внутренняя ошибка");
-            alert.setContentText("Сообщение ошибки:\n" + e.getCause() + "\n" + e.getMessage());
-            alert.showAndWait();
-        }
     }
 
     @FXML
     void turnHandle(){
 
-        execButton.setDisable(!turnButton.isSelected());
-        cleanButton.setDisable(!turnButton.isSelected());
-        turnButton.setText(turnButton.isSelected() ? "ВЫКЛЮЧИТЬ СЕТЬ" : "ВКЛЮЧИТЬ СЕТЬ");
+        try {
 
-        statePrompt.setText("ЛВС "
-                + (turnButton.isSelected() ? "включена" : "отключена"));
 
-        for (VisualDevice visualDevice : visualDevices) {
-            visualDevice.transparentButton(!turnButton.isSelected());
-            visualDevice.disableButton(!turnButton.isSelected());
-            visualDevice.setConsole(console);
+            if (turnButton.isSelected()) {
 
-        }
+                if (amountField.getText().isEmpty())
+                    throw new IOException("Введите значение количества ОУ!");
 
-        if (turnButton.isSelected()){
+                devicesAmount = Integer.parseInt(amountField.getText());
 
-            lvs = LVS.realLVS(sleepAmount, devicesAmount);
+                if (devicesAmount < 1 || devicesAmount > 32)
+                    throw new NumberFormatException("Неверное количество ОУ! Должно быть число в пределах от 1 до 32!");
 
-            lineStateProperty.bindBidirectional(lvs.lineStateProperty());
+                for (int i = 0; i < devicesAmount; i++) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                            i % 2 == 0 ? "DeviceUpper.fxml" : "DeviceLower.fxml"));
 
-            for (int vdi = 0; vdi < visualDevices.size(); vdi++) {
+                    Node elm = loader.load();
+                    elements.add(elm);
+                    visualDevices.add(loader.getController());
+                    lvsPane.getChildren().add(elm);
+                    elm.setLayoutX(5 + 680 * i / ((devicesAmount > 1 ? devicesAmount : 2) - 1));
+                    elm.setLayoutY(i % 2 == 0 ? 9 : 105);
+                }
 
-                visualDevices.get(vdi).setOn(vdi, lvs.getDevices().get(vdi));
+                for (VisualDevice visualDevice : visualDevices) {
+                    visualDevice.transparentButton(!turnButton.isSelected());
+                    visualDevice.disableButton(!turnButton.isSelected());
+                    visualDevice.setConsole(console);
+                }
+
+                lvs = LVS.realLVS(sleepAmount, devicesAmount);
+
+                lineStateProperty.bindBidirectional(lvs.lineStateProperty());
+
+                for (int vdi = 0; vdi < devicesAmount; vdi++) {
+
+                    visualDevices.get(vdi).setOn(vdi, lvs.getDevices().get(vdi));
+                }
+
+            } else {
+
+                lineStateProperty.unbindBidirectional(lvs.lineStateProperty());
+
+                for (int vdi = 0; vdi < devicesAmount; vdi++) {
+                    visualDevices.get(vdi).setOff(lvs.getDevices().get(vdi));
+                }
+
+                visualDevices.clear();
+
+                lvsPane.getChildren().removeAll(elements);
+
+                lvs = null;
             }
 
+            execButton.setDisable(!turnButton.isSelected());
+            cleanButton.setDisable(!turnButton.isSelected());
+            turnButton.setText(turnButton.isSelected() ? "ВЫКЛЮЧИТЬ СЕТЬ" : "ВКЛЮЧИТЬ СЕТЬ");
 
-        } else {
+            lineA.setStroke(turnButton.isSelected() ? stateColor.get(ONLINE) : baseColor);
+            lineB.setStroke(baseColor);
+            amountField.setDisable(turnButton.isSelected());
+            cleanConsole(turnButton.isSelected() ? "*СИСТЕМА ЛВС ВКЛЮЧЕНА*" : "*ОТКЛЮЧЕНО*");
 
-            lineStateProperty.unbindBidirectional(lvs.lineStateProperty());
+        } catch(IOException | NumberFormatException e) {
 
-            for (int vdi = 0; vdi < visualDevices.size(); vdi++) {
-                visualDevices.get(vdi).setOff(lvs.getDevices().get(vdi));
-            }
-
-            lvs = null;
+            lvsPane.getChildren().removeAll(elements);
+            visualDevices.clear();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Ошибка инициализации ЛВС");
+            alert.setTitle("Error: внутренняя ошибка");
+            alert.setContentText("Сообщение ошибки:\n" + e.getMessage());
+            alert.showAndWait();
+            turnButton.setSelected(false);
         }
-
-        lineA.setStroke(turnButton.isSelected() ? stateColor.get(ONLINE) : baseColor);
-        lineB.setStroke(baseColor);
-
-        cleanConsole(turnButton.isSelected() ? "*СИСТЕМА ЛВС ВКЛЮЧЕНА*" : "*ОТКЛЮЧЕНО*");
     }
 
     @FXML

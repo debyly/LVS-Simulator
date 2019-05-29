@@ -9,28 +9,23 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="pane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VisualDevice">
+<VBox fx:id="pane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VisualDevice">
     <AnchorPane prefHeight="64.0" prefWidth="50.0">
-        <Line fx:id="tail" endX="12.0" endY="-70.0" layoutX="13.0" layoutY="66.0" startX="12.0" startY="-40.0"
-              stroke="#b1b1b1" strokeWidth="8.0"/>
-        <Rectangle fx:id="display" arcHeight="5.0" arcWidth="5.0" fill="#d4deff" height="40.0" layoutX="5.0"
-                   layoutY="24.0" stroke="#b1b1b1" strokeType="INSIDE" strokeWidth="2.0" width="40.0"/>
-        <Rectangle fx:id="stateIndicator" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="19.0"
-                   layoutY="38.0" stroke="#868686" strokeType="INSIDE" width="12.0"/>
+        <Line fx:id="tail" endX="12.0" endY="-70.0" layoutX="13.0" layoutY="66.0" startX="12.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+        <Rectangle fx:id="display" arcHeight="5.0" arcWidth="5.0" fill="#d4deff" height="40.0" layoutX="5.0" layoutY="24.0" stroke="#b1b1b1" strokeType="INSIDE" strokeWidth="2.0" width="40.0" />
+        <Rectangle fx:id="stateIndicator" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="12.0" layoutX="19.0" layoutY="38.0" stroke="#868686" strokeType="INSIDE" width="12.0" />
     </AnchorPane>
     <Label fx:id="tdLabel" text="----">
         <font>
-          <Font name="Calibri" size="12.0"/>
+          <Font name="Calibri" size="12.0" />
         </font>
     </Label>
-    <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="50.0" mnemonicParsing="false"
-            onAction="#changeStateHandle" prefWidth="50.0" text="ССТ">
+    <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="44.0" minWidth="44.0" mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="44.0" text="ССТ">
         <VBox.margin>
-          <Insets/>
+          <Insets />
         </VBox.margin>
         <font>
-          <Font name="Calibri" size="12.0"/>
+          <Font name="Calibri" size="12.0" />
         </font>
     </Button>
 </VBox>

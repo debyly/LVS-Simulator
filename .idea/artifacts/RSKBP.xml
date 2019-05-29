@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="RSKBP">
+  <artifact type="javafx" build-on-make="true" name="RSKBP">
     <output-path>$PROJECT_DIR$/out/artifacts/RSKBP</output-path>
     <properties id="javafx-properties">
       <options>
