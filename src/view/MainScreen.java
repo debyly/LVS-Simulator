@@ -40,7 +40,7 @@ public class MainScreen {
     Line lineB;
 
     private int devicesAmount = 32;
-    private int sleepAmount = 200;
+    private int sleepAmount = 100;
 
     private Thread modelThread = null;
     private ArrayList<VisualDevice> visualDevices;
@@ -132,7 +132,7 @@ public class MainScreen {
                     elements.add(elm);
                     visualDevices.add(loader.getController());
                     lvsPane.getChildren().add(elm);
-                    elm.setLayoutX(5 + 680 * i / ((devicesAmount > 1 ? devicesAmount : 2) - 1));
+                    elm.setLayoutX(-5 + 685 * i / ((devicesAmount > 1 ? devicesAmount : 2) - 1));
                     elm.setLayoutY(i % 2 == 0 ? 9 : 105);
                 }
 

@@ -50,7 +50,7 @@
           <Font size="12.0" />
         </font>
     </Text>
-    <Separator layoutX="-12.0" layoutY="289.0" prefHeight="12.0" prefWidth="763.0" />
+    <Separator layoutX="-5.0" layoutY="289.0" prefHeight="12.0" prefWidth="759.0" />
     <Button fx:id="execButton" layoutX="619.0" layoutY="313.0" mnemonicParsing="false" onAction="#execHandle" prefHeight="51.0" prefWidth="89.0" text="Запуск Контроллера" textAlignment="CENTER" wrapText="true">
         <font>
           <Font name="Calibri" size="12.0" />
@@ -86,31 +86,31 @@
           <Font name="Calibri" size="14.0" />
         </font>
     </TextArea>
-    <Pane fx:id="lvsPane" layoutX="14.0" layoutY="66.0" prefHeight="221.0" prefWidth="716.0">
-        <Label layoutX="2.0" layoutY="91.0" text="A">
+    <Pane fx:id="lvsPane" layoutX="10.0" layoutY="66.0" prefHeight="221.0" prefWidth="728.0">
+        <Label layoutX="-6.0" layoutY="91.0" text="A">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Label layoutX="2.0" layoutY="105.0" text="B">
+        <Label layoutX="-6.0" layoutY="105.0" text="B">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Line fx:id="lineA" endX="615.0" endY="-40.0" layoutX="83.0" layoutY="141.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
-        <Line fx:id="lineB" endX="615.0" endY="-40.0" layoutX="83.0" layoutY="153.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
-        <Label layoutX="706.0" layoutY="91.0" text="A">
+        <Line fx:id="lineA" endX="635.0" endY="-40.0" layoutX="75.0" layoutY="141.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+        <Line fx:id="lineB" endX="635.0" endY="-40.0" layoutX="75.0" layoutY="153.0" startX="-65.0" startY="-40.0" stroke="#b1b1b1" strokeWidth="8.0" />
+        <Label layoutX="720.0" layoutY="91.0" text="A">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
-        <Label layoutX="706.0" layoutY="105.0" text="B">
+        <Label layoutX="720.0" layoutY="105.0" text="B">
             <font>
                 <Font name="System Bold" size="12.0" />
             </font>
         </Label>
     </Pane>
-    <Separator layoutX="-3.0" layoutY="50.0" prefHeight="12.0" prefWidth="763.0" />
+    <Separator layoutX="2.0" layoutY="50.0" prefHeight="12.0" prefWidth="748.0" />
    <TextField fx:id="amountField" layoutX="629.0" layoutY="17.0" prefHeight="25.0" prefWidth="78.0" promptText="от 1 до 32" />
    <Label layoutX="563.0" layoutY="21.0" text="Кол-во ОУ" />
 </AnchorPane>

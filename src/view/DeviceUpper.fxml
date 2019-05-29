@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VisualDevice">
-    <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="44.0" minWidth="44.0" mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="44.0" text="ССТ">
+    <Button fx:id="tdStateButton" disable="true" focusTraversable="false" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#changeStateHandle" prefWidth="40.0" text="ССТ">
         <font>
           <Font name="Calibri" size="12.0" />
         </font>
